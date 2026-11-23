@@ -1,0 +1,168 @@
+# Malagasy cardinal number words. Rules in README.md; every entry cites its source.
+zero:
+  word: aotra
+  source: https://malagasyword.org/bins/teny2/aotra
+  checked: 2026-11-23
+units:
+  - value: 1
+    word: iray
+    source: https://malagasyword.org/bins/teny2/iray
+    checked: 2026-11-23
+  - value: 2
+    word: roa
+    source: https://malagasyword.org/bins/manisa
+    checked: 2026-11-23
+  - value: 3
+    word: telo
+    source: https://malagasyword.org/bins/manisa
+    checked: 2026-11-23
+  - value: 4
+    word: efatra
+    source: https://malagasyword.org/bins/manisa
+    checked: 2026-11-23
+  - value: 5
+    word: dimy
+    source: https://malagasyword.org/bins/manisa
+    checked: 2026-11-23
+  - value: 6
+    word: enina
+    source: https://malagasyword.org/bins/manisa
+    checked: 2026-11-23
+  - value: 7
+    word: fito
+    source: https://malagasyword.org/bins/manisa
+    checked: 2026-11-23
+  - value: 8
+    word: valo
+    source: https://malagasyword.org/bins/manisa
+    checked: 2026-11-23
+  - value: 9
+    word: sivy
+    source: https://malagasyword.org/bins/manisa
+    checked: 2026-11-23
+# 'iray' becomes 'iraika' when it is added to tens or hundreds (11, 21, 101).
+unitOneInCompound:
+  word: iraika
+  source: https://malagasyword.org/bins/teny2/iraika
+  checked: 2026-11-23
+tens:
+  - value: 10
+    word: folo
+    source: https://malagasyword.org/bins/manisa
+    checked: 2026-11-23
+  - value: 20
+    word: roapolo
+    source: https://malagasyword.org/bins/manisa
+    checked: 2026-11-23
+  - value: 30
+    word: telopolo
+    source: https://malagasyword.org/bins/manisa
+    checked: 2026-11-23
+  - value: 40
+    word: efapolo
+    source: https://malagasyword.org/bins/manisa
+    checked: 2026-11-23
+  - value: 50
+    word: dimampolo
+    source: https://malagasyword.org/bins/manisa
+    checked: 2026-11-23
+  - value: 60
+    word: enimpolo
+    source: https://malagasyword.org/bins/manisa
+    checked: 2026-11-23
+  - value: 70
+    word: fitopolo
+    source: https://malagasyword.org/bins/manisa
+    checked: 2026-11-23
+  - value: 80
+    word: valopolo
+    source: https://malagasyword.org/bins/manisa
+    checked: 2026-11-23
+  - value: 90
+    word: sivifolo
+    source: https://malagasyword.org/bins/manisa
+    checked: 2026-11-23
+hundreds:
+  - value: 100
+    word: zato
+    source: https://malagasyword.org/bins/manisa
+    checked: 2026-11-23
+  - value: 200
+    word: roanjato
+    source: https://malagasyword.org/bins/manisa
+    checked: 2026-11-23
+  - value: 300
+    word: telonjato
+    source: https://malagasyword.org/bins/manisa
+    checked: 2026-11-23
+  - value: 400
+    word: efajato
+    source: https://malagasyword.org/bins/manisa
+    checked: 2026-11-23
+  - value: 500
+    word: dimanjato
+    source: https://malagasyword.org/bins/manisa
+    checked: 2026-11-23
+  - value: 600
+    word: eninjato
+    source: https://malagasyword.org/bins/manisa
+    checked: 2026-11-23
+  - value: 700
+    word: fitonjato
+    source: https://malagasyword.org/bins/manisa
+    checked: 2026-11-23
+  - value: 800
+    word: valonjato
+    source: https://malagasyword.org/bins/manisa
+    checked: 2026-11-23
+  - value: 900
+    word: sivinjato
+    source: https://malagasyword.org/bins/manisa
+    checked: 2026-11-23
+# Groups above 999. A count of one is the bare word ('arivo', not 'iray arivo').
+# maxCount: largest multiplier read before the word (9 → 'sivy alina'; 999 → '... tapitrisa').
+scales:
+  - value: 1000
+    word: arivo
+    maxCount: 9
+    source: https://malagasyword.org/bins/teny2/arivo
+    checked: 2026-11-23
+  - value: 10000
+    word: alina
+    maxCount: 9
+    source: https://malagasyword.org/bins/teny2/alina
+    checked: 2026-11-23
+  - value: 100000
+    word: hetsy
+    maxCount: 9
+    source: https://malagasyword.org/bins/teny2/hetsy
+    checked: 2026-11-23
+  - value: 1000000
+    word: tapitrisa
+    maxCount: 999
+    source: https://malagasyword.org/bins/teny2/tapitrisa
+    checked: 2026-11-23
+  - value: 1000000000
+    word: lavitrisa
+    maxCount: 999
+    source: https://malagasyword.org/bins/teny2/lavitrisa
+    checked: 2026-11-23
+joiners:
+  # 11–19 only: 'iraika ambin' ny folo'.
+  unitsBeforeTen:
+    word: "ambin' ny"
+    source: https://malagasyword.org/bins/teny2/amby
+    checked: 2026-11-23
+  # Any other addition below 1000: 'iraika amby roapolo', 'dimy amby zato', 'telo amby valopolo'.
+  belowThousand:
+    word: amby
+    source: https://malagasyword.org/bins/teny2/amby
+    checked: 2026-11-23
+  # Between groups of 1000 and above: 'valo alina sy roa hetsy' (280 000).
+  betweenGroups:
+    word: sy
+    source: https://malagasyword.org/bins/teny2/tapitrisa
+    checked: 2026-11-23
+limits:
+  min: 0
+  max: 999999999999

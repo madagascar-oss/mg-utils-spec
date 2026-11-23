@@ -1,0 +1,163 @@
+# Shared test vectors for numberToWords. Every language must pass all of them.
+# Notes cite the dictionary row when the exact phrase is attested; other rows apply the rules in README.md.
+- input: 0
+  expected: 'aotra'
+  note: 'dictionary table'
+- input: 1
+  expected: 'iray'
+- input: 2
+  expected: 'roa'
+- input: 5
+  expected: 'dimy'
+- input: 9
+  expected: 'sivy'
+- input: 10
+  expected: 'folo'
+- input: 11
+  expected: "iraika ambin' ny folo"
+  note: 'dictionary table'
+- input: 12
+  expected: "roa ambin' ny folo"
+  note: 'dictionary table'
+- input: 15
+  expected: "dimy ambin' ny folo"
+- input: 19
+  expected: "sivy ambin' ny folo"
+- input: 20
+  expected: 'roapolo'
+- input: 21
+  expected: 'iraika amby roapolo'
+  note: 'dictionary table; units are read before tens'
+- input: 22
+  expected: 'roa amby roapolo'
+- input: 29
+  expected: 'sivy amby roapolo'
+- input: 30
+  expected: 'telopolo'
+- input: 43
+  expected: 'telo amby efapolo'
+- input: 55
+  expected: 'dimy amby dimampolo'
+- input: 90
+  expected: 'sivifolo'
+  note: 'dictionary table'
+- input: 99
+  expected: 'sivy amby sivifolo'
+- input: 100
+  expected: 'zato'
+- input: 101
+  expected: 'iraika amby zato'
+  note: "dictionary entry iraika: 'iraika amby zato'"
+- input: 105
+  expected: 'dimy amby zato'
+  note: "dictionary entry amby: 'dimy amby zato'"
+- input: 110
+  expected: 'folo amby zato'
+- input: 111
+  expected: "iraika ambin' ny folo amby zato"
+- input: 119
+  expected: "sivy ambin' ny folo amby zato"
+- input: 120
+  expected: 'roapolo amby zato'
+- input: 121
+  expected: 'iraika amby roapolo amby zato'
+- input: 200
+  expected: 'roanjato'
+- input: 280
+  expected: 'valopolo amby roanjato'
+- input: 999
+  expected: 'sivy amby sivifolo amby sivinjato'
+- input: 1000
+  expected: 'arivo'
+  note: 'dictionary table: a count of one is the bare scale word'
+- input: 1001
+  expected: 'iray sy arivo'
+- input: 1010
+  expected: 'folo sy arivo'
+- input: 1011
+  expected: "iraika ambin' ny folo sy arivo"
+- input: 1100
+  expected: 'zato sy arivo'
+- input: 2000
+  expected: 'roa arivo'
+- input: 2026
+  expected: 'enina amby roapolo sy roa arivo'
+  note: 'malagasy-numberwords README example'
+- input: 9999
+  expected: 'sivy amby sivifolo amby sivinjato sy sivy arivo'
+- input: 10000
+  expected: 'alina'
+  note: 'dictionary table'
+- input: 10001
+  expected: 'iray sy alina'
+- input: 12345
+  expected: 'dimy amby efapolo amby telonjato sy roa arivo sy alina'
+- input: 20000
+  expected: 'roa alina'
+- input: 35000
+  expected: 'dimy arivo sy telo alina'
+  note: "dictionary entry alina: 'dimy arivo sy telo alina'"
+- input: 99999
+  expected: 'sivy amby sivifolo amby sivinjato sy sivy arivo sy sivy alina'
+- input: 100000
+  expected: 'hetsy'
+- input: 100001
+  expected: 'iray sy hetsy'
+- input: 123456
+  expected: 'enina amby dimampolo amby efajato sy telo arivo sy roa alina sy hetsy'
+- input: 280000
+  expected: 'valo alina sy roa hetsy'
+  note: 'dictionary entry tapitrisa: groups read upwards, joined by sy'
+- input: 999999
+  expected: 'sivy amby sivifolo amby sivinjato sy sivy arivo sy sivy alina sy sivy hetsy'
+- input: 1000000
+  expected: 'tapitrisa'
+  note: 'dictionary table'
+- input: 1000001
+  expected: 'iray sy tapitrisa'
+- input: 1234567
+  expected: 'fito amby enimpolo amby dimanjato sy efatra arivo sy telo alina sy roa hetsy sy tapitrisa'
+- input: 2000000
+  expected: 'roa tapitrisa'
+- input: 10000000
+  expected: 'folo tapitrisa'
+- input: 21000000
+  expected: 'iraika amby roapolo tapitrisa'
+- input: 200000000
+  expected: 'roanjato tapitrisa'
+  note: 'dictionary table'
+- input: 280000000
+  expected: 'valopolo amby roanjato tapitrisa'
+  note: 'dictionary entry tapitrisa'
+- input: 999999999
+  expected: 'sivy amby sivifolo amby sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo amby sivinjato tapitrisa'
+- input: 1000000000
+  expected: 'lavitrisa'
+  note: 'dictionary table'
+- input: 1000000001
+  expected: 'iray sy lavitrisa'
+- input: 2000000000
+  expected: 'roa lavitrisa'
+  note: 'dictionary table'
+- input: 12000000000
+  expected: "roa ambin' ny folo lavitrisa"
+- input: 999999999999
+  expected: 'sivy amby sivifolo amby sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo amby sivinjato tapitrisa sy sivy amby sivifolo amby sivinjato lavitrisa'
+- input: -1
+  error: OUT_OF_RANGE
+  note: negative numbers are not supported
+- input: 1000000000000
+  error: OUT_OF_RANGE
+  note: above limits.max
+- input: 1.5
+  error: INVALID_TYPE
+  note: only integers have number words
+- input: '12'
+  error: INVALID_TYPE
+  note: strings are not parsed
+- input: null
+  error: INVALID_TYPE
+- input: .nan
+  error: INVALID_TYPE
+- input: .inf
+  error: INVALID_TYPE
