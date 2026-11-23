@@ -1,0 +1,10 @@
+# Error codes shared by every language. Codegen turns this list into native constants.
+# Tests reference these codes in `error:`; the validator rejects unknown codes.
+- code: INVALID_TYPE
+  description: The input is not of the accepted type (for example a string or a non-integer where an integer is expected).
+- code: OUT_OF_RANGE
+  description: The input has the right type but lies outside the supported range.
+- code: INVALID_FORMAT
+  description: The input text cannot be read as a value of this module (wrong characters or wrong length).
+- code: UNKNOWN_OPERATOR
+  description: The phone number is well formed but its operator code is not assigned to a mobile operator.

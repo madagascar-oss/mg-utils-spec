@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/madagascar-oss/mg-utils/spec/_schemas/tests.schema.json",
+  "title": "Shared test vectors",
+  "description": "Each vector calls one public function with `input` (and optional extra `args`) and expects either `expected` or an `error` code from spec/errors.yaml.",
+  "type": "array",
+  "minItems": 1,
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["input"],
+    "properties": {
+      "fn": {
+        "type": "string",
+        "pattern": "^[a-z][A-Za-z0-9]*$",
+        "description": "Function to call; defaults to the module's main function."
+      },
+      "input": { "description": "First argument." },
+      "args": { "type": "array", "description": "Further arguments, in order." },
+      "expected": { "description": "Exact return value." },
+      "error": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]*$" },
+      "note": { "type": "string" }
+    },
+    "oneOf": [{ "required": ["expected"] }, { "required": ["error"] }]
+  }
+}
