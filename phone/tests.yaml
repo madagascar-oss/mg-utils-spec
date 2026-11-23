@@ -1,0 +1,194 @@
+# Shared test vectors for the phone module. Every language must pass all of them.
+# Default function: parsePhoneNumber.
+- input: '0341234567'
+  expected:
+    e164: '+261341234567'
+    nationalNumber: '341234567'
+    operator: telma
+  note: national form with trunk prefix 0
+- input: '034 12 345 67'
+  expected:
+    e164: '+261341234567'
+    nationalNumber: '341234567'
+    operator: telma
+  note: spaces are ignored
+- input: '034-12-345-67'
+  expected:
+    e164: '+261341234567'
+    nationalNumber: '341234567'
+    operator: telma
+  note: dashes are ignored
+- input: '034.12.345.67'
+  expected:
+    e164: '+261341234567'
+    nationalNumber: '341234567'
+    operator: telma
+  note: dots are ignored
+- input: '(034) 12 345 67'
+  expected:
+    e164: '+261341234567'
+    nationalNumber: '341234567'
+    operator: telma
+  note: parentheses are ignored
+- input: '+261341234567'
+  expected:
+    e164: '+261341234567'
+    nationalNumber: '341234567'
+    operator: telma
+  note: E.164
+- input: '+261 34 12 345 67'
+  expected:
+    e164: '+261341234567'
+    nationalNumber: '341234567'
+    operator: telma
+  note: international with spaces
+- input: '00261341234567'
+  expected:
+    e164: '+261341234567'
+    nationalNumber: '341234567'
+    operator: telma
+  note: international prefix 00
+- input: '261341234567'
+  expected:
+    e164: '+261341234567'
+    nationalNumber: '341234567'
+    operator: telma
+  note: country code without plus
+- input: '341234567'
+  expected:
+    e164: '+261341234567'
+    nationalNumber: '341234567'
+    operator: telma
+  note: national significant number alone
+- input: ' 034 12 345 67 '
+  expected:
+    e164: '+261341234567'
+    nationalNumber: '341234567'
+    operator: telma
+  note: surrounding spaces are ignored
+- input: '0321234567'
+  expected:
+    e164: '+261321234567'
+    nationalNumber: '321234567'
+    operator: orange
+- input: '0371234567'
+  expected:
+    e164: '+261371234567'
+    nationalNumber: '371234567'
+    operator: orange
+  note: prefix 37 assigned to Orange in 2022
+- input: '0331234567'
+  expected:
+    e164: '+261331234567'
+    nationalNumber: '331234567'
+    operator: airtel
+- input: '0381234567'
+  expected:
+    e164: '+261381234567'
+    nationalNumber: '381234567'
+    operator: telma
+  note: prefix 38 assigned to Telma in 2022
+- input: '0391234567'
+  expected:
+    e164: '+261391234567'
+    nationalNumber: '391234567'
+    operator: blueline
+- input: ''
+  error: INVALID_FORMAT
+  note: empty
+- input: '   '
+  error: INVALID_FORMAT
+  note: only spaces
+- input: '034123456'
+  error: INVALID_FORMAT
+  note: one digit short; a national number never starts with 0
+- input: '03412345678'
+  error: INVALID_FORMAT
+  note: one digit too many
+- input: '034 12 345 6a'
+  error: INVALID_FORMAT
+  note: letters are rejected
+- input: '034_12_345_67'
+  error: INVALID_FORMAT
+  note: unknown separator
+- input: '34+1234567'
+  error: INVALID_FORMAT
+  note: plus only at the start
+- input: '++261341234567'
+  error: INVALID_FORMAT
+- input: '+33612345678'
+  error: INVALID_FORMAT
+  note: another country
+- input: '+2610341234567'
+  error: INVALID_FORMAT
+  note: trunk prefix inside international form
+- input: '０３４１２３４５６７'
+  error: INVALID_FORMAT
+  note: full-width digits are rejected
+- input: '00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
+  error: INVALID_FORMAT
+  note: very long input
+- input: '0351234567'
+  error: UNKNOWN_OPERATOR
+  note: 35 is not assigned
+- input: '0301234567'
+  error: UNKNOWN_OPERATOR
+  note: 30 is not assigned
+- input: '0202212345'
+  error: UNKNOWN_OPERATOR
+  note: fixed lines are not mobile numbers
+- input: '0221234567'
+  error: UNKNOWN_OPERATOR
+  note: 22 is a VSAT fixed range
+- input: 341234567
+  error: INVALID_TYPE
+  note: number, not string
+- input: null
+  error: INVALID_TYPE
+- fn: formatPhoneNumber
+  input: '0341234567'
+  args: [e164]
+  expected: '+261341234567'
+- fn: formatPhoneNumber
+  input: '0341234567'
+  args: [international]
+  expected: '+261 34 12 345 67'
+- fn: formatPhoneNumber
+  input: '+261341234567'
+  args: [national]
+  expected: '034 12 345 67'
+- fn: formatPhoneNumber
+  input: '00261 32 11 222 33'
+  args: [national]
+  expected: '032 11 222 33'
+- fn: formatPhoneNumber
+  input: '0391234567'
+  args: [international]
+  expected: '+261 39 12 345 67'
+- fn: formatPhoneNumber
+  input: '0341234567'
+  args: [rfc3966]
+  error: INVALID_TYPE
+  note: unknown format name
+- fn: formatPhoneNumber
+  input: '0351234567'
+  args: [e164]
+  error: UNKNOWN_OPERATOR
+- fn: isValidPhoneNumber
+  input: '0341234567'
+  expected: true
+- fn: isValidPhoneNumber
+  input: '+261 37 12 345 67'
+  expected: true
+- fn: isValidPhoneNumber
+  input: '0351234567'
+  expected: false
+- fn: isValidPhoneNumber
+  input: ''
+  expected: false
+- fn: isValidPhoneNumber
+  input: 341234567
+  expected: false
+- fn: isValidPhoneNumber
+  input: null
+  expected: false

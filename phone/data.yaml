@@ -1,0 +1,33 @@
+# Madagascar mobile numbering (+261). Rules in README.md; every entry cites its source.
+# Source: ARTEC / OMERT communications to the ITU on the national numbering plan
+# (27.VIII.2013, 21.VIII.2013, 21.X.2022), published by the ITU for country code +261.
+plan:
+  countryCode: '261'
+  internationalPrefix: '00'
+  trunkPrefix: '0'
+  nationalNumberLength: 9
+  # +261 37 XX XXX XX — operator code, then 2, 3 and 2 digits.
+  grouping: [2, 2, 3, 2]
+  source: https://www.itu.int/dms_pub/itu-t/oth/02/02/T020200007F0002PDFF.pdf
+  checked: 2026-11-23
+operators:
+  - id: orange
+    name: Orange Madagascar
+    prefixes: ['32', '37']
+    source: https://www.itu.int/dms_pub/itu-t/oth/02/02/T020200007F0002PDFF.pdf
+    checked: 2026-11-23
+  - id: airtel
+    name: Airtel Madagascar
+    prefixes: ['33']
+    source: https://www.itu.int/dms_pub/itu-t/oth/02/02/T020200007F0002PDFF.pdf
+    checked: 2026-11-23
+  - id: telma
+    name: Telma
+    prefixes: ['34', '38']
+    source: https://www.itu.int/dms_pub/itu-t/oth/02/02/T020200007F0002PDFF.pdf
+    checked: 2026-11-23
+  - id: blueline
+    name: Blueline
+    prefixes: ['39']
+    source: https://www.itu.int/dms_pub/itu-t/oth/02/02/T020200007F0002PDFF.pdf
+    checked: 2026-11-23
