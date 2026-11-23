@@ -12,7 +12,8 @@ Functions: `parsePhoneNumber(input)` (main), `safeParsePhoneNumber(input)`,
    `034 12 345 67`, `+261 34 12 345 67`, `00261 34 12 345 67`, `261 34 12 345 67`,
    `34 12 345 67`.
    - `0` is the national trunk prefix; `00` is the international prefix.
-   - Spaces, `-`, `.`, `(` and `)` are ignored. A `+` is allowed only as the first character.
+   - Spaces (including non-breaking and other Unicode spaces), `-`, `.`, `(` and `)` are
+     ignored. A `+` is allowed only as the first character.
    - Any other character (letters, `_`, full-width digits) is `INVALID_FORMAT`.
    - The 9 significant digits never start with `0`, so `034 12 345 6` (one digit short) is
      `INVALID_FORMAT`, not a 9-digit number with operator `03`.
