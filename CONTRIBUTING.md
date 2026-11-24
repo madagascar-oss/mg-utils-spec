@@ -27,6 +27,15 @@ feat/… fix/… ──squash──▶ dev ──merge──▶ main ──▶ t
 Bump [`VERSION`](VERSION) in the PR that changes the spec. Merging `dev` into `main` tags
 `v<VERSION>` and creates the GitHub release.
 
+## Public API rules
+
+- Each module README has a **Public API** table. A port is complete when it passes every vector
+  **and** provides every function in that table, named the way its language does it.
+- A function that can reject input has a `safeParse` variant that returns the value or the error
+  code without throwing.
+- Extras are allowed only to adapt the language's native types (for example its date type), and
+  are listed under the table. Anything else goes into the table first, so every port gets it.
+
 ## Data rules
 
 - **No source, no merge.** An official page, a law or decree, a regulator publication, or a

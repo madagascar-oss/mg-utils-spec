@@ -2,8 +2,19 @@
 
 Reads, checks and formats Malagasy **mobile** phone numbers (country code `+261`).
 
-Functions: `parsePhoneNumber(input)` (main), `safeParsePhoneNumber(input)`,
-`isValidPhoneNumber(input)`, `formatPhoneNumber(input, format)`.
+## Public API
+
+Every language port provides each function below, named the way its language does it. Behaviour
+is set by the rules and test vectors here; `safeParse` variants return the value or the error
+code without throwing.
+
+| Function               | Does                                            | JavaScript                         | PHP                                           |
+| ---------------------- | ----------------------------------------------- | ---------------------------------- | --------------------------------------------- |
+| `parsePhoneNumber`     | Text → parsed value, or throws                  | `parsePhoneNumber(input)`          | `PhoneNumber::parse($input)`                  |
+| `safeParsePhoneNumber` | Text → parsed value or error code, never throws | `safeParsePhoneNumber(input)`      | `PhoneNumber::safeParse($input)`              |
+| `isValidPhoneNumber`   | Any value → `true`/`false`, never throws        | `isValidPhoneNumber(input)`        | `PhoneNumber::isValid($input)`                |
+| `formatPhoneNumber`    | Text → `e164`, `international` or `national`    | `formatPhoneNumber(input, format)` | `PhoneNumber::parse($input)->format($format)` |
+| operator display name  | Operator id → name, e.g. `telma` → `Telma`      | `OPERATOR_NAMES[id]`               | `Operator::displayName()`                     |
 
 ## Rules
 
