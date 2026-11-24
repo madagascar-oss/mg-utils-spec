@@ -5,16 +5,17 @@ set shell := ["bash", "-euo", "pipefail", "-c"]
 default:
     @just --list
 
-# Install dependencies
+# Install dependencies and git hooks
 setup:
     command -v pnpm >/dev/null || npm install --global pnpm@10
     pnpm install --frozen-lockfile
+    pnpm hooks
 
 # Validate data, schemas, test vectors and error codes
 validate:
     pnpm validate
 
-# Format check and typecheck the tools
+# Format check, typecheck and dead-code check for the tools
 lint:
     pnpm lint
 

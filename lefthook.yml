@@ -1,10 +1,13 @@
-# Format staged files and validate the spec before each commit.
+# Format staged files and validate the spec before each commit. Installed by `just setup`.
 pre-commit:
   commands:
     prettier:
       glob: '*.{ts,json,md,yaml,yml}'
       run: pnpm exec prettier --write {staged_files}
       stage_fixed: true
+    yamllint:
+      glob: '*.{yaml,yml}'
+      run: yamllint -c .yamllint.yaml {staged_files} || echo "yamllint not installed; CI will check YAML"
     validate:
       glob: '*.{yaml,json}'
       run: pnpm validate
