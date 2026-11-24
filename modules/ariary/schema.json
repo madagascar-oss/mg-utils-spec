@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/madagascar-oss/mg-utils-spec/ariary/schema.json",
+  "$id": "https://github.com/madagascar-oss/mg-utils-spec/modules/ariary/schema.json",
   "title": "Malagasy Ariary",
   "type": "object",
   "additionalProperties": false,
@@ -15,7 +15,7 @@
     "limits"
   ],
   "$defs": {
-    "sourced": { "$ref": "../_schemas/source.schema.json" },
+    "sourced": { "$ref": "../../schemas/source.schema.json" },
     "character": { "type": "string", "minLength": 1, "maxLength": 1 }
   },
   "properties": {

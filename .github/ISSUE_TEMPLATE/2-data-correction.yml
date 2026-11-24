@@ -12,8 +12,8 @@ body:
       options:
         - phone
         - words
-        - ariary (planned)
-        - date (planned)
+        - ariary
+        - date
     validations:
       required: true
   - type: input

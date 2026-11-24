@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/madagascar-oss/mg-utils-spec/_schemas/source.schema.json",
+  "$id": "https://github.com/madagascar-oss/mg-utils-spec/schemas/source.schema.json",
   "title": "Provenance carried by every data entry",
   "type": "object",
   "required": ["source", "checked"],

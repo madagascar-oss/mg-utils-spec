@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/madagascar-oss/mg-utils-spec/words/schema.json",
+  "$id": "https://github.com/madagascar-oss/mg-utils-spec/modules/words/schema.json",
   "title": "Malagasy number words",
   "type": "object",
   "additionalProperties": false,
@@ -16,7 +16,7 @@
   ],
   "$defs": {
     "word": { "type": "string", "pattern": "^[a-zà-ỳ' ]+$" },
-    "sourced": { "$ref": "../_schemas/source.schema.json" },
+    "sourced": { "$ref": "../../schemas/source.schema.json" },
     "entry": {
       "allOf": [{ "$ref": "#/$defs/sourced" }],
       "type": "object",
