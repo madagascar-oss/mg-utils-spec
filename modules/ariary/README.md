@@ -3,9 +3,23 @@
 Formats, reads and converts amounts in Malagasy Ariary (ISO 4217 `MGA`), writes them in words,
 and converts old Malagasy francs (FMG).
 
-Functions: `formatAriary(amount, options)` (main), `parseAriary(text)`, `safeParseAriary(text)`,
-`ariaryToWords(amount)`, `fmgToAriary(francs)`, `ariaryToFmg(amount)`,
-`formatFmg(francs, options)`.
+## Public API
+
+Every language port provides each function below, named the way its language does it. Behaviour
+is set by the rules and test vectors here. Parsers (text typed by users → value) come in three forms:
+`parse` throws, `safeParse` returns the value or the error code, `tryParse` returns the value or
+nothing.
+
+| Function          | Does                                            | JavaScript                           | PHP                                     |
+| ----------------- | ----------------------------------------------- | ------------------------------------ | --------------------------------------- |
+| `formatAriary`    | Amount → `Ar 1 500` (grouping, symbol position) | `formatAriary(amount, options)`      | `Ariary::fromInt($amount)->format(...)` |
+| `parseAriary`     | Text → amount, or throws                        | `parseAriary(text)`                  | `Ariary::parse($text)->amount`          |
+| `safeParseAriary` | Text → amount or error code, never throws       | `safeParseAriary(text)`              | `Ariary::safeParse($text)`              |
+| `tryParseAriary`  | Text → amount, or nothing, never throws         | `tryParseAriary(text)` → `undefined` | `Ariary::tryParse($text)` → `null`      |
+| `ariaryToWords`   | Amount → Malagasy words + `ariary`              | `ariaryToWords(amount)`              | `Ariary::fromInt($amount)->toWords()`   |
+| `fmgToAriary`     | Old francs → Ariary (5 FMG = 1 Ar)              | `fmgToAriary(francs)`                | `Ariary::fromFmg($francs)->amount`      |
+| `ariaryToFmg`     | Ariary → old francs                             | `ariaryToFmg(amount)`                | `Ariary::fromInt($amount)->toFmg()`     |
+| `formatFmg`       | Francs → `Fmg 7 500`                            | `formatFmg(francs, options)`         | `Ariary::formatFmg($francs, ...)`       |
 
 ## Rules
 

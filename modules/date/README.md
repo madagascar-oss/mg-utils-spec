@@ -2,8 +2,22 @@
 
 Writes Gregorian dates in Malagasy, and gives the Malagasy names of months and weekdays.
 
-Functions: `formatDate(date, style)` (main), `getMonthName(month, width)`,
-`getWeekdayName(isoWeekday, width)`.
+## Public API
+
+Every language port provides each function below, named the way its language does it. Behaviour
+is set by the rules and test vectors here. Parsers (text typed by users → value) come in three forms:
+`parse` throws, `safeParse` returns the value or the error code, `tryParse` returns the value or
+nothing.
+
+| Function         | Does                                            | JavaScript                          | PHP                                               |
+| ---------------- | ----------------------------------------------- | ----------------------------------- | ------------------------------------------------- |
+| `formatDate`     | Date → text in a `DateStyle`                    | `formatDate(date, style)`           | `MalagasyDate::fromString($date)->format($style)` |
+| `getMonthName`   | `1`–`12` → month name, wide or abbreviated      | `getMonthName(month, width)`        | `MalagasyDate::monthName($month, $width)`         |
+| `getWeekdayName` | ISO weekday `1`–`7` → name, wide or abbreviated | `getWeekdayName(isoWeekday, width)` | `MalagasyDate::weekdayName($weekday, $width)`     |
+
+Allowed per language, because they adapt native types: building a date from the language's own
+date type (`Date` in JavaScript, `DateTimeInterface` via `MalagasyDate::fromDateTime()` in PHP)
+and reading the ISO weekday of a date object (`MalagasyDate->isoWeekday()` in PHP).
 
 ## Rules
 

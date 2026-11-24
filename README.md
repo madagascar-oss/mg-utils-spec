@@ -37,6 +37,9 @@ docs/adr/            architecture decisions
 
 ## Implementations
 
+Docs for every module, and a playground that runs each port live in the browser:
+**[madagascar-oss.github.io/mg-utils-docs](https://madagascar-oss.github.io/mg-utils-docs/)**.
+
 | Language   | Repository                                                     | Package                                |
 | ---------- | -------------------------------------------------------------- | -------------------------------------- |
 | JavaScript | [mg-utils-js](https://github.com/madagascar-oss/mg-utils-js)   | `@madagascar-oss/*` on npm             |

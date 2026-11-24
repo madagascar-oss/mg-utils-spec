@@ -33,7 +33,13 @@ write(
 
 What this module does, in one sentence.
 
-Main function: \`${fnName}(input)\` (placeholder — rename it in spec and code).
+## Public API
+
+Every language port provides each function below, named the way its language does it.
+
+| Function | Does | JavaScript | PHP |
+| --- | --- | --- | --- |
+| \`${fnName}\` | Placeholder — rename it in spec and code | \`${fnName}(input)\` | TODO |
 
 ## Rules
 

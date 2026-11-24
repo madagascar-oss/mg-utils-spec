@@ -6,8 +6,8 @@ import { Ajv2020 } from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
 import {
   MODULE_FILES,
+  ROOT_DIR,
   SCHEMAS_DIR,
-  SPEC_DIR,
   isoDate,
   listModules,
   moduleFile,
@@ -52,7 +52,7 @@ function checkDates(value: unknown, label: string): void {
   }
 }
 
-const errorsFile = join(SPEC_DIR, 'errors.yaml');
+const errorsFile = join(ROOT_DIR, 'errors.yaml');
 check(
   'https://github.com/madagascar-oss/mg-utils-spec/schemas/errors.schema.json',
   readYaml(errorsFile),
