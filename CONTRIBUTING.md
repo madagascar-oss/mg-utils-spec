@@ -31,8 +31,9 @@ Bump [`VERSION`](VERSION) in the PR that changes the spec. Merging `dev` into `m
 
 - Each module README has a **Public API** table. A port is complete when it passes every vector
   **and** provides every function in that table, named the way its language does it.
-- A function that can reject input has a `safeParse` variant that returns the value or the error
-  code without throwing.
+- A parser (text typed by users → value) comes in three forms: `parse` throws, `safeParse` returns the
+  value or the error code, `tryParse` returns the value or nothing (`undefined` in JavaScript,
+  `null` in PHP). None of the last two ever throws.
 - Extras are allowed only to adapt the language's native types (for example its date type), and
   are listed under the table. Anything else goes into the table first, so every port gets it.
 

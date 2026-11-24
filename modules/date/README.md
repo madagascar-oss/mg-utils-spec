@@ -5,8 +5,9 @@ Writes Gregorian dates in Malagasy, and gives the Malagasy names of months and w
 ## Public API
 
 Every language port provides each function below, named the way its language does it. Behaviour
-is set by the rules and test vectors here; `safeParse` variants return the value or the error
-code without throwing.
+is set by the rules and test vectors here. Parsers (text typed by users → value) come in three forms:
+`parse` throws, `safeParse` returns the value or the error code, `tryParse` returns the value or
+nothing.
 
 | Function         | Does                                            | JavaScript                          | PHP                                               |
 | ---------------- | ----------------------------------------------- | ----------------------------------- | ------------------------------------------------- |
