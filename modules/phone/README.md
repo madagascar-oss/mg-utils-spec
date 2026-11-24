@@ -5,16 +5,18 @@ Reads, checks and formats Malagasy **mobile** phone numbers (country code `+261`
 ## Public API
 
 Every language port provides each function below, named the way its language does it. Behaviour
-is set by the rules and test vectors here; `safeParse` variants return the value or the error
-code without throwing.
+is set by the rules and test vectors here. Functions that can reject input come in three forms:
+`parse` throws, `safeParse` returns the value or the error code, `tryParse` returns the value or
+nothing.
 
-| Function               | Does                                            | JavaScript                         | PHP                                           |
-| ---------------------- | ----------------------------------------------- | ---------------------------------- | --------------------------------------------- |
-| `parsePhoneNumber`     | Text → parsed value, or throws                  | `parsePhoneNumber(input)`          | `PhoneNumber::parse($input)`                  |
-| `safeParsePhoneNumber` | Text → parsed value or error code, never throws | `safeParsePhoneNumber(input)`      | `PhoneNumber::safeParse($input)`              |
-| `isValidPhoneNumber`   | Any value → `true`/`false`, never throws        | `isValidPhoneNumber(input)`        | `PhoneNumber::isValid($input)`                |
-| `formatPhoneNumber`    | Text → `e164`, `international` or `national`    | `formatPhoneNumber(input, format)` | `PhoneNumber::parse($input)->format($format)` |
-| operator display name  | Operator id → name, e.g. `telma` → `Telma`      | `OPERATOR_NAMES[id]`               | `Operator::displayName()`                     |
+| Function               | Does                                            | JavaScript                                 | PHP                                           |
+| ---------------------- | ----------------------------------------------- | ------------------------------------------ | --------------------------------------------- |
+| `parsePhoneNumber`     | Text → parsed value, or throws                  | `parsePhoneNumber(input)`                  | `PhoneNumber::parse($input)`                  |
+| `safeParsePhoneNumber` | Text → parsed value or error code, never throws | `safeParsePhoneNumber(input)`              | `PhoneNumber::safeParse($input)`              |
+| `tryParsePhoneNumber`  | Text → parsed value, or nothing, never throws   | `tryParsePhoneNumber(input)` → `undefined` | `PhoneNumber::tryParse($input)` → `null`      |
+| `isValidPhoneNumber`   | Any value → `true`/`false`, never throws        | `isValidPhoneNumber(input)`                | `PhoneNumber::isValid($input)`                |
+| `formatPhoneNumber`    | Text → `e164`, `international` or `national`    | `formatPhoneNumber(input, format)`         | `PhoneNumber::parse($input)->format($format)` |
+| operator display name  | Operator id → name, e.g. `telma` → `Telma`      | `OPERATOR_NAMES[id]`                       | `Operator::displayName()`                     |
 
 ## Rules
 

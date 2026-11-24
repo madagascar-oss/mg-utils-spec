@@ -6,8 +6,9 @@ standard (official) language.
 ## Public API
 
 Every language port provides each function below, named the way its language does it. Behaviour
-is set by the rules and test vectors here; `safeParse` variants return the value or the error
-code without throwing.
+is set by the rules and test vectors here. Functions that can reject input come in three forms:
+`parse` throws, `safeParse` returns the value or the error code, `tryParse` returns the value or
+nothing.
 
 | Function        | Does                          | JavaScript         | PHP                        |
 | --------------- | ----------------------------- | ------------------ | -------------------------- |
