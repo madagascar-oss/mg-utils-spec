@@ -4,9 +4,8 @@ import { fileURLToPath } from 'node:url';
 import { parse } from 'yaml';
 
 export const ROOT_DIR = fileURLToPath(new URL('../..', import.meta.url));
-export const SPEC_DIR = ROOT_DIR;
-export const MODULES_DIR = join(SPEC_DIR, 'modules');
-export const SCHEMAS_DIR = join(SPEC_DIR, 'schemas');
+export const MODULES_DIR = join(ROOT_DIR, 'modules');
+export const SCHEMAS_DIR = join(ROOT_DIR, 'schemas');
 /** Length of an ISO 8601 calendar date such as 2026-11-24. */
 const ISO_DATE_LENGTH = 10;
 /** Indentation of JSON files written by tools, matching Prettier. */
@@ -38,17 +37,13 @@ export function moduleFile(module: string, file: (typeof MODULE_FILES)[number]):
   return join(MODULES_DIR, module, file);
 }
 
-export function readSpecVersion(): string {
-  return readFileSync(join(SPEC_DIR, 'VERSION'), 'utf8').trim();
-}
-
 export interface ErrorDefinition {
   readonly code: string;
   readonly description: string;
 }
 
 export function readErrors(): readonly ErrorDefinition[] {
-  return readYaml(join(SPEC_DIR, 'errors.yaml')) as ErrorDefinition[];
+  return readYaml(join(ROOT_DIR, 'errors.yaml')) as ErrorDefinition[];
 }
 
 export interface TestVector {

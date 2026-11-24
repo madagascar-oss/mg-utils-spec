@@ -1,5 +1,11 @@
 blank_issues_enabled: false
 contact_links:
+  - name: Bug in the JavaScript packages
+    url: https://github.com/madagascar-oss/mg-utils-js/issues/new/choose
+    about: Wrong output or a crash in @madagascar-oss/* on npm.
+  - name: Bug in the PHP package
+    url: https://github.com/madagascar-oss/mg-utils-php/issues/new/choose
+    about: Wrong output or a crash in madagascar-oss/mg-utils on Packagist.
   - name: Question or idea
     url: https://github.com/madagascar-oss/mg-utils-spec/discussions
     about: Ask questions and discuss ideas in Discussions, so issues stay for actionable work.
