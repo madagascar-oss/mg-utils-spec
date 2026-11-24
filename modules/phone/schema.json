@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/madagascar-oss/mg-utils-spec/phone/schema.json",
+  "$id": "https://github.com/madagascar-oss/mg-utils-spec/modules/phone/schema.json",
   "title": "Madagascar mobile numbering",
   "type": "object",
   "additionalProperties": false,
@@ -10,7 +10,7 @@
   },
   "properties": {
     "plan": {
-      "allOf": [{ "$ref": "../_schemas/source.schema.json" }],
+      "allOf": [{ "$ref": "../../schemas/source.schema.json" }],
       "type": "object",
       "unevaluatedProperties": false,
       "required": [
@@ -38,7 +38,7 @@
       "type": "array",
       "minItems": 1,
       "items": {
-        "allOf": [{ "$ref": "../_schemas/source.schema.json" }],
+        "allOf": [{ "$ref": "../../schemas/source.schema.json" }],
         "type": "object",
         "unevaluatedProperties": false,
         "required": ["id", "name", "prefixes"],

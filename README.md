@@ -9,21 +9,31 @@ Spec version: see [`VERSION`](VERSION) · releases are tagged `vX.Y.Z`.
 
 ## Modules
 
-| Module                     | What it does                                                           |
-| -------------------------- | ---------------------------------------------------------------------- |
-| [words](words/README.md)   | `21` → `iraika amby roapolo`                                           |
-| [phone](phone/README.md)   | Parse, validate and format `+261` mobile numbers                       |
-| [ariary](ariary/README.md) | `1500` → `Ar 1 500`, parse, words, FMG                                 |
-| [date](date/README.md)     | `2026-11-23` → `Alatsinainy 23 Novambra 2026`, month and weekday names |
+| Module                             | What it does                                                           |
+| ---------------------------------- | ---------------------------------------------------------------------- |
+| [words](modules/words/README.md)   | `21` → `iraika amby roapolo`                                           |
+| [phone](modules/phone/README.md)   | Parse, validate and format `+261` mobile numbers                       |
+| [ariary](modules/ariary/README.md) | `1500` → `Ar 1 500`, parse, words, FMG                                 |
+| [date](modules/date/README.md)     | `2026-11-23` → `Alatsinainy 23 Novambra 2026`, month and weekday names |
 
-Each module folder holds:
+Each folder in [`modules/`](modules) holds:
 
 - `README.md` — rules in plain words, sources, recorded disagreements
 - `data.yaml` — the data, every entry with `source:` and `checked:`
 - `schema.json` — JSON Schema for `data.yaml`
 - `tests.yaml` — shared test vectors (the contract)
 
-Error codes shared by every language live in [`errors.yaml`](errors.yaml).
+Error codes shared by every language live in [`errors.yaml`](errors.yaml); the JSON Schemas
+for sources, vectors and errors live in [`schemas/`](schemas).
+
+```text
+VERSION              spec version, tagged vX.Y.Z on release
+errors.yaml          error codes shared by every language
+modules/<name>/      README.md · data.yaml · schema.json · tests.yaml
+schemas/             source, tests and errors JSON Schemas
+tools/               validate, stale-data, new-module (dev only)
+docs/adr/            architecture decisions
+```
 
 ## Implementations
 

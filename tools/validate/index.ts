@@ -1,11 +1,12 @@
 // Validates every spec file: data against its module schema, vectors against the shared
-// schema, error codes against spec/errors.yaml, and provenance dates.
+// schema, error codes against errors.yaml, and provenance dates.
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { Ajv2020 } from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
 import {
   MODULE_FILES,
+  SCHEMAS_DIR,
   SPEC_DIR,
   isoDate,
   listModules,
@@ -23,7 +24,7 @@ const problems: string[] = [];
 const ajv = new Ajv2020({ allErrors: true, strict: true, strictRequired: false });
 addFormats.default(ajv);
 for (const name of SHARED_SCHEMAS) {
-  ajv.addSchema(readJson(join(SPEC_DIR, '_schemas', `${name}.schema.json`)) as object);
+  ajv.addSchema(readJson(join(SCHEMAS_DIR, `${name}.schema.json`)) as object);
 }
 
 function check(schemaOrId: string | object, data: unknown, label: string): void {
@@ -53,32 +54,32 @@ function checkDates(value: unknown, label: string): void {
 
 const errorsFile = join(SPEC_DIR, 'errors.yaml');
 check(
-  'https://github.com/madagascar-oss/mg-utils-spec/_schemas/errors.schema.json',
+  'https://github.com/madagascar-oss/mg-utils-spec/schemas/errors.schema.json',
   readYaml(errorsFile),
-  'spec/errors.yaml',
+  'errors.yaml',
 );
 const knownCodes = new Set(readErrors().map((error) => error.code));
 
 for (const module of listModules()) {
   const missing = MODULE_FILES.filter((file) => !existsSync(moduleFile(module, file)));
   if (missing.length > 0) {
-    problems.push(`spec/${module}: missing ${missing.join(', ')}`);
+    problems.push(`modules/${module}: missing ${missing.join(', ')}`);
     continue;
   }
   const data = readYaml(moduleFile(module, 'data.yaml'));
-  check(readJson(moduleFile(module, 'schema.json')) as object, data, `spec/${module}/data.yaml`);
-  checkDates(data, `spec/${module}/data.yaml`);
+  check(readJson(moduleFile(module, 'schema.json')) as object, data, `modules/${module}/data.yaml`);
+  checkDates(data, `modules/${module}/data.yaml`);
 
   const vectors = readTestVectors(module);
   check(
-    'https://github.com/madagascar-oss/mg-utils-spec/_schemas/tests.schema.json',
+    'https://github.com/madagascar-oss/mg-utils-spec/schemas/tests.schema.json',
     vectors,
-    `spec/${module}/tests.yaml`,
+    `modules/${module}/tests.yaml`,
   );
   vectors.forEach((vector, index) => {
     if (vector.error !== undefined && !knownCodes.has(vector.error)) {
       problems.push(
-        `spec/${module}/tests.yaml/${String(index)}: unknown error code ${vector.error}`,
+        `modules/${module}/tests.yaml/${String(index)}: unknown error code ${vector.error}`,
       );
     }
   });

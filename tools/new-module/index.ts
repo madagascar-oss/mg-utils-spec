@@ -3,7 +3,7 @@
 // Usage: just new-module <name>   (lower-case, e.g. ariary)
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { JSON_INDENT, ROOT_DIR, SPEC_DIR, isoDate } from '../lib/spec.ts';
+import { JSON_INDENT, MODULES_DIR, ROOT_DIR, isoDate } from '../lib/spec.ts';
 
 const MODULE_NAME = /^[a-z][a-z0-9]*$/;
 const name = process.argv[2] ?? '';
@@ -11,7 +11,7 @@ if (!MODULE_NAME.test(name)) {
   console.error('Usage: just new-module <name>  (lower-case letters and digits, e.g. ariary)');
   process.exit(1);
 }
-const specDir = join(SPEC_DIR, name);
+const specDir = join(MODULES_DIR, name);
 if (existsSync(specDir)) {
   console.error(`Module "${name}" already exists.`);
   process.exit(1);
@@ -71,13 +71,13 @@ write(
   `${JSON.stringify(
     {
       $schema: 'https://json-schema.org/draft/2020-12/schema',
-      $id: `https://github.com/madagascar-oss/mg-utils-spec/${name}/schema.json`,
+      $id: `https://github.com/madagascar-oss/mg-utils-spec/modules/${name}/schema.json`,
       title: name,
       type: 'object',
       additionalProperties: false,
       required: ['entries'],
       properties: {
-        entries: { type: 'array', items: { $ref: '../_schemas/source.schema.json' } },
+        entries: { type: 'array', items: { $ref: '../../schemas/source.schema.json' } },
       },
     },
     null,
@@ -96,5 +96,5 @@ write(
 );
 
 console.log(
-  `Next: fill ${name}/, run \`just validate\`, then scaffold the code in mg-utils-js and mg-utils-php.`,
+  `Next: fill modules/${name}/, run \`just validate\`, then scaffold the code in mg-utils-js and mg-utils-php.`,
 );

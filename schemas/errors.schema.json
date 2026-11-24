@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/madagascar-oss/mg-utils-spec/_schemas/errors.schema.json",
+  "$id": "https://github.com/madagascar-oss/mg-utils-spec/schemas/errors.schema.json",
   "title": "Shared error codes",
   "type": "array",
   "minItems": 1,
