@@ -6,7 +6,7 @@ and converts old Malagasy francs (FMG).
 ## Public API
 
 Every language port provides each function below, named the way its language does it. Behaviour
-is set by the rules and test vectors here. Functions that can reject input come in three forms:
+is set by the rules and test vectors here. Parsers (text typed by users → value) come in three forms:
 `parse` throws, `safeParse` returns the value or the error code, `tryParse` returns the value or
 nothing.
 
