@@ -1,0 +1,7 @@
+config:
+  extends: .markdownlint.yaml
+ignores:
+  - '**/node_modules/**'
+  - '**/etc/*.api.md'
+  - '**/CHANGELOG.md'
+  - '**/dist/**'

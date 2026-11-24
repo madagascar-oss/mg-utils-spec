@@ -25,13 +25,13 @@ groupSeparators:
     checked: 2026-11-24
   - id: dot
     value: .
-    source: https://github.com/madagascar-oss/mg-utils/blob/dev/spec/ariary/README.md#recorded-decisions
+    source: https://github.com/madagascar-oss/mg-utils-spec/blob/dev/ariary/README.md#recorded-decisions
     checked: 2026-11-24
 # Characters accepted between digit groups when reading text (space, no-break space,
 # narrow no-break space, dot). A comma is never a thousand separator in Madagascar.
 readableSeparators:
   values: [' ', ' ', ' ', .]
-  source: https://github.com/madagascar-oss/mg-utils/blob/dev/spec/ariary/README.md#recorded-decisions
+  source: https://github.com/madagascar-oss/mg-utils-spec/blob/dev/ariary/README.md#recorded-decisions
   checked: 2026-11-24
 # Words accepted around an amount when reading text (case-insensitive).
 currencyTokens:

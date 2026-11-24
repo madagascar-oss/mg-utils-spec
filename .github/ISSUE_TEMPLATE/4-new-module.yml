@@ -1,0 +1,34 @@
+name: New module
+description: A whole new concern for mg-utils
+labels: [feature, needs-decision, triage]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Module name
+      placeholder: ariary
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why it belongs in mg-utils
+      description: Malagasy-specific, small, pure, useful in more than one language.
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Official sources
+    validations:
+      required: true
+  - type: textarea
+    id: vectors
+    attributes:
+      label: First test vectors
+      render: yaml
+      placeholder: |
+        - input: 1500
+          expected: "1 500 Ar"
+    validations:
+      required: true

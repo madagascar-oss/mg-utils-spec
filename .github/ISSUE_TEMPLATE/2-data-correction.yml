@@ -1,0 +1,43 @@
+name: Data correction
+description: A Malagasy value is wrong or out of date (no coding needed)
+labels: [data, no-code, triage]
+body:
+  - type: markdown
+    attributes:
+      value: 'No source, no merge: please link an official page, law, decree, regulator publication, or recognised dictionary or grammar.'
+  - type: dropdown
+    id: module
+    attributes:
+      label: Module
+      options:
+        - phone
+        - words
+        - ariary (planned)
+        - date (planned)
+    validations:
+      required: true
+  - type: input
+    id: current
+    attributes:
+      label: Current value
+      placeholder: 'prefix 39 → blueline'
+    validations:
+      required: true
+  - type: input
+    id: correct
+    attributes:
+      label: Correct value
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Official source link
+      placeholder: https://
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Anything else
+      description: Where in the source, effective date, other sources that disagree.

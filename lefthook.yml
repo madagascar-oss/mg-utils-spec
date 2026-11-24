@@ -1,0 +1,16 @@
+# Format staged files and validate the spec before each commit.
+pre-commit:
+  commands:
+    prettier:
+      glob: '*.{ts,json,md,yaml,yml}'
+      run: pnpm exec prettier --write {staged_files}
+      stage_fixed: true
+    validate:
+      glob: '*.{yaml,json}'
+      run: pnpm validate
+commit-msg:
+  commands:
+    conventional:
+      run: >-
+        grep -Eq '^(feat|fix|docs|chore|refactor|test|perf|ci|build|revert)(\([a-z0-9-]+\))?!?: .+' {1}
+        || (echo "Commit title must follow Conventional Commits, e.g. feat(phone): add prefix 37" && exit 1)
