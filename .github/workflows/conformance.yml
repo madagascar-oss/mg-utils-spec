@@ -1,0 +1,78 @@
+name: Conformance
+
+# Runs each language port against this spec change: the port's spec/ submodule is replaced
+# with this checkout, tables are regenerated, then every vector runs. A red job shows which
+# port needs code before the spec is released. Informational: not a required check.
+on:
+  pull_request:
+  push:
+    branches: [dev]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  js:
+    name: Conformance (JavaScript)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: madagascar-oss/mg-utils-js
+          path: port
+          persist-credentials: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          path: port/spec
+          persist-credentials: false
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+        with:
+          package_json_file: port/package.json
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          cache: pnpm
+          cache-dependency-path: port/pnpm-lock.yaml
+      - working-directory: port
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm codegen
+          pnpm test
+
+  php:
+    name: Conformance (PHP)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: madagascar-oss/mg-utils-php
+          path: port
+          persist-credentials: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          path: port/spec
+          persist-credentials: false
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+        with:
+          package_json_file: port/package.json
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          cache: pnpm
+          cache-dependency-path: port/pnpm-lock.yaml
+      - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
+        with:
+          php-version: '8.4'
+          coverage: xdebug
+          tools: composer:v2
+      - working-directory: port
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm codegen
+          composer update --no-interaction --no-progress --prefer-dist
+          composer test
