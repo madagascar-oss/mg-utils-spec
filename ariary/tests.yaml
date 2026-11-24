@@ -1,0 +1,237 @@
+# Shared test vectors for the ariary module. Every language must pass all of them.
+# Default function: formatAriary. \u00a0 is a no-break space, \u202f a narrow no-break space.
+- fn: formatAriary
+  input: 0
+  expected: "Ar\u00a00"
+- fn: formatAriary
+  input: 5
+  expected: "Ar\u00a05"
+- fn: formatAriary
+  input: 999
+  expected: "Ar\u00a0999"
+  note: 'no separator below 1000'
+- fn: formatAriary
+  input: 1000
+  expected: "Ar\u00a01\u00a0000"
+- fn: formatAriary
+  input: 1500
+  expected: "Ar\u00a01\u00a0500"
+  note: 'default: symbol first, no-break spaces between groups'
+- fn: formatAriary
+  input: 12345
+  expected: "Ar\u00a012\u00a0345"
+- fn: formatAriary
+  input: 100000
+  expected: "Ar\u00a0100\u00a0000"
+- fn: formatAriary
+  input: 2026000
+  expected: "Ar\u00a02\u00a0026\u00a0000"
+- fn: formatAriary
+  input: 999999999999
+  expected: "Ar\u00a0999\u00a0999\u00a0999\u00a0999"
+  note: 'largest supported amount'
+- fn: formatAriary
+  input: 1500
+  args: [{ 'grouping': 'dot' }]
+  expected: "Ar\u00a01.500"
+  note: 'dot grouping option'
+- fn: formatAriary
+  input: 1500
+  args: [{ 'symbolPosition': 'after' }]
+  expected: "1\u00a0500\u00a0Ar"
+  note: 'symbol after the amount'
+- fn: formatAriary
+  input: 2500000
+  args: [{ 'grouping': 'dot', 'symbolPosition': 'after' }]
+  expected: "2.500.000\u00a0Ar"
+- fn: formatAriary
+  input: 2500000
+  args: [{}]
+  expected: "Ar\u00a02\u00a0500\u00a0000"
+  note: 'empty options use the defaults'
+- fn: formatAriary
+  input: -1
+  error: OUT_OF_RANGE
+  note: 'negative amounts are not supported'
+- fn: formatAriary
+  input: 1000000000000
+  error: OUT_OF_RANGE
+- fn: formatAriary
+  input: 1.5
+  error: INVALID_TYPE
+  note: 'ariary amounts are whole numbers'
+- fn: formatAriary
+  input: '1500'
+  error: INVALID_TYPE
+- fn: formatAriary
+  input: 1500
+  args: [{ 'grouping': 'comma' }]
+  error: INVALID_TYPE
+  note: 'Madagascar never groups thousands with a comma'
+- fn: formatAriary
+  input: 1500
+  args: [{ 'symbolPosition': 'middle' }]
+  error: INVALID_TYPE
+- fn: parseAriary
+  input: 'Ar 1 500'
+  expected: 1500
+- fn: parseAriary
+  input: "Ar\u00a01\u00a0500"
+  expected: 1500
+  note: 'output of formatAriary reads back'
+- fn: parseAriary
+  input: '1 500 Ar'
+  expected: 1500
+- fn: parseAriary
+  input: '1.500 Ar'
+  expected: 1500
+  note: 'dot grouping'
+- fn: parseAriary
+  input: '1500'
+  expected: 1500
+  note: 'no separator'
+- fn: parseAriary
+  input: 'MGA 1 500'
+  expected: 1500
+  note: 'ISO code'
+- fn: parseAriary
+  input: '1 500 Ariary'
+  expected: 1500
+- fn: parseAriary
+  input: 'ar 2 000'
+  expected: 2000
+  note: 'currency words are case-insensitive'
+- fn: parseAriary
+  input: 'Ar1500'
+  expected: 1500
+- fn: parseAriary
+  input: '  Ar 2 000  '
+  expected: 2000
+  note: 'surrounding spaces are ignored'
+- fn: parseAriary
+  input: "1\u202f000\u202f000 Ar"
+  expected: 1000000
+  note: 'narrow no-break spaces'
+- fn: parseAriary
+  input: '0'
+  expected: 0
+- fn: parseAriary
+  input: 'Ar 999 999 999 999'
+  expected: 999999999999
+- fn: parseAriary
+  input: '1,500'
+  error: INVALID_FORMAT
+  note: 'a comma is not a thousand separator'
+- fn: parseAriary
+  input: '1 50'
+  error: INVALID_FORMAT
+  note: 'groups after the first have three digits'
+- fn: parseAriary
+  input: '1.000 000'
+  error: INVALID_FORMAT
+  note: 'mixed separators'
+- fn: parseAriary
+  input: '1.500,00'
+  error: INVALID_FORMAT
+  note: 'ariary amounts have no decimals'
+- fn: parseAriary
+  input: ''
+  error: INVALID_FORMAT
+- fn: parseAriary
+  input: 'Ar'
+  error: INVALID_FORMAT
+  note: 'symbol without an amount'
+- fn: parseAriary
+  input: 'abc'
+  error: INVALID_FORMAT
+- fn: parseAriary
+  input: 'Ar 1 500 Ar'
+  error: INVALID_FORMAT
+  note: 'currency written twice'
+- fn: parseAriary
+  input: "1 500 \u20ac"
+  error: INVALID_FORMAT
+  note: 'another currency'
+- fn: parseAriary
+  input: '-1 500'
+  error: INVALID_FORMAT
+  note: 'negative amounts are not supported'
+- fn: parseAriary
+  input: '007'
+  error: INVALID_FORMAT
+  note: 'leading zeros'
+- fn: parseAriary
+  input: '1 000 000 000 000'
+  error: OUT_OF_RANGE
+- fn: parseAriary
+  input: '0000000000000000000000000000000000000000'
+  error: INVALID_FORMAT
+  note: 'input longer than 32 characters'
+- fn: parseAriary
+  input: 1500
+  error: INVALID_TYPE
+  note: 'number, not string'
+- fn: ariaryToWords
+  input: 0
+  expected: 'aotra ariary'
+- fn: ariaryToWords
+  input: 1
+  expected: 'iray ariary'
+- fn: ariaryToWords
+  input: 21
+  expected: 'iraika amby roapolo ariary'
+- fn: ariaryToWords
+  input: 1500
+  expected: 'dimanjato sy arivo ariary'
+- fn: ariaryToWords
+  input: 20000
+  expected: 'roa alina ariary'
+- fn: ariaryToWords
+  input: -1
+  error: OUT_OF_RANGE
+- fn: fmgToAriary
+  input: 0
+  expected: 0
+- fn: fmgToAriary
+  input: 5
+  expected: 1
+  note: '1 Ar = 5 FMG'
+- fn: fmgToAriary
+  input: 7500
+  expected: 1500
+- fn: fmgToAriary
+  input: 1000000
+  expected: 200000
+- fn: fmgToAriary
+  input: 3
+  error: OUT_OF_RANGE
+  note: 'only multiples of 5 FMG convert to whole ariary'
+- fn: fmgToAriary
+  input: -5
+  error: OUT_OF_RANGE
+- fn: fmgToAriary
+  input: 2.5
+  error: INVALID_TYPE
+- fn: ariaryToFmg
+  input: 0
+  expected: 0
+- fn: ariaryToFmg
+  input: 1
+  expected: 5
+- fn: ariaryToFmg
+  input: 1500
+  expected: 7500
+- fn: ariaryToFmg
+  input: -1
+  error: OUT_OF_RANGE
+- fn: formatFmg
+  input: 7500
+  expected: "Fmg\u00a07\u00a0500"
+  note: 'francs use the same layout with the Fmg symbol'
+- fn: formatFmg
+  input: 7500
+  args: [{ 'grouping': 'dot', 'symbolPosition': 'after' }]
+  expected: "7.500\u00a0Fmg"
+- fn: formatFmg
+  input: -5
+  error: OUT_OF_RANGE

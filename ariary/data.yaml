@@ -1,0 +1,52 @@
+# Malagasy Ariary (MGA). Rules in README.md; every entry cites its source.
+currency:
+  code: MGA
+  symbol: Ar
+  name: Ariary
+  word: ariary
+  source: https://raw.githubusercontent.com/unicode-org/cldr-json/main/cldr-json/cldr-numbers-full/main/mg/currencies.json
+  checked: 2026-11-24
+# Space between the symbol and the amount: CLDR currencySpacing insertBetween (U+00A0).
+symbolSeparator:
+  value: ' '
+  source: https://raw.githubusercontent.com/unicode-org/cldr-json/main/cldr-json/cldr-numbers-full/main/mg/numbers.json
+  checked: 2026-11-24
+grouping:
+  size: 3
+  source: https://cabri-sbo.org/uploads/bia/Madagascar_2025_Formulation_External_BudgetFramework_MinistryOfFinanceAndEconomicDevelopment_SADCCOMESA_French_32db46.pdf
+  checked: 2026-11-24
+# Thousand separators for formatting. The first one is the default.
+groupSeparators:
+  # Ministry of Economy and Finance, annex to finance bill 022/2024: "12 075 821 312".
+  # Written as a no-break space so an amount never wraps across lines.
+  - id: space
+    value: ' '
+    source: https://cabri-sbo.org/uploads/bia/Madagascar_2025_Formulation_External_BudgetFramework_MinistryOfFinanceAndEconomicDevelopment_SADCCOMESA_French_32db46.pdf
+    checked: 2026-11-24
+  - id: dot
+    value: .
+    source: https://github.com/madagascar-oss/mg-utils/blob/dev/spec/ariary/README.md#recorded-decisions
+    checked: 2026-11-24
+# Characters accepted between digit groups when reading text (space, no-break space,
+# narrow no-break space, dot). A comma is never a thousand separator in Madagascar.
+readableSeparators:
+  values: [' ', ' ', ' ', .]
+  source: https://github.com/madagascar-oss/mg-utils/blob/dev/spec/ariary/README.md#recorded-decisions
+  checked: 2026-11-24
+# Words accepted around an amount when reading text (case-insensitive).
+currencyTokens:
+  values: [Ar, MGA, Ariary]
+  source: https://www.six-group.com/dam/download/financial-information/data-center/iso-currrency/lists/list-one.xml
+  checked: 2026-11-24
+# The Malagasy franc (FMG, ISO MGF) was withdrawn after 2004-12-31; 1 Ar = 5 FMG.
+legacyFranc:
+  code: MGF
+  symbol: Fmg
+  francsPerAriary: 5
+  lastDay: 2004-12-31
+  source: https://raw.githubusercontent.com/unicode-org/cldr-json/main/cldr-json/cldr-core/supplemental/currencyData.json
+  checked: 2026-11-24
+# Same range as the words module, so every amount can also be written in words.
+limits:
+  min: 0
+  max: 999999999999
