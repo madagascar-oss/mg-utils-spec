@@ -3,7 +3,15 @@
 Turns a whole number from `0` to `999 999 999 999` into Malagasy words, as written in the
 standard (official) language.
 
-Main function: `numberToWords(n)`.
+## Public API
+
+Every language port provides each function below, named the way its language does it. Behaviour
+is set by the rules and test vectors here; `safeParse` variants return the value or the error
+code without throwing.
+
+| Function        | Does                          | JavaScript         | PHP                        |
+| --------------- | ----------------------------- | ------------------ | -------------------------- |
+| `numberToWords` | Whole number → Malagasy words | `numberToWords(n)` | `NumberWords::fromInt($n)` |
 
 ## Rules
 
