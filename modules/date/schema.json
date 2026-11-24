@@ -1,13 +1,13 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/madagascar-oss/mg-utils-spec/date/schema.json",
+  "$id": "https://github.com/madagascar-oss/mg-utils-spec/modules/date/schema.json",
   "title": "Malagasy calendar names and date patterns",
   "type": "object",
   "additionalProperties": false,
   "required": ["months", "monthsSource", "weekdays", "weekdaysSource", "styles", "limits"],
   "$defs": {
     "name": { "type": "string", "pattern": "^[A-Z][a-z]+$" },
-    "sourced": { "$ref": "../_schemas/source.schema.json" }
+    "sourced": { "$ref": "../../schemas/source.schema.json" }
   },
   "properties": {
     "months": {

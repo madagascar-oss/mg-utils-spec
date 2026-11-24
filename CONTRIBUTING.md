@@ -11,7 +11,7 @@ apply too.
 
 1. **Find work.** Issues labelled `good first issue`, `help wanted` or `no-code`.
 2. **Set up.** Node.js 22.18+, pnpm and [just](https://just.systems), then `just setup`.
-3. **Change data or vectors.** Edit `<module>/data.yaml` or `<module>/tests.yaml`, then
+3. **Change data or vectors.** Edit `modules/<module>/data.yaml` or `modules/<module>/tests.yaml`, then
    `just validate`. Branch from `dev` as `<type>/<short-name>`, e.g. `fix/phone-dots`.
 4. **Open the PR against `dev`.** Cite a source for any data. The conformance check runs the
    JS and PHP ports against your change, so you see which ports need code.
@@ -38,12 +38,15 @@ Bump [`VERSION`](VERSION) in the PR that changes the spec. Merging `dev` into `m
 
 ## Versioning
 
+Before 1.0.0, a major change bumps the minor version instead.
+
 | Change                               | Spec  |
 | ------------------------------------ | ----- |
 | Typo or wrong value fixed in data    | patch |
 | New data (operator, prefix, word)    | minor |
 | New helper function                  | minor |
 | Output changes for an existing input | major |
+| File layout consumers read changes   | major |
 
 Each package states the spec version it implements; its CI fails if it does not match.
 

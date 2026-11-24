@@ -29,7 +29,7 @@ function findStale(value: unknown, path: string): StaleEntry[] {
 }
 
 const stale = listModules().flatMap((module) =>
-  findStale(readYaml(moduleFile(module, 'data.yaml')), `spec/${module}/data.yaml`),
+  findStale(readYaml(moduleFile(module, 'data.yaml')), `modules/${module}/data.yaml`),
 );
 
 if (stale.length === 0) {

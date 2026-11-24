@@ -6,16 +6,16 @@ docs:
       - any-glob-to-any-file: [docs/**, '**/*.md']
 data:
   - changed-files:
-      - any-glob-to-any-file: '*/data.yaml'
+      - any-glob-to-any-file: 'modules/*/data.yaml'
 phone:
   - changed-files:
-      - any-glob-to-any-file: phone/**
+      - any-glob-to-any-file: modules/phone/**
 words:
   - changed-files:
-      - any-glob-to-any-file: words/**
+      - any-glob-to-any-file: modules/words/**
 ariary:
   - changed-files:
-      - any-glob-to-any-file: ariary/**
+      - any-glob-to-any-file: modules/ariary/**
 date:
   - changed-files:
-      - any-glob-to-any-file: date/**
+      - any-glob-to-any-file: modules/date/**
