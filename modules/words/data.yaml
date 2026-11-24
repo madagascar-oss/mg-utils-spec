@@ -40,7 +40,7 @@ units:
     word: sivy
     source: https://malagasyword.org/bins/manisa
     checked: 2026-11-23
-# 'iray' becomes 'iraika' when it is added to tens or hundreds (11, 21, 101).
+# 'iray' becomes 'iraika' right before 'ambin'ny' or 'amby' (11, 21, 101); before 'sy' it stays 'iray' (201).
 unitOneInCompound:
   word: iraika
   source: https://malagasyword.org/bins/teny2/iraika
@@ -148,17 +148,18 @@ scales:
     source: https://malagasyword.org/bins/teny2/lavitrisa
     checked: 2026-11-23
 joiners:
-  # 11–19 only: 'iraika ambin' ny folo'.
+  # 11–19 only: 'iraika ambin'ny folo'.
   unitsBeforeTen:
-    word: "ambin' ny"
-    source: https://malagasyword.org/bins/teny2/amby
-    checked: 2026-11-23
-  # Any other addition below 1000: 'iraika amby roapolo', 'dimy amby zato', 'telo amby valopolo'.
+    word: "ambin'ny"
+    source: https://www.languagesandnumbers.com/how-to-count-in-malagasy/en/mlg/
+    checked: 2026-11-24
+  # Units onto 20–90 ('iraika amby roapolo') and anything onto exactly 100 ('dimy amby zato').
   belowThousand:
     word: amby
     source: https://malagasyword.org/bins/teny2/amby
     checked: 2026-11-23
-  # Between groups of 1000 and above: 'valo alina sy roa hetsy' (280 000).
+  # Anything onto 200–900 ('dimy sy roanjato') and between groups of 1000 and above
+  # ('valo alina sy roa hetsy', 280 000).
   betweenGroups:
     word: sy
     source: https://malagasyword.org/bins/teny2/tapitrisa
