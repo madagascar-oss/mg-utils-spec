@@ -1,0 +1,55 @@
+# Malagasy calendar names and date patterns (Gregorian calendar). Rules in README.md.
+months:
+  - { number: 1, name: Janoary, abbreviation: Jan }
+  - { number: 2, name: Febroary, abbreviation: Feb }
+  - { number: 3, name: Martsa, abbreviation: Mar }
+  - { number: 4, name: Aprily, abbreviation: Apr }
+  - { number: 5, name: Mey, abbreviation: Mey }
+  - { number: 6, name: Jona, abbreviation: Jon }
+  - { number: 7, name: Jolay, abbreviation: Jol }
+  - { number: 8, name: Aogositra, abbreviation: Aog }
+  - { number: 9, name: Septambra, abbreviation: Sep }
+  - { number: 10, name: Oktobra, abbreviation: Okt }
+  - { number: 11, name: Novambra, abbreviation: Nov }
+  - { number: 12, name: Desambra, abbreviation: Des }
+monthsSource:
+  source: https://raw.githubusercontent.com/unicode-org/cldr-json/main/cldr-json/cldr-dates-full/main/mg/ca-gregorian.json
+  checked: 2026-11-24
+# ISO 8601 weekday numbers: Monday is 1, Sunday is 7.
+weekdays:
+  - { isoNumber: 1, name: Alatsinainy, abbreviation: Alats }
+  - { isoNumber: 2, name: Talata, abbreviation: Tal }
+  - { isoNumber: 3, name: Alarobia, abbreviation: Alar }
+  - { isoNumber: 4, name: Alakamisy, abbreviation: Alak }
+  - { isoNumber: 5, name: Zoma, abbreviation: Zom }
+  - { isoNumber: 6, name: Asabotsy, abbreviation: Asab }
+  - { isoNumber: 7, name: Alahady, abbreviation: Alah }
+weekdaysSource:
+  source: https://raw.githubusercontent.com/unicode-org/cldr-json/main/cldr-json/cldr-dates-full/main/mg/ca-gregorian.json
+  checked: 2026-11-24
+# CLDR date patterns (EEEE weekday, d/dd day, MMMM/MMM/MM month, y year).
+# The first style is the default.
+styles:
+  - id: long
+    pattern: d MMMM y
+    source: https://raw.githubusercontent.com/unicode-org/cldr-json/main/cldr-json/cldr-dates-full/main/mg/ca-gregorian.json
+    checked: 2026-11-24
+  - id: full
+    pattern: EEEE d MMMM y
+    source: https://raw.githubusercontent.com/unicode-org/cldr-json/main/cldr-json/cldr-dates-full/main/mg/ca-gregorian.json
+    checked: 2026-11-24
+  - id: medium
+    pattern: y MMM d
+    source: https://raw.githubusercontent.com/unicode-org/cldr-json/main/cldr-json/cldr-dates-full/main/mg/ca-gregorian.json
+    checked: 2026-11-24
+  - id: short
+    pattern: y-MM-dd
+    source: https://raw.githubusercontent.com/unicode-org/cldr-json/main/cldr-json/cldr-dates-full/main/mg/ca-gregorian.json
+    checked: 2026-11-24
+  - id: numeric
+    pattern: dd/MM/y
+    source: https://github.com/madagascar-oss/mg-utils/blob/dev/spec/date/README.md#recorded-decisions
+    checked: 2026-11-24
+limits:
+  minYear: 1
+  maxYear: 9999

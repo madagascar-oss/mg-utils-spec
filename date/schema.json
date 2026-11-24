@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/madagascar-oss/mg-utils/spec/date/schema.json",
+  "title": "Malagasy calendar names and date patterns",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["months", "monthsSource", "weekdays", "weekdaysSource", "styles", "limits"],
+  "$defs": {
+    "name": { "type": "string", "pattern": "^[A-Z][a-z]+$" },
+    "sourced": { "$ref": "../_schemas/source.schema.json" }
+  },
+  "properties": {
+    "months": {
+      "type": "array",
+      "minItems": 12,
+      "maxItems": 12,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["number", "name", "abbreviation"],
+        "properties": {
+          "number": { "type": "integer", "minimum": 1, "maximum": 12 },
+          "name": { "$ref": "#/$defs/name" },
+          "abbreviation": { "$ref": "#/$defs/name" }
+        }
+      }
+    },
+    "monthsSource": {
+      "$ref": "#/$defs/sourced",
+      "type": "object",
+      "unevaluatedProperties": false,
+      "properties": { "source": true, "checked": true }
+    },
+    "weekdays": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["isoNumber", "name", "abbreviation"],
+        "properties": {
+          "isoNumber": { "type": "integer", "minimum": 1, "maximum": 7 },
+          "name": { "$ref": "#/$defs/name" },
+          "abbreviation": { "$ref": "#/$defs/name" }
+        }
+      }
+    },
+    "weekdaysSource": {
+      "$ref": "#/$defs/sourced",
+      "type": "object",
+      "unevaluatedProperties": false,
+      "properties": { "source": true, "checked": true }
+    },
+    "styles": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "allOf": [{ "$ref": "#/$defs/sourced" }],
+        "type": "object",
+        "unevaluatedProperties": false,
+        "required": ["id", "pattern"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z]+$" },
+          "pattern": { "type": "string", "pattern": "^(EEEE|MMMM|MMM|MM|dd|d|y|[ /.,-])+$" },
+          "source": true,
+          "checked": true
+        }
+      }
+    },
+    "limits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["minYear", "maxYear"],
+      "properties": {
+        "minYear": { "type": "integer", "minimum": 1 },
+        "maxYear": { "type": "integer", "maximum": 9999 }
+      }
+    }
+  }
+}

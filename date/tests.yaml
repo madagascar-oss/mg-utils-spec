@@ -1,0 +1,236 @@
+# Shared test vectors for the date module. Every language must pass all of them.
+# Default function: formatDate. Weekdays are checked against an independent calendar.
+- fn: formatDate
+  input: '2026-11-23'
+  expected: '23 Novambra 2026'
+  note: 'default style: long'
+- fn: formatDate
+  input: '2026-11-23'
+  args: ['long']
+  expected: '23 Novambra 2026'
+- fn: formatDate
+  input: '2026-11-23'
+  args: ['full']
+  expected: 'Alatsinainy 23 Novambra 2026'
+- fn: formatDate
+  input: '2026-11-23'
+  args: ['medium']
+  expected: '2026 Nov 23'
+- fn: formatDate
+  input: '2026-11-23'
+  args: ['short']
+  expected: '2026-11-23'
+- fn: formatDate
+  input: '2026-11-23'
+  args: ['numeric']
+  expected: '23/11/2026'
+- fn: formatDate
+  input: '1960-06-26'
+  args: ['full']
+  expected: 'Alahady 26 Jona 1960'
+  note: 'independence day'
+- fn: formatDate
+  input: '2026-01-01'
+  args: ['full']
+  expected: 'Alakamisy 1 Janoary 2026'
+- fn: formatDate
+  input: '2024-02-29'
+  args: ['full']
+  expected: 'Alakamisy 29 Febroary 2024'
+  note: 'leap year'
+- fn: formatDate
+  input: '2000-02-29'
+  args: ['full']
+  expected: 'Talata 29 Febroary 2000'
+  note: '400-year leap rule'
+- fn: formatDate
+  input: '2026-07-05'
+  args: ['full']
+  expected: 'Alahady 5 Jolay 2026'
+  note: 'single-digit day'
+- fn: formatDate
+  input: '0001-01-01'
+  args: ['full']
+  expected: 'Alatsinainy 1 Janoary 1'
+  note: 'smallest year'
+- fn: formatDate
+  input: '9999-12-31'
+  args: ['full']
+  expected: 'Zoma 31 Desambra 9999'
+  note: 'largest year'
+- fn: formatDate
+  input: '2026-07-05'
+  args: ['numeric']
+  expected: '05/07/2026'
+  note: 'numeric pads day and month'
+- fn: formatDate
+  input: { 'year': 2026, 'month': 11, 'day': 23 }
+  args: ['full']
+  expected: 'Alatsinainy 23 Novambra 2026'
+  note: 'calendar fields instead of text'
+- fn: formatDate
+  input: '2026-11-16'
+  args: ['full']
+  expected: 'Alatsinainy 16 Novambra 2026'
+- fn: formatDate
+  input: '2026-11-17'
+  args: ['full']
+  expected: 'Talata 17 Novambra 2026'
+- fn: formatDate
+  input: '2026-11-18'
+  args: ['full']
+  expected: 'Alarobia 18 Novambra 2026'
+- fn: formatDate
+  input: '2026-11-19'
+  args: ['full']
+  expected: 'Alakamisy 19 Novambra 2026'
+- fn: formatDate
+  input: '2026-11-20'
+  args: ['full']
+  expected: 'Zoma 20 Novambra 2026'
+- fn: formatDate
+  input: '2026-11-21'
+  args: ['full']
+  expected: 'Asabotsy 21 Novambra 2026'
+- fn: formatDate
+  input: '2026-11-22'
+  args: ['full']
+  expected: 'Alahady 22 Novambra 2026'
+- fn: formatDate
+  input: '2026-02-30'
+  error: INVALID_FORMAT
+  note: 'no 30 February'
+- fn: formatDate
+  input: '2023-02-29'
+  error: INVALID_FORMAT
+  note: '2023 is not a leap year'
+- fn: formatDate
+  input: '1900-02-29'
+  error: INVALID_FORMAT
+  note: '1900 is not a leap year'
+- fn: formatDate
+  input: '2026-13-01'
+  error: INVALID_FORMAT
+- fn: formatDate
+  input: '26/06/1960'
+  error: INVALID_FORMAT
+  note: 'input is ISO 8601 YYYY-MM-DD'
+- fn: formatDate
+  input: '2026-1-5'
+  error: INVALID_FORMAT
+  note: 'two-digit month and day'
+- fn: formatDate
+  input: ''
+  error: INVALID_FORMAT
+- fn: formatDate
+  input: '2026-11-23T10:00'
+  error: INVALID_FORMAT
+  note: 'dates only, no time'
+- fn: formatDate
+  input: '0000-01-01'
+  error: OUT_OF_RANGE
+  note: 'year 0 is not supported'
+- fn: formatDate
+  input: { 'year': 2026, 'month': 2, 'day': 30 }
+  error: OUT_OF_RANGE
+- fn: formatDate
+  input: { 'year': 10000, 'month': 1, 'day': 1 }
+  error: OUT_OF_RANGE
+- fn: formatDate
+  input: 20261123
+  error: INVALID_TYPE
+- fn: formatDate
+  input: null
+  error: INVALID_TYPE
+- fn: formatDate
+  input: '2026-11-23'
+  args: ['iso']
+  error: INVALID_TYPE
+  note: 'unknown style'
+- fn: getMonthName
+  input: 1
+  expected: 'Janoary'
+- fn: getMonthName
+  input: 2
+  expected: 'Febroary'
+- fn: getMonthName
+  input: 3
+  expected: 'Martsa'
+- fn: getMonthName
+  input: 4
+  expected: 'Aprily'
+- fn: getMonthName
+  input: 5
+  expected: 'Mey'
+- fn: getMonthName
+  input: 6
+  expected: 'Jona'
+- fn: getMonthName
+  input: 7
+  expected: 'Jolay'
+- fn: getMonthName
+  input: 8
+  expected: 'Aogositra'
+- fn: getMonthName
+  input: 9
+  expected: 'Septambra'
+- fn: getMonthName
+  input: 10
+  expected: 'Oktobra'
+- fn: getMonthName
+  input: 11
+  expected: 'Novambra'
+- fn: getMonthName
+  input: 12
+  expected: 'Desambra'
+- fn: getMonthName
+  input: 11
+  args: ['abbreviated']
+  expected: 'Nov'
+- fn: getMonthName
+  input: 0
+  error: OUT_OF_RANGE
+- fn: getMonthName
+  input: 13
+  error: OUT_OF_RANGE
+- fn: getMonthName
+  input: 1.5
+  error: INVALID_TYPE
+- fn: getMonthName
+  input: 1
+  args: ['narrow']
+  error: INVALID_TYPE
+  note: 'unknown width'
+- fn: getWeekdayName
+  input: 1
+  expected: 'Alatsinainy'
+  note: 'ISO 8601: Monday is 1'
+- fn: getWeekdayName
+  input: 2
+  expected: 'Talata'
+- fn: getWeekdayName
+  input: 3
+  expected: 'Alarobia'
+- fn: getWeekdayName
+  input: 4
+  expected: 'Alakamisy'
+- fn: getWeekdayName
+  input: 5
+  expected: 'Zoma'
+- fn: getWeekdayName
+  input: 6
+  expected: 'Asabotsy'
+- fn: getWeekdayName
+  input: 7
+  expected: 'Alahady'
+  note: 'Sunday is 7'
+- fn: getWeekdayName
+  input: 7
+  args: ['abbreviated']
+  expected: 'Alah'
+- fn: getWeekdayName
+  input: 0
+  error: OUT_OF_RANGE
+- fn: getWeekdayName
+  input: 8
+  error: OUT_OF_RANGE
