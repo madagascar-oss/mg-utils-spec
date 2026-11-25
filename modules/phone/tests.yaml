@@ -198,3 +198,12 @@
 - fn: isValidPhoneNumber
   input: null
   expected: false
+- input: '0341234567                      '
+  expected:
+    e164: '+261341234567'
+    nationalNumber: '341234567'
+    operator: telma
+  note: 'exactly 32 characters (the limit) is read'
+- input: '0341234567                       '
+  error: INVALID_FORMAT
+  note: '33 characters is over the limit'
