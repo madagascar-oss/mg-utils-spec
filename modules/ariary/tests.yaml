@@ -164,6 +164,14 @@
   input: '1 000 000 000 000'
   error: OUT_OF_RANGE
 - fn: parseAriary
+  input: '1500                            '
+  expected: 1500
+  note: 'exactly 32 characters (the limit) is read'
+- fn: parseAriary
+  input: '1500                             '
+  error: INVALID_FORMAT
+  note: '33 characters is over the limit'
+- fn: parseAriary
   input: '0000000000000000000000000000000000000000'
   error: INVALID_FORMAT
   note: 'input longer than 32 characters'
