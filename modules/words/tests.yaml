@@ -107,12 +107,14 @@
 - input: 9999
   expected: 'sivy amby sivifolo sy sivinjato sy sivy arivo'
 - input: 10000
-  expected: 'alina'
-  note: 'dictionary table'
+  expected: 'iray alina'
+  note: "a count of one is bare only for arivo; the dictionary table writes 'alina'"
 - input: 10001
-  expected: 'iray sy alina'
+  expected: 'iray sy iray alina'
 - input: 12345
-  expected: 'dimy amby efapolo sy telonjato sy roa arivo sy alina'
+  expected: 'dimy amby efapolo sy telonjato sy roa arivo sy iray alina'
+- input: 11000
+  expected: 'arivo sy iray alina'
 - input: 20000
   expected: 'roa alina'
 - input: 35000
@@ -121,23 +123,26 @@
 - input: 99999
   expected: 'sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina'
 - input: 100000
-  expected: 'hetsy'
+  expected: 'iray hetsy'
 - input: 100001
-  expected: 'iray sy hetsy'
+  expected: 'iray sy iray hetsy'
 - input: 123456
-  expected: 'enina amby dimampolo sy efajato sy telo arivo sy roa alina sy hetsy'
+  expected: 'enina amby dimampolo sy efajato sy telo arivo sy roa alina sy iray hetsy'
+- input: 199102
+  expected: 'roa amby zato sy sivy arivo sy sivy alina sy iray hetsy'
+  note: 'maintainer example'
 - input: 280000
   expected: 'valo alina sy roa hetsy'
   note: 'dictionary entry tapitrisa: groups read upwards, joined by sy'
 - input: 999999
   expected: 'sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy'
 - input: 1000000
-  expected: 'tapitrisa'
-  note: 'dictionary table'
+  expected: 'iray tapitrisa'
+  note: "the dictionary table writes 'tapitrisa'"
 - input: 1000001
-  expected: 'iray sy tapitrisa'
+  expected: 'iray sy iray tapitrisa'
 - input: 1234567
-  expected: 'fito amby enimpolo sy dimanjato sy efatra arivo sy telo alina sy roa hetsy sy tapitrisa'
+  expected: 'fito amby enimpolo sy dimanjato sy efatra arivo sy telo alina sy roa hetsy sy iray tapitrisa'
 - input: 2000000
   expected: 'roa tapitrisa'
 - input: 10000000
@@ -155,10 +160,10 @@
 - input: 999999999
   expected: 'sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo sy sivinjato tapitrisa'
 - input: 1000000000
-  expected: 'lavitrisa'
-  note: 'dictionary table'
+  expected: 'iray lavitrisa'
+  note: "the dictionary table writes 'lavitrisa'"
 - input: 1000000001
-  expected: 'iray sy lavitrisa'
+  expected: 'iray sy iray lavitrisa'
 - input: 2000000000
   expected: 'roa lavitrisa'
   note: 'dictionary table'

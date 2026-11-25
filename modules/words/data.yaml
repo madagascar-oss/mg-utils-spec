@@ -119,7 +119,7 @@ hundreds:
     word: sivinjato
     source: https://malagasyword.org/bins/manisa
     checked: 2026-11-23
-# Groups above 999. A count of one is the bare word ('arivo', not 'iray arivo').
+# Groups above 999. A count of one is bare only for arivo ('arivo', 'iray alina', 'iray tapitrisa').
 # maxCount: largest multiplier read before the word (9 → 'sivy alina'; 999 → '... tapitrisa').
 scales:
   - value: 1000
