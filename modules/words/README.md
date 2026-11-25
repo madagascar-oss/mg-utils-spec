@@ -37,8 +37,10 @@ nothing.
    (10⁶) and `lavitrisa` (10⁹). The count is read before the group word: `roa arivo`,
    `roapolo tapitrisa`. `arivo`, `alina` and `hetsy` take a count of 1–9; `tapitrisa` and
    `lavitrisa` take 1–999, written with the same rules: `201 000 000` → `iray sy roanjato tapitrisa`.
-7. **A count of one is the bare group word:** `1000` → `arivo`, `10 000` → `alina`,
-   `1 000 000` → `tapitrisa`. `10`, `100` are `folo`, `zato` (never `iray folo`, `iray zato`).
+7. **A count of one is bare only for `arivo`:** `1000` → `arivo`, but `10 000` → `iray alina`,
+   `100 000` → `iray hetsy`, `1 000 000` → `iray tapitrisa`, `10⁹` → `iray lavitrisa`.
+   `199 102` → `roa amby zato sy sivy arivo sy sivy alina sy iray hetsy`. `10` and `100` are
+   `folo` and `zato` (never `iray folo`, `iray zato`).
 8. **Groups are joined by `sy`, smallest first:** `280 000` → `valo alina sy roa hetsy`;
    `2026` → `enina amby roapolo sy roa arivo`.
 9. **Out of scope for now:** negative numbers and decimals.
@@ -78,8 +80,10 @@ telonjato` (`amby` below 1000) but `2 586` → `enina amby valopolo sy dimanjato
 - **`isa` vs `iray` for 1.** The dictionary's numbers table lists `isa` (the counting form);
   its `iray` entry gives `iray` as the adjective "one", which is the form used in sentences
   and in Assimil. The data follows `iray`.
-- **`iray alina` vs `alina`.** Some learner sites write `iray alina`, `iray tapitrisa`. The
-  dictionary's numbers table and Assimil give the bare words, and the data follows them.
+- **`iray alina` vs `alina`.** The dictionary's numbers table and Assimil give the bare words
+  (`alina`, `hetsy`, `tapitrisa`, `lavitrisa`). Since spec 0.4.0 the data writes `iray` before
+  every group except `arivo`, as in everyday and learner usage. Decided by the maintainers on
+  2026-11-25.
 - **Largest-first for millions.** Some texts put the millions first (`dimy tapitrisa sy …`).
   The dictionary and Assimil read every number from the smallest part up; the data follows them.
 - **Older `roa amby ny folo` (12).** The `amby` and `lavitrisa` entries quote this older
