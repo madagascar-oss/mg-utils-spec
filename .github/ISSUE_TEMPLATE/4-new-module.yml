@@ -1,5 +1,5 @@
 name: New module
-description: A whole new concern for mg-utils
+description: A whole new concern for mdg-utils
 labels: [feature, needs-decision, triage]
 body:
   - type: input
@@ -12,7 +12,7 @@ body:
   - type: textarea
     id: why
     attributes:
-      label: Why it belongs in mg-utils
+      label: Why it belongs in mdg-utils
       description: Malagasy-specific, small, pure, useful in more than one language.
     validations:
       required: true

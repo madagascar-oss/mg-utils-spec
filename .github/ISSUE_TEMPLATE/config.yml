@@ -1,14 +1,14 @@
 blank_issues_enabled: false
 contact_links:
   - name: Bug in the JavaScript packages
-    url: https://github.com/madagascar-oss/mg-utils-js/issues/new/choose
-    about: Wrong output or a crash in @madagascar-oss/* on npm.
+    url: https://github.com/mdgascar/mdg-utils-js/issues/new/choose
+    about: Wrong output or a crash in @mdgascar/* on npm.
   - name: Bug in the PHP package
-    url: https://github.com/madagascar-oss/mg-utils-php/issues/new/choose
-    about: Wrong output or a crash in madagascar-oss/mg-utils on Packagist.
+    url: https://github.com/mdgascar/mdg-utils-php/issues/new/choose
+    about: Wrong output or a crash in mdgascar/mdg-utils on Packagist.
   - name: Question or idea
-    url: https://github.com/madagascar-oss/mg-utils-spec/discussions
+    url: https://github.com/mdgascar/mdg-utils-spec/discussions
     about: Ask questions and discuss ideas in Discussions, so issues stay for actionable work.
   - name: Security vulnerability
-    url: https://github.com/madagascar-oss/mg-utils-spec/security/advisories/new
+    url: https://github.com/mdgascar/mdg-utils-spec/security/advisories/new
     about: Report security issues privately, never in a public issue.

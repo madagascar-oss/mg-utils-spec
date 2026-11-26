@@ -1,5 +1,5 @@
 name: New language port
-description: Port mg-utils to Python, Go, Java…
+description: Port mdg-utils to Python, Go, Java…
 labels: [feature, needs-decision, triage]
 body:
   - type: input

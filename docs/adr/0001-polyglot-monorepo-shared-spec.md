@@ -5,7 +5,7 @@
 
 ## Context
 
-mg-utils gives developers Malagasy-specific helpers (number words, phone numbers, Ariary
+mdg-utils gives developers Malagasy-specific helpers (number words, phone numbers, Ariary
 amounts, dates) in several languages, starting with JavaScript and PHP. The same Malagasy data
 and rules would otherwise be copied into each language and drift apart: a new operator prefix
 fixed in one port but not another, or two ports spelling 11 differently. The project is run by
@@ -13,7 +13,7 @@ volunteers, so every repeated task must be cheap or automated.
 
 ## Decision
 
-One repository, `madagascar-oss/mg-utils`, holds:
+One repository, `mdgascar/mdg-utils`, holds:
 
 - `spec/` — the single source of truth: for each module, rules in plain words (`README.md`),
   data with a source and check date per entry (`data.yaml`), a JSON Schema (`schema.json`) and
@@ -24,7 +24,7 @@ One repository, `madagascar-oss/mg-utils`, holds:
   A port is done when it passes all of them.
 - Tooling at the root, behind one `justfile`.
 
-PHP is mirrored read-only to `mg-utils-php` for Packagist, because Packagist needs a
+PHP is mirrored read-only to `mdg-utils-php` for Packagist, because Packagist needs a
 `composer.json` at the repository root.
 
 ## Consequences

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/madagascar-oss/mg-utils-spec/modules/date/schema.json",
+  "$id": "https://github.com/mdgascar/mdg-utils-spec/modules/date/schema.json",
   "title": "Malagasy calendar names and date patterns",
   "type": "object",
   "additionalProperties": false,

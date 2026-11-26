@@ -48,7 +48,7 @@ styles:
     checked: 2026-11-24
   - id: numeric
     pattern: dd/MM/y
-    source: https://github.com/madagascar-oss/mg-utils-spec/blob/dev/modules/date/README.md#recorded-decisions
+    source: https://github.com/mdgascar/mdg-utils-spec/blob/dev/modules/date/README.md#recorded-decisions
     checked: 2026-11-24
 limits:
   minYear: 1
