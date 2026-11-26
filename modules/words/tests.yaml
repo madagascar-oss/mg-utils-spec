@@ -194,8 +194,42 @@
   error: OUT_OF_RANGE
   note: negative numbers are not supported
 - input: 1.5
-  error: INVALID_TYPE
-  note: only integers have number words
+  expected: 'iray faingo dimy'
+  note: 'rule 9: faingo, then the decimals'
+- input: 3.14
+  expected: "telo faingo efatra ambin'ny folo"
+  note: 'malagasy-numberwords README and tanisa README'
+- input: 18.3
+  expected: "valo ambin'ny folo faingo telo"
+  note: 'tanisa README'
+- input: 0.008
+  expected: 'aotra faingo aotra aotra valo'
+  note: 'tanisa README: each leading zero is aotra'
+- input: 0.5
+  expected: 'aotra faingo dimy'
+- input: 0.1
+  expected: 'aotra faingo iray'
+- input: 1.05
+  expected: 'iray faingo aotra dimy'
+- input: 2.25
+  expected: 'roa faingo dimy amby roapolo'
+- input: 21.21
+  expected: 'iraika amby roapolo faingo iraika amby roapolo'
+- input: 12.101
+  expected: "roa ambin'ny folo faingo iraika amby zato"
+- input: 1234.5678
+  expected: 'efatra amby telopolo sy roanjato sy arivo faingo valo amby fitopolo sy eninjato sy dimy arivo'
+- input: 0.0000001
+  expected: 'aotra faingo aotra aotra aotra aotra aotra aotra iray'
+  note: 'small values have no exponent notation'
+- input: 0.30000000000000004
+  expected: 'aotra faingo efatra sy telopolo tapitrisa lavitrisa'
+  note: 'rule 10: the value 0.1 + 0.2, decimals longer than an exact integer'
+- input: 1.0
+  expected: 'iray'
+  note: 'rule 10: a whole-valued number has no faingo'
+- input: -1.5
+  error: OUT_OF_RANGE
 - input: '12'
   error: INVALID_TYPE
   note: strings are not parsed

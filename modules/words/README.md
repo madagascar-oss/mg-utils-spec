@@ -1,8 +1,9 @@
 # words — Malagasy cardinal number words
 
-Turns any whole number from `0` up into Malagasy words, as written in the standard (official)
-language. The rules have no upper limit; each port stops at its largest exact integer (see
-[Errors](#errors)).
+Turns any number from `0` up, whole or decimal, into Malagasy words, as written in the standard
+(official) language. The rules have no upper limit; each port stops at its largest exact integer
+(see [Errors](#errors)). Input is a number value only: strings, digit separators and other
+notations are not parsed.
 
 ## Public API
 
@@ -11,9 +12,9 @@ is set by the rules and test vectors here. Parsers (text typed by users → valu
 `parse` throws, `safeParse` returns the value or the error code, `tryParse` returns the value or
 nothing.
 
-| Function        | Does                          | JavaScript         | PHP                        |
-| --------------- | ----------------------------- | ------------------ | -------------------------- |
-| `numberToWords` | Whole number → Malagasy words | `numberToWords(n)` | `NumberWords::fromInt($n)` |
+| Function        | Does                    | JavaScript         | PHP                                                      |
+| --------------- | ----------------------- | ------------------ | -------------------------------------------------------- |
+| `numberToWords` | Number → Malagasy words | `numberToWords(n)` | `NumberWords::fromInt($n)`, `NumberWords::fromFloat($n)` |
 
 ## Rules
 
@@ -47,22 +48,31 @@ nothing.
    `folo` and `zato` (never `iray folo`, `iray zato`).
 8. **Groups are joined by `sy`, smallest first:** `280 000` → `valo alina sy roa hetsy`;
    `2026` → `enina amby roapolo sy roa arivo`.
-9. **Out of scope for now:** negative numbers and decimals.
+9. **Decimals: `faingo`, then the decimals read as a whole number.** The whole part comes first,
+   then `faingo` (the comma), then the digits after the point, read with every rule above:
+   `3.14` → `telo faingo efatra ambin'ny folo`, `18.3` → `valo ambin'ny folo faingo telo`.
+   Each leading zero after the point is `aotra`: `0.008` → `aotra faingo aotra aotra valo`,
+   `1.05` → `iray faingo aotra dimy`. A whole part of zero is `aotra`: `0.5` → `aotra faingo dimy`.
+10. **The decimals are those of the number value**, in its shortest exact decimal form. A number
+    has no trailing zeros (`1.50` is `1.5`), and a whole-valued number has no `faingo` (`1.0` →
+    `iray`). A binary floating-point value reads as it is: `0.1 + 0.2` is
+    `0.30000000000000004`, not `0.3`.
+11. **Out of scope for now:** negative numbers.
 
 ## Errors
 
-| Input                                           | Code           |
-| ----------------------------------------------- | -------------- |
-| Not a number, not an integer, `NaN`, `Infinity` | `INVALID_TYPE` |
-| Integer below 0                                 | `OUT_OF_RANGE` |
-| Integer above the port's largest exact integer  | `OUT_OF_RANGE` |
+| Input                                  | Code           |
+| -------------------------------------- | -------------- |
+| Not a number, `NaN`, `Infinity`        | `INVALID_TYPE` |
+| Below 0                                | `OUT_OF_RANGE` |
+| Above the port's largest exact integer | `OUT_OF_RANGE` |
 
 The spec sets no maximum. A port stops where its integer type stops being exact:
 
-| Port       | Largest input                                        |
-| ---------- | ---------------------------------------------------- |
-| JavaScript | `Number.MAX_SAFE_INTEGER` (9 007 199 254 740 991)    |
-| PHP        | `PHP_INT_MAX` (9 223 372 036 854 775 807, on 64-bit) |
+| Port       | Largest input                                                                                             |
+| ---------- | --------------------------------------------------------------------------------------------------------- |
+| JavaScript | `Number.MAX_SAFE_INTEGER` (9 007 199 254 740 991)                                                         |
+| PHP        | `PHP_INT_MAX` (9 223 372 036 854 775 807, on 64-bit) for `fromInt`; 9 007 199 254 740 991 for `fromFloat` |
 
 Shared vectors stay within 9 007 199 254 740 991 so every port runs all of them.
 
@@ -75,10 +85,12 @@ Shared vectors stay within 9 007 199 254 740 991 so every port runs all of them.
 - Malagasy Dictionary and Encyclopedia of Madagascar (J.-M. de La Beaujardière, linguistic
   advisors I. Paul, H. Razanarisoa, B. S. Ralalaoherivony, L. Koziol):
   - Numbers table: <https://malagasyword.org/bins/manisa>
-  - Entries `amby`, `iraika`, `aotra`, `alina`, `hetsy`, `tapitrisa`, `lavitrisa`:
+  - Entries `amby`, `iraika`, `aotra`, `alina`, `hetsy`, `tapitrisa`, `lavitrisa`, `faingo`:
     `https://malagasyword.org/bins/teny2/<word>`
-- `2026` example: README of the `malagasy-numberwords` LaTeX package (CTAN, 2026),
+- `2026` and `3.14` examples: README of the `malagasy-numberwords` LaTeX package (CTAN, 2026),
   <https://ctan.org/pkg/malagasy-numberwords>.
+- `18.3` and `0.008` examples: README of the `tanisa` npm package,
+  <https://unpkg.com/tanisa@1.2.0/README.md>.
 
 ## Recorded disagreements
 
@@ -105,6 +117,10 @@ telonjato` (`amby` below 1000) but `2 586` → `enina amby valopolo sy dimanjato
   ways: `iray sy arivo lavitrisa` is both `1 001 × 10⁹` (the output) and `1 + 1 000 × 10⁹`
   (whose output is the same phrase). Output stays one phrase per number; a future
   words-to-number parser must decide how to read these.
+- **Leading zeros after `faingo` (rule 9).** `tanisa` reads each one as `aotra` (`0.008` →
+  `aotra faingo aotra aotra valo`). The `malagasy-numberwords` guide lists it as a known
+  limitation that `3,05` may be read as `5` instead of zero then five. The data follows `tanisa`,
+  so `1.05` and `1.5` stay different. Decided by the maintainers on 2026-11-26.
 - **Largest-first for millions.** Some texts put the millions first (`dimy tapitrisa sy …`).
   The dictionary and Assimil read every number from the smallest part up; the data follows them.
 - **Older `roa amby ny folo` (12).** The `amby` and `lavitrisa` entries quote this older

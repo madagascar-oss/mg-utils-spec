@@ -165,6 +165,11 @@ joiners:
     word: sy
     source: https://malagasyword.org/bins/teny2/tapitrisa
     checked: 2026-11-23
+# Between the whole part and the decimals: 3.14 → 'telo faingo efatra ambin'ny folo'.
+decimalSeparator:
+  word: faingo
+  source: https://malagasyword.org/bins/teny2/faingo
+  checked: 2026-11-26
 # No max: each port stops at its largest exact integer (README, Errors).
 limits:
   min: 0
