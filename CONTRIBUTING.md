@@ -1,10 +1,10 @@
-# Contributing to mg-utils-spec
+# Contributing to mdg-utils-spec
 
 This repository is the contract. Changes here reach every language, so they are reviewed for
 correctness and sources first.
 
-The [organisation guide](https://github.com/madagascar-oss/.github/blob/main/CONTRIBUTING.md)
-and [Code of Conduct](https://github.com/madagascar-oss/.github/blob/main/CODE_OF_CONDUCT.md)
+The [organisation guide](https://github.com/mdgascar/.github/blob/main/CONTRIBUTING.md)
+and [Code of Conduct](https://github.com/mdgascar/.github/blob/main/CODE_OF_CONDUCT.md)
 apply too.
 
 ## Steps

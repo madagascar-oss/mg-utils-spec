@@ -1,9 +1,9 @@
-# mg-utils-spec
+# mdg-utils-spec
 
-The shared contract behind mg-utils: Malagasy data with official sources, and the test
+The shared contract behind mdg-utils: Malagasy data with official sources, and the test
 vectors every language port must pass.
 
-[![CI](https://github.com/madagascar-oss/mg-utils-spec/actions/workflows/ci.yml/badge.svg)](https://github.com/madagascar-oss/mg-utils-spec/actions/workflows/ci.yml)
+[![CI](https://github.com/mdgascar/mdg-utils-spec/actions/workflows/ci.yml/badge.svg)](https://github.com/mdgascar/mdg-utils-spec/actions/workflows/ci.yml)
 
 Spec version: see [`VERSION`](VERSION) · releases are tagged `vX.Y.Z`.
 
@@ -38,16 +38,16 @@ docs/adr/            architecture decisions
 ## Implementations
 
 Docs for every module, and a playground that runs each port live in the browser:
-**[madagascar-oss.github.io/mg-utils-docs](https://madagascar-oss.github.io/mg-utils-docs/)**.
+**[mdgascar.github.io/mdg-utils-docs](https://mdgascar.github.io/mdg-utils-docs/)**.
 
-| Language   | Repository                                                     | Package                                |
-| ---------- | -------------------------------------------------------------- | -------------------------------------- |
-| JavaScript | [mg-utils-js](https://github.com/madagascar-oss/mg-utils-js)   | `@madagascar-oss/*` on npm             |
-| PHP        | [mg-utils-php](https://github.com/madagascar-oss/mg-utils-php) | `madagascar-oss/mg-utils` on Packagist |
+| Language   | Repository                                                 | Package                           |
+| ---------- | ---------------------------------------------------------- | --------------------------------- |
+| JavaScript | [mdg-utils-js](https://github.com/mdgascar/mdg-utils-js)   | `@mdgascar/*` on npm              |
+| PHP        | [mdg-utils-php](https://github.com/mdgascar/mdg-utils-php) | `mdgascar/mdg-utils` on Packagist |
 
 Each implementation includes this repository as a git submodule at `spec/`, pinned to a
-release tag. A port is done when it passes every vector. Want another language? Open a
-[new-language issue](https://github.com/madagascar-oss/mg-utils-spec/issues/new/choose).
+spec commit. A port is done when it passes every vector. Want another language? Open a
+[new-language issue](https://github.com/mdgascar/mdg-utils-spec/issues/new/choose).
 
 Why this layout: [ADR 0003](docs/adr/0003-split-repos-per-language.md).
 

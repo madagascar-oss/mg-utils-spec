@@ -12,8 +12,8 @@ registry layout (Packagist wants `composer.json` at the root) and maintainers.
 
 ## Decision
 
-- `mg-utils-spec` holds data, schemas, error codes and test vectors. Tags `vX.Y.Z` are releases.
-- `mg-utils-js` and `mg-utils-php` each include the spec as a git submodule at `spec/`,
+- `mdg-utils-spec` holds data, schemas, error codes and test vectors. Tags `vX.Y.Z` are releases.
+- `mdg-utils-js` and `mdg-utils-php` each include the spec as a git submodule at `spec/`,
   pinned to a tag, generate their tables from it and run every vector.
 - Renovate bumps the submodule; the bump PR is where a port catches up.
 - A conformance workflow in this repository runs the ports against spec pull requests.
