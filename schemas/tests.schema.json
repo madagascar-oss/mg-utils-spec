@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/madagascar-oss/mg-utils-spec/schemas/tests.schema.json",
+  "$id": "https://github.com/mdgascar/mdg-utils-spec/schemas/tests.schema.json",
   "title": "Shared test vectors",
   "description": "Each vector calls one public function with `input` (and optional extra `args`) and expects either `expected` or an `error` code from spec/errors.yaml.",
   "type": "array",

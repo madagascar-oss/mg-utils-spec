@@ -1,4 +1,4 @@
-name: Set up mg-utils-spec
+name: Set up mdg-utils-spec
 description: Install pnpm, Node.js and dependencies from the lockfile.
 inputs:
   node-version:

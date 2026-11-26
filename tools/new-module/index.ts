@@ -77,7 +77,7 @@ write(
   `${JSON.stringify(
     {
       $schema: 'https://json-schema.org/draft/2020-12/schema',
-      $id: `https://github.com/madagascar-oss/mg-utils-spec/modules/${name}/schema.json`,
+      $id: `https://github.com/mdgascar/mdg-utils-spec/modules/${name}/schema.json`,
       title: name,
       type: 'object',
       additionalProperties: false,
@@ -102,5 +102,5 @@ write(
 );
 
 console.log(
-  `Next: fill modules/${name}/, run \`just validate\`, then scaffold the code in mg-utils-js and mg-utils-php.`,
+  `Next: fill modules/${name}/, run \`just validate\`, then scaffold the code in mdg-utils-js and mdg-utils-php.`,
 );

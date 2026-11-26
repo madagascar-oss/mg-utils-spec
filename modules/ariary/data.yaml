@@ -25,30 +25,30 @@ groupSeparators:
     checked: 2026-11-24
   - id: dot
     value: .
-    source: https://github.com/madagascar-oss/mg-utils-spec/blob/dev/modules/ariary/README.md#recorded-decisions
+    source: https://github.com/mdgascar/mdg-utils-spec/blob/dev/modules/ariary/README.md#recorded-decisions
     checked: 2026-11-24
   # Opt-in only, for text written in another convention ('1,500.50'). Never the default.
   - id: comma
     value: ','
-    source: https://github.com/madagascar-oss/mg-utils-spec/blob/dev/modules/ariary/README.md#recorded-decisions
+    source: https://github.com/mdgascar/mdg-utils-spec/blob/dev/modules/ariary/README.md#recorded-decisions
     checked: 2026-11-26
 # Before the decimals, when formatting and reading. The first one is the default:
 # 1500.5 → 'Ar 1 500,5'. The dot is opt-in, for text written in another convention.
 decimalSeparators:
   - id: comma
     value: ','
-    source: https://github.com/madagascar-oss/mg-utils-spec/blob/dev/modules/ariary/README.md#recorded-decisions
+    source: https://github.com/mdgascar/mdg-utils-spec/blob/dev/modules/ariary/README.md#recorded-decisions
     checked: 2026-11-26
   - id: dot
     value: .
-    source: https://github.com/madagascar-oss/mg-utils-spec/blob/dev/modules/ariary/README.md#recorded-decisions
+    source: https://github.com/mdgascar/mdg-utils-spec/blob/dev/modules/ariary/README.md#recorded-decisions
     checked: 2026-11-26
 # Characters accepted between digit groups when reading text with no grouping option (space,
 # no-break space, narrow no-break space, dot). A comma is never a thousand separator in
 # Madagascar. With grouping 'space', the three spaces are accepted.
 readableSeparators:
   values: [' ', ' ', ' ', .]
-  source: https://github.com/madagascar-oss/mg-utils-spec/blob/dev/modules/ariary/README.md#recorded-decisions
+  source: https://github.com/mdgascar/mdg-utils-spec/blob/dev/modules/ariary/README.md#recorded-decisions
   checked: 2026-11-24
 # Words accepted around an amount when reading text (case-insensitive).
 currencyTokens:

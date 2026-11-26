@@ -12,8 +12,8 @@ and ship to Packagist, which needs `composer.json` at a repository root.
 
 ## Decision
 
-- **Package and namespace.** Composer package `madagascar-oss/mg-utils`, namespace
-  `Madagascar\MgUtils`, one sub-namespace per module (`Words`, `Phone`, …), PHP `>=8.3`, no
+- **Package and namespace.** Composer package `mdgascar/mdg-utils`, namespace
+  `Mdgascar\MdgUtils`, one sub-namespace per module (`Words`, `Phone`, …), PHP `>=8.3`, no
   runtime dependencies.
 - **Shape.** Pure static entry points for conversions (`NumberWords::fromInt()`) and
   `final readonly` value objects for domain values (`PhoneNumber::parse()`), with backed
@@ -23,16 +23,16 @@ and ship to Packagist, which needs `composer.json` at a repository root.
   tables as TypeScript (`tools/codegen/shared/tables.ts`). Generated files are written in
   PER-CS style and excluded from php-cs-fixer, so the drift check compares exactly what the
   generator prints.
-- **Errors.** `MgUtilsException` (extends `InvalidArgumentException`) carries
+- **Errors.** `MdgUtilsException` (extends `InvalidArgumentException`) carries
   `ErrorCode $errorCode` with the shared spec codes.
 - **`INVALID_TYPE` in a typed language.** With `declare(strict_types=1)`, PHP rejects wrong
   types before our code runs, with `TypeError`; an unknown enum name raises `ValueError`.
-  The spec runner treats both as `INVALID_TYPE`. Throwing `MgUtilsException` for them instead
+  The spec runner treats both as `INVALID_TYPE`. Throwing `MdgUtilsException` for them instead
   would need `mixed` parameters everywhere and fight the language.
 - **Tooling.** PHPUnit (100% coverage gate), PHPStan level max with strict rules and
   `phpVersion: 80300`, PHPMD (complexity ≤ 10, methods ≤ 25 lines, naming), php-cs-fixer
   (PER-CS), PHPBench. No `composer.lock`: each CI PHP version resolves compatible dev tools.
-- **Distribution.** `php/` is split to the read-only mirror `madagascar-oss/mg-utils-php`
+- **Distribution.** `php/` is split to the read-only mirror `mdgascar/mdg-utils-php`
   on release and published from there to Packagist (see the release workflow). Commits on the
   mirror are rewritten by the split, so they are not signed; the monorepo stays the signed
   source of truth.

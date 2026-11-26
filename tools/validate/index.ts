@@ -54,7 +54,7 @@ function checkDates(value: unknown, label: string): void {
 
 const errorsFile = join(ROOT_DIR, 'errors.yaml');
 check(
-  'https://github.com/madagascar-oss/mg-utils-spec/schemas/errors.schema.json',
+  'https://github.com/mdgascar/mdg-utils-spec/schemas/errors.schema.json',
   readYaml(errorsFile),
   'errors.yaml',
 );
@@ -72,7 +72,7 @@ for (const module of listModules()) {
 
   const vectors = readTestVectors(module);
   check(
-    'https://github.com/madagascar-oss/mg-utils-spec/schemas/tests.schema.json',
+    'https://github.com/mdgascar/mdg-utils-spec/schemas/tests.schema.json',
     vectors,
     `modules/${module}/tests.yaml`,
   );
