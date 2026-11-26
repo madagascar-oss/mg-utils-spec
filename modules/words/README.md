@@ -1,7 +1,8 @@
 # words — Malagasy cardinal number words
 
-Turns a whole number from `0` to `999 999 999 999` into Malagasy words, as written in the
-standard (official) language.
+Turns any whole number from `0` up into Malagasy words, as written in the standard (official)
+language. The rules have no upper limit; each port stops at its largest exact integer (see
+[Errors](#errors)).
 
 ## Public API
 
@@ -35,8 +36,11 @@ nothing.
    and alone it is `iray`: `1` → `iray`, `201` → `iray sy roanjato`, `1 001` → `iray sy arivo`.
 6. **Groups of 1000 and above** are `arivo` (10³), `alina` (10⁴), `hetsy` (10⁵), `tapitrisa`
    (10⁶) and `lavitrisa` (10⁹). The count is read before the group word: `roa arivo`,
-   `roapolo tapitrisa`. `arivo`, `alina` and `hetsy` take a count of 1–9; `tapitrisa` and
-   `lavitrisa` take 1–999, written with the same rules: `201 000 000` → `iray sy roanjato tapitrisa`.
+   `roapolo tapitrisa`. `arivo`, `alina` and `hetsy` take a count of 1–9 and `tapitrisa` 1–999,
+   written with the same rules: `201 000 000` → `iray sy roanjato tapitrisa`.
+   **`lavitrisa`, the largest group, takes any count**, written with every rule here, so numbers
+   of any size are spelled: `10¹²` → `arivo lavitrisa`, `1 999 × 10⁹` →
+   `sivy amby sivifolo sy sivinjato sy arivo lavitrisa`, `10¹⁸` → `iray tapitrisa lavitrisa`.
 7. **A count of one is bare only for `arivo`:** `1000` → `arivo`, but `10 000` → `iray alina`,
    `100 000` → `iray hetsy`, `1 000 000` → `iray tapitrisa`, `10⁹` → `iray lavitrisa`.
    `199 102` → `roa amby zato sy sivy arivo sy sivy alina sy iray hetsy`. `10` and `100` are
@@ -50,7 +54,17 @@ nothing.
 | Input                                           | Code           |
 | ----------------------------------------------- | -------------- |
 | Not a number, not an integer, `NaN`, `Infinity` | `INVALID_TYPE` |
-| Integer below 0 or above 999 999 999 999        | `OUT_OF_RANGE` |
+| Integer below 0                                 | `OUT_OF_RANGE` |
+| Integer above the port's largest exact integer  | `OUT_OF_RANGE` |
+
+The spec sets no maximum. A port stops where its integer type stops being exact:
+
+| Port       | Largest input                                        |
+| ---------- | ---------------------------------------------------- |
+| JavaScript | `Number.MAX_SAFE_INTEGER` (9 007 199 254 740 991)    |
+| PHP        | `PHP_INT_MAX` (9 223 372 036 854 775 807, on 64-bit) |
+
+Shared vectors stay within 9 007 199 254 740 991 so every port runs all of them.
 
 ## Sources
 
@@ -84,6 +98,13 @@ telonjato` (`amby` below 1000) but `2 586` → `enina amby valopolo sy dimanjato
   (`alina`, `hetsy`, `tapitrisa`, `lavitrisa`). Since spec 0.4.0 the data writes `iray` before
   every group except `arivo`, as in everyday and learner usage. Decided by the maintainers on
   2026-11-25.
+- **Counts of 1000 and more before `lavitrisa` (rule 6).** The sources stop at `lavitrisa`
+  (10⁹) and attest no larger group word. The data reuses `lavitrisa` with a count written by
+  the same rules (`arivo lavitrisa` for 10¹²) instead of inventing one. Decided by the
+  maintainers on 2026-11-26. Because the count is itself joined by `sy`, some phrases read two
+  ways: `iray sy arivo lavitrisa` is both `1 001 × 10⁹` (the output) and `1 + 1 000 × 10⁹`
+  (whose output is the same phrase). Output stays one phrase per number; a future
+  words-to-number parser must decide how to read these.
 - **Largest-first for millions.** Some texts put the millions first (`dimy tapitrisa sy …`).
   The dictionary and Assimil read every number from the smallest part up; the data follows them.
 - **Older `roa amby ny folo` (12).** The `amby` and `lavitrisa` entries quote this older

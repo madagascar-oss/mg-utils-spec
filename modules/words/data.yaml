@@ -121,6 +121,8 @@ hundreds:
     checked: 2026-11-23
 # Groups above 999. A count of one is bare only for arivo ('arivo', 'iray alina', 'iray tapitrisa').
 # maxCount: largest multiplier read before the word (9 → 'sivy alina'; 999 → '... tapitrisa').
+# The largest group has no maxCount: it takes any count, written with every rule
+# (1999 × 10⁹ → 'sivy amby sivifolo sy sivinjato sy arivo lavitrisa').
 scales:
   - value: 1000
     word: arivo
@@ -144,7 +146,6 @@ scales:
     checked: 2026-11-23
   - value: 1000000000
     word: lavitrisa
-    maxCount: 999
     source: https://malagasyword.org/bins/teny2/lavitrisa
     checked: 2026-11-23
 joiners:
@@ -164,6 +165,6 @@ joiners:
     word: sy
     source: https://malagasyword.org/bins/teny2/tapitrisa
     checked: 2026-11-23
+# No max: each port stops at its largest exact integer (README, Errors).
 limits:
   min: 0
-  max: 999999999999
