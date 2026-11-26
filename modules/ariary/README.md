@@ -23,8 +23,11 @@ nothing.
 
 ## Rules
 
-1. **Amounts are whole numbers** from 0 to 999 999 999 999 Ariary, the range the words module can
-   spell. Negative amounts are `OUT_OF_RANGE`; non-integers are `INVALID_TYPE`.
+1. **Amounts are whole numbers** from 0 up, the same range as the words module, which spells
+   numbers of any size. The spec sets no maximum; a port stops at its largest exact integer:
+   `Number.MAX_SAFE_INTEGER` (9 007 199 254 740 991) in JavaScript, `PHP_INT_MAX` in PHP.
+   Negative amounts and amounts above that limit are `OUT_OF_RANGE`; non-integers are
+   `INVALID_TYPE`. Shared vectors stay within 9 007 199 254 740 991.
 2. **Default format: `Ar 1 500`.** Symbol `Ar`, a no-break space (U+00A0), then the digits in
    groups of three separated by no-break spaces. No decimals.
 3. **Options** (`formatAriary` and `formatFmg`):
@@ -43,12 +46,13 @@ nothing.
      or dots, the same separator throughout. Every group after the first has three digits.
    - Rejected with `INVALID_FORMAT`: commas, decimals, signs, leading zeros, other currencies,
      and input longer than 32 characters.
-   - Amounts above 999 999 999 999 are `OUT_OF_RANGE`.
+   - Amounts above the port's largest exact integer are `OUT_OF_RANGE`.
 5. **In words:** the number in words (see the words module) followed by `ariary`:
    `1500` → `dimanjato sy arivo ariary`.
 6. **Malagasy franc:** 1 Ar = 5 FMG. `fmgToAriary` accepts only multiples of 5 (other amounts do
-   not convert to whole ariary: `OUT_OF_RANGE`); `ariaryToFmg` multiplies by 5. `formatFmg` uses
-   the same layout with the symbol `Fmg`.
+   not convert to whole ariary: `OUT_OF_RANGE`); `ariaryToFmg` multiplies by 5, and a result
+   above the port's largest exact integer is `OUT_OF_RANGE`. `formatFmg` uses the same layout
+   with the symbol `Fmg`.
 
 ## Sources
 
@@ -76,6 +80,15 @@ nothing.
   no-break spaces interchangeably, so all three count as the same separator when reading.
 - **Symbol `Fmg`.** ISO uses `MGF` and CLDR `mg` has no symbol for the franc; `Fmg` is the
   abbreviation the project lead asked for.
+
+## Waiting for a source or an expert
+
+- **FMG amounts in words.** Not provided. `iraimbilanja` names one franc (1/5 ariary) in
+  [English Wikipedia, Malagasy franc](https://en.wikipedia.org/wiki/Malagasy_franc) and
+  [Malagasy Wikipedia, Ariary](https://mg.wikipedia.org/wiki/Ariary), and the latter says a
+  franc amount is spoken in ariary (`2 500 F` is said `dimanjato`). No source spells a whole
+  FMG amount, so the spec adds no FMG words function until one does. Decided by the
+  maintainers on 2026-11-26.
 
 ## Recorded disagreements
 

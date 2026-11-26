@@ -46,7 +46,7 @@ legacyFranc:
   lastDay: 2004-12-31
   source: https://raw.githubusercontent.com/unicode-org/cldr-json/main/cldr-json/cldr-core/supplemental/currencyData.json
   checked: 2026-11-24
-# Same range as the words module, so every amount can also be written in words.
+# Same range as the words module, so every amount can also be written in words. No max:
+# each port stops at its largest exact integer (README, rule 1).
 limits:
   min: 0
-  max: 999999999999

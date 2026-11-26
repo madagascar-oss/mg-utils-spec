@@ -112,10 +112,9 @@
     "limits": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["min", "max"],
+      "required": ["min"],
       "properties": {
-        "min": { "type": "integer", "minimum": 0 },
-        "max": { "type": "integer", "maximum": 9007199254740991 }
+        "min": { "type": "integer", "minimum": 0 }
       }
     }
   }

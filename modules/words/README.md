@@ -92,6 +92,31 @@ Shared vectors stay within 9 007 199 254 740 991 so every port runs all of them.
 - `18.3` and `0.008` examples: README of the `tanisa` npm package,
   <https://unpkg.com/tanisa@1.2.0/README.md>.
 
+## Waiting for a source or an expert
+
+Not in the data until a source settles them, or a Malagasy language expert reviews them.
+
+- **Negative numbers.** Out of scope (rule 11). Malagasy Wikipedia defines negative numbers as
+  numbers `latsaky ny aotra` ("below zero",
+  [Isa miiba](https://mg.wikipedia.org/wiki/Isa_miiba)) but writes its examples only in digits
+  (`−3`, `−100`). Elsewhere `latsaky ny` means "less than" (`isa latsaky ny zato`, numbers below
+  a hundred, [Fanisana amin' ny teny malagasy](https://mg.wikipedia.org/wiki/Fanisana_amin'_ny_teny_malagasy)),
+  so `latsaky ny dimy` would read as "less than five", not "minus five". `tanisa` rejects
+  negatives (`toWords(-5)` throws). Needed: a source that spells a negative number in words.
+- **Names for 10⁷, 10⁸ and above.** Languages and Numbers (quoting Assimil) lists a name for each
+  power of ten: `safatsiroa` (10⁷), `tsitamboisa` (10⁸), `lavitrisa` or `arivo tapitrisa` (10⁹),
+  `alinkisa` (10¹⁰), `tsipesimpesenina` (10¹¹), `tsitokotsiforohana` (10¹²), `tsihitanoanoa`
+  (10¹³), `safatsiroafaharoa` (10¹⁴), `tsitamboisafaharoa` (10¹⁵), … `safatsiroafahatelo` (10²¹),
+  `tsitamboisafahatelo` (10²²)
+  ([source](https://www.languagesandnumbers.com/how-to-count-in-malagasy/en/mlg/)). `tanisa` 1.1.3
+  uses some of them (`… sy dimy tapitrisa sy efatra safatsiroa sy telo tsitamboisa sy roa
+lavitrisa sy iray alinkisa` for 12 345 678 901,
+  [README](https://unpkg.com/tanisa@1.1.3/README.md)). The data reads these powers through
+  counts instead, as the dictionary's `tapitrisa` entry does: 12 345 678 901 is `… sy dimy amby
+efapolo sy telonjato tapitrisa sy roa ambin'ny folo lavitrisa` (rule 6). Several of these words also have looser meanings
+  (`alinkisa` "innumerable", `tsitokotsiforohana` "an enormous sum"). Needed: an expert ruling on
+  whether standard writing uses them, and which form the spec should give.
+
 ## Recorded disagreements
 
 - **`sy` before 200–900 at every size (rule 4).** Assimil gives `348` → `valo amby efapolo amby
