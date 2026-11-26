@@ -171,15 +171,65 @@
   expected: "roa ambin'ny folo lavitrisa"
 - input: 999999999999
   expected: 'sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo sy sivinjato tapitrisa sy sivy amby sivifolo sy sivinjato lavitrisa'
+- input: 1000000000000
+  expected: 'arivo lavitrisa'
+  note: 'rule 6: lavitrisa takes any count'
+- input: 1000000000001
+  expected: 'iray sy arivo lavitrisa'
+- input: 1001000000000
+  expected: 'iray sy arivo lavitrisa'
+  note: 'same phrase as 1000000000001, recorded in README'
+- input: 1999999999999
+  expected: 'sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo sy sivinjato tapitrisa sy sivy amby sivifolo sy sivinjato sy arivo lavitrisa'
+- input: 10000000000000
+  expected: 'iray alina lavitrisa'
+- input: 21000000000000
+  expected: 'arivo sy roa alina lavitrisa'
+- input: 1000000000000000
+  expected: 'iray tapitrisa lavitrisa'
+- input: 9007199254740991
+  expected: 'iraika amby sivifolo sy sivinjato sy efatra alina sy fito hetsy sy efatra amby dimampolo sy roanjato tapitrisa sy sivy amby sivifolo amby zato sy fito arivo sy sivy tapitrisa lavitrisa'
+  note: 'largest input every port can hold exactly (Number.MAX_SAFE_INTEGER)'
 - input: -1
   error: OUT_OF_RANGE
   note: negative numbers are not supported
-- input: 1000000000000
-  error: OUT_OF_RANGE
-  note: above limits.max
 - input: 1.5
-  error: INVALID_TYPE
-  note: only integers have number words
+  expected: 'iray faingo dimy'
+  note: 'rule 9: faingo, then the decimals'
+- input: 3.14
+  expected: "telo faingo efatra ambin'ny folo"
+  note: 'malagasy-numberwords README and tanisa README'
+- input: 18.3
+  expected: "valo ambin'ny folo faingo telo"
+  note: 'tanisa README'
+- input: 0.008
+  expected: 'aotra faingo aotra aotra valo'
+  note: 'tanisa README: each leading zero is aotra'
+- input: 0.5
+  expected: 'aotra faingo dimy'
+- input: 0.1
+  expected: 'aotra faingo iray'
+- input: 1.05
+  expected: 'iray faingo aotra dimy'
+- input: 2.25
+  expected: 'roa faingo dimy amby roapolo'
+- input: 21.21
+  expected: 'iraika amby roapolo faingo iraika amby roapolo'
+- input: 12.101
+  expected: "roa ambin'ny folo faingo iraika amby zato"
+- input: 1234.5678
+  expected: 'efatra amby telopolo sy roanjato sy arivo faingo valo amby fitopolo sy eninjato sy dimy arivo'
+- input: 0.0000001
+  expected: 'aotra faingo aotra aotra aotra aotra aotra aotra iray'
+  note: 'small values have no exponent notation'
+- input: 0.30000000000000004
+  expected: 'aotra faingo efatra sy telopolo tapitrisa lavitrisa'
+  note: 'rule 10: the value 0.1 + 0.2, decimals longer than an exact integer'
+- input: 1.0
+  expected: 'iray'
+  note: 'rule 10: a whole-valued number has no faingo'
+- input: -1.5
+  error: OUT_OF_RANGE
 - input: '12'
   error: INVALID_TYPE
   note: strings are not parsed

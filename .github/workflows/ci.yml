@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   lint:
-    uses: madagascar-oss/.github/.github/workflows/reusable-lint.yml@main
+    uses: madagascar-oss/.github/.github/workflows/reusable-lint.yml@0610e49630c07c4854ea85312207c26722fc1437 # main
 
   spec:
     name: Spec schema + vectors
