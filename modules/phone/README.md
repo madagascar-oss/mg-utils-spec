@@ -9,14 +9,14 @@ is set by the rules and test vectors here. Parsers (text typed by users → valu
 `parse` throws, `safeParse` returns the value or the error code, `tryParse` returns the value or
 nothing.
 
-| Function               | Does                                            | JavaScript                                 | PHP                                           |
-| ---------------------- | ----------------------------------------------- | ------------------------------------------ | --------------------------------------------- |
-| `parsePhoneNumber`     | Text → parsed value, or throws                  | `parsePhoneNumber(input)`                  | `PhoneNumber::parse($input)`                  |
-| `safeParsePhoneNumber` | Text → parsed value or error code, never throws | `safeParsePhoneNumber(input)`              | `PhoneNumber::safeParse($input)`              |
-| `tryParsePhoneNumber`  | Text → parsed value, or nothing, never throws   | `tryParsePhoneNumber(input)` → `undefined` | `PhoneNumber::tryParse($input)` → `null`      |
-| `isValidPhoneNumber`   | Any value → `true`/`false`, never throws        | `isValidPhoneNumber(input)`                | `PhoneNumber::isValid($input)`                |
-| `formatPhoneNumber`    | Text → `e164`, `international` or `national`    | `formatPhoneNumber(input, format)`         | `PhoneNumber::parse($input)->format($format)` |
-| operator display name  | Operator id → name, e.g. `telma` → `Telma`      | `OPERATOR_NAMES[id]`                       | `Operator::displayName()`                     |
+| Function               | Does                                              | JavaScript                                 | PHP                                           |
+| ---------------------- | ------------------------------------------------- | ------------------------------------------ | --------------------------------------------- |
+| `parsePhoneNumber`     | Text → parsed value, or throws                    | `parsePhoneNumber(input)`                  | `PhoneNumber::parse($input)`                  |
+| `safeParsePhoneNumber` | Text → parsed value or error code, never throws   | `safeParsePhoneNumber(input)`              | `PhoneNumber::safeParse($input)`              |
+| `tryParsePhoneNumber`  | Text → parsed value, or nothing, never throws     | `tryParsePhoneNumber(input)` → `undefined` | `PhoneNumber::tryParse($input)` → `null`      |
+| `isValidPhoneNumber`   | Any value → `true`/`false`, never throws          | `isValidPhoneNumber(input)`                | `PhoneNumber::isValid($input)`                |
+| `formatPhoneNumber`    | Text → `e164`, `international` or `national`      | `formatPhoneNumber(input, format)`         | `PhoneNumber::parse($input)->format($format)` |
+| operator display name  | Operator id → name, e.g. `yas` → `Yas Madagascar` | `OPERATOR_NAMES[id]`                       | `Operator::displayName()`                     |
 
 ## Rules
 
@@ -33,14 +33,15 @@ nothing.
    - Input longer than 32 characters is `INVALID_FORMAT`, so parsers never scan unbounded text.
 3. **Operator codes 30–39 are mobile.** Assigned codes:
 
-   | Code | Operator                 | Assigned    |
-   | ---- | ------------------------ | ----------- |
-   | 32   | Orange Madagascar        | 2013 plan   |
-   | 33   | Airtel Madagascar        | 2013 plan   |
-   | 34   | Telma                    | 2013 plan   |
-   | 37   | Orange Madagascar        | 21 Oct 2022 |
-   | 38   | Telma (Telecom Malagasy) | 21 Oct 2022 |
-   | 39   | Blueline (MVNO)          | 21 Aug 2013 |
+   | Code | Operator                        | Assigned    |
+   | ---- | ------------------------------- | ----------- |
+   | 32   | Orange Madagascar               | 2013 plan   |
+   | 33   | Airtel Madagascar               | 2013 plan   |
+   | 34   | Yas Madagascar (formerly Telma) | 2013 plan   |
+   | 35   | Airtel Madagascar               | 22 Jun 2026 |
+   | 37   | Orange Madagascar               | 21 Oct 2022 |
+   | 38   | Yas Madagascar (formerly Telma) | 21 Oct 2022 |
+   | 39   | Blueline (MVNO)                 | 21 Aug 2013 |
 
    A well-formed number with any other code (including fixed-line `20` and VSAT `22`) is
    `UNKNOWN_OPERATOR`. Fixed lines are out of scope for spec 0.1.
@@ -63,7 +64,7 @@ nothing.
 ```yaml
 e164: '+261341234567'
 nationalNumber: '341234567'
-operator: telma
+operator: yas
 ```
 
 ## Sources
@@ -74,6 +75,12 @@ operator: telma
 - ARTEC, Plan national de numérotation: <https://www.artec.mg/plan-national-de-numerotation/>
   (lists 32 Orange, 33 Airtel, 34 and 38 Telma; did not load over HTTPS when checked on
   2026-11-23 because of a certificate error).
+- Prefix 35 (Airtel Madagascar), numbers on sale since 22 June 2026: TechAfrica News,
+  <https://techafricanews.com/2026/06/22/airtel-madagascar-launches-new-035-prefix-to-support-network-growth/>
+  (also reported by CapMad and Telecompaper). Not in the ITU filing yet.
+- Telma renamed Yas Madagascar on 26 November 2024: L'Express de Madagascar,
+  <https://www.lexpress.mg/2024/11/telephonie-mobile-telma-change-de-nom.html>.
+  The operator id changed from `telma` to `yas` in spec 0.6.0.
 
 ## Recorded disagreements
 
@@ -85,3 +92,9 @@ operator: telma
 - **37 on the ARTEC page.** The ARTEC web page does not list 37; the ITU communication of
   21 Oct 2022 assigns it to Orange Madagascar. The data follows the ITU communication, which
   is the later and formal notice.
+
+## Waiting for a source
+
+- **36 (Yas Madagascar).** Yas announced a new 036 range ("Bienvenue 036 !") on LinkedIn,
+  without a date. No page on yas.mg, no press article and no ARTEC or ITU entry was found on
+  2026-11-26, so 36 stays `UNKNOWN_OPERATOR` until one is published.
