@@ -23,19 +23,24 @@ nothing.
 
 ## Rules
 
-1. **Amounts are whole numbers** from 0 up, the same range as the words module, which spells
-   numbers of any size. The spec sets no maximum; a port stops at its largest exact integer:
-   `Number.MAX_SAFE_INTEGER` (9 007 199 254 740 991) in JavaScript, `PHP_INT_MAX` in PHP.
-   Negative amounts and amounts above that limit are `OUT_OF_RANGE`; non-integers are
-   `INVALID_TYPE`. Shared vectors stay within 9 007 199 254 740 991.
+1. **Amounts are numbers from 0 up, whole or decimal**, with any number of decimal places: the
+   same range as the words module. The spec sets no maximum; a port stops at its largest exact
+   integer: `Number.MAX_SAFE_INTEGER` (9 007 199 254 740 991) in JavaScript, `PHP_INT_MAX` in PHP
+   for whole amounts and 9 007 199 254 740 991 for decimal ones. Negative amounts and amounts
+   above that limit are `OUT_OF_RANGE`; anything that is not a finite number is `INVALID_TYPE`.
+   Shared vectors stay within 9 007 199 254 740 991. A decimal amount is the number value in its
+   shortest exact decimal form: `1500.50` is `1500.5`.
 2. **Default format: `Ar 1 500`.** Symbol `Ar`, a no-break space (U+00A0), then the digits in
-   groups of three separated by no-break spaces. No decimals.
+   groups of three separated by no-break spaces. **Decimals follow a comma**, as written, never
+   grouped, rounded or padded: `1500.5` → `Ar 1 500,5`, `0.25` → `Ar 0,25`.
 3. **Options** (`formatAriary` and `formatFmg`):
 
-   | Option           | Values                      | Example for 1500 |
-   | ---------------- | --------------------------- | ---------------- |
-   | `grouping`       | `space` (default), `dot`    | `Ar 1.500`       |
-   | `symbolPosition` | `before` (default), `after` | `1 500 Ar`       |
+   | Option     | Values                   | Example for 1500 |
+   | ---------- | ------------------------ | ---------------- |
+   | `grouping` | `space` (default), `dot` | `Ar 1.500`       |
+
+   With `dot`, decimals still follow a comma: `1234567.89` → `Ar 1.234.567,89`.
+   | `symbolPosition` | `before` (default), `after` | `1 500 Ar` |
 
    Any other value is `INVALID_TYPE`. **A comma is never a thousand separator in Madagascar.**
 
@@ -44,13 +49,17 @@ nothing.
      or no currency at all, but not on both sides.
    - Digit groups may be separated by spaces, no-break spaces, narrow no-break spaces (U+202F)
      or dots, the same separator throughout. Every group after the first has three digits.
-   - Rejected with `INVALID_FORMAT`: commas, decimals, signs, leading zeros, other currencies,
-     and input longer than 32 characters.
+   - Decimals follow one comma: `1 500,50 Ar` → `1500.5`, `0,5` → `0.5`. **`1,500` is 1.5**, the
+     Malagasy reading, not fifteen hundred. A dot is never a decimal point (`1.5` is rejected).
+   - Rejected with `INVALID_FORMAT`: a dot or a second comma for decimals, a comma with no digit
+     on either side (`1,`, `,5`), signs, leading zeros, other currencies, and input longer than
+     32 characters.
    - Amounts above the port's largest exact integer are `OUT_OF_RANGE`.
 5. **In words:** the number in words (see the words module) followed by `ariary`:
-   `1500` → `dimanjato sy arivo ariary`.
-6. **Malagasy franc:** 1 Ar = 5 FMG. `fmgToAriary` accepts only multiples of 5 (other amounts do
-   not convert to whole ariary: `OUT_OF_RANGE`); `ariaryToFmg` multiplies by 5, and a result
+   `1500` → `dimanjato sy arivo ariary`, `1500.5` → `dimanjato sy arivo faingo dimy ariary`.
+6. **Malagasy franc:** 1 Ar = 5 FMG. `fmgToAriary` divides by 5 and `ariaryToFmg` multiplies by
+   5, both exactly in decimal: `7501` FMG → `1500.2` Ar, `0.07` Ar → `0.35` FMG (never a
+   binary rounding artefact such as `0.35000000000000003`). Francs may be decimal too. A result
    above the port's largest exact integer is `OUT_OF_RANGE`. `formatFmg` uses the same layout
    with the symbol `Fmg`.
 
@@ -78,6 +87,9 @@ nothing.
   as an option, and keeps CLDR's symbol position (`Ar` first).
 - **Reading separators.** Text pasted from documents uses spaces, no-break spaces or narrow
   no-break spaces interchangeably, so all three count as the same separator when reading.
+- **Decimals, with a comma.** Amounts take any number of decimals, written after a comma
+  (`Ar 1 500,5`), as in French and Malagasy writing; the dot stays a thousand separator. Reading
+  `1,500` therefore gives 1.5. Decided by the project lead on 2026-11-26.
 - **Symbol `Fmg`.** ISO uses `MGF` and CLDR `mg` has no symbol for the franc; `Fmg` is the
   abbreviation the project lead asked for.
 
@@ -93,5 +105,6 @@ nothing.
 ## Recorded disagreements
 
 - **Minor unit.** ISO 4217 lists 2 minor units for MGA; CLDR uses 0 digits and amounts are
-  written without decimals in practice. The spec follows CLDR: whole ariary only.
+  usually written without decimals. Since spec 0.5.0 the spec follows neither limit: amounts
+  take any number of decimals (see "Recorded decisions").
 - **Thousand separator.** See "Recorded decisions": CLDR comma vs Ministry of Finance space.

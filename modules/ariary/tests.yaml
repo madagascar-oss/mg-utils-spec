@@ -61,8 +61,34 @@
   note: 'negative amounts are not supported'
 - fn: formatAriary
   input: 1.5
+  expected: "Ar\u00a01,5"
+  note: 'decimals follow a comma'
+- fn: formatAriary
+  input: 1500.5
+  expected: "Ar\u00a01\u00a0500,5"
+- fn: formatAriary
+  input: 0.25
+  args: [{ 'symbolPosition': 'after' }]
+  expected: "0,25\u00a0Ar"
+- fn: formatAriary
+  input: 1234567.89
+  args: [{ 'grouping': 'dot' }]
+  expected: "Ar\u00a01.234.567,89"
+  note: 'dot grouping keeps the decimal comma'
+- fn: formatAriary
+  input: 1234.5678
+  expected: "Ar\u00a01\u00a0234,5678"
+  note: 'decimals are not grouped, rounded or padded'
+- fn: formatAriary
+  input: 0.0000001
+  expected: "Ar\u00a00,0000001"
+  note: 'no exponent notation'
+- fn: formatAriary
+  input: .nan
   error: INVALID_TYPE
-  note: 'ariary amounts are whole numbers'
+- fn: formatAriary
+  input: .inf
+  error: INVALID_TYPE
 - fn: formatAriary
   input: '1500'
   error: INVALID_TYPE
@@ -123,8 +149,44 @@
   expected: 999999999999
 - fn: parseAriary
   input: '1,500'
+  expected: 1.5
+  note: 'a comma is the decimal separator, never a thousand separator'
+- fn: parseAriary
+  input: '1 500,50 Ar'
+  expected: 1500.5
+- fn: parseAriary
+  input: 'Ar 0,5'
+  expected: 0.5
+- fn: parseAriary
+  input: "Ar\u00a01\u00a0500,5"
+  expected: 1500.5
+  note: 'decimal output of formatAriary reads back'
+- fn: parseAriary
+  input: '1.234.567,89'
+  expected: 1234567.89
+- fn: parseAriary
+  input: '1.5'
   error: INVALID_FORMAT
-  note: 'a comma is not a thousand separator'
+  note: 'a dot is never a decimal point'
+- fn: parseAriary
+  input: '1 500.50'
+  error: INVALID_FORMAT
+- fn: parseAriary
+  input: '1,'
+  error: INVALID_FORMAT
+  note: 'no digit after the comma'
+- fn: parseAriary
+  input: ',5'
+  error: INVALID_FORMAT
+  note: 'no digit before the comma'
+- fn: parseAriary
+  input: '1,5,0'
+  error: INVALID_FORMAT
+  note: 'one decimal comma at most'
+- fn: parseAriary
+  input: '1,5 00'
+  error: INVALID_FORMAT
+  note: 'decimals are not grouped'
 - fn: parseAriary
   input: '1 50'
   error: INVALID_FORMAT
@@ -135,8 +197,8 @@
   note: 'mixed separators'
 - fn: parseAriary
   input: '1.500,00'
-  error: INVALID_FORMAT
-  note: 'ariary amounts have no decimals'
+  expected: 1500
+  note: 'zero decimals read as a whole amount'
 - fn: parseAriary
   input: ''
   error: INVALID_FORMAT
@@ -201,6 +263,12 @@
   input: 20000
   expected: 'roa alina ariary'
 - fn: ariaryToWords
+  input: 1500.5
+  expected: 'dimanjato sy arivo faingo dimy ariary'
+- fn: ariaryToWords
+  input: 0.25
+  expected: 'aotra faingo dimy amby roapolo ariary'
+- fn: ariaryToWords
   input: 1000000000000
   expected: 'arivo lavitrisa ariary'
   note: 'words module rule 6: lavitrisa takes any count'
@@ -229,14 +297,22 @@
   note: 'largest multiple of 5 within Number.MAX_SAFE_INTEGER'
 - fn: fmgToAriary
   input: 3
-  error: OUT_OF_RANGE
-  note: 'only multiples of 5 FMG convert to whole ariary'
+  expected: 0.6
+  note: 'francs that do not divide by 5 give decimal ariary'
+- fn: fmgToAriary
+  input: 7501
+  expected: 1500.2
 - fn: fmgToAriary
   input: -5
   error: OUT_OF_RANGE
 - fn: fmgToAriary
   input: 2.5
-  error: INVALID_TYPE
+  expected: 0.5
+  note: 'francs may be decimal'
+- fn: fmgToAriary
+  input: 0.35
+  expected: 0.07
+  note: 'exact decimal division, not 0.06999999999999999'
 - fn: ariaryToFmg
   input: 0
   expected: 0
@@ -246,6 +322,16 @@
 - fn: ariaryToFmg
   input: 1500
   expected: 7500
+- fn: ariaryToFmg
+  input: 0.07
+  expected: 0.35
+  note: 'exact decimal product, not 0.35000000000000003'
+- fn: ariaryToFmg
+  input: 1500.5
+  expected: 7502.5
+- fn: ariaryToFmg
+  input: 0.2
+  expected: 1
 - fn: ariaryToFmg
   input: 1801439850948198
   expected: 9007199254740990
@@ -261,6 +347,9 @@
   input: 7500
   args: [{ 'grouping': 'dot', 'symbolPosition': 'after' }]
   expected: "7.500\u00a0Fmg"
+- fn: formatFmg
+  input: 7500.5
+  expected: "Fmg\u00a07\u00a0500,5"
 - fn: formatFmg
   input: -5
   error: OUT_OF_RANGE
