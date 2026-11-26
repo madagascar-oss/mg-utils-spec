@@ -46,7 +46,7 @@ Docs for every module, and a playground that runs each port live in the browser:
 | PHP        | [mdg-utils-php](https://github.com/mdgascar/mdg-utils-php) | `mdgascar/mdg-utils` on Packagist |
 
 Each implementation includes this repository as a git submodule at `spec/`, pinned to a
-release tag. A port is done when it passes every vector. Want another language? Open a
+spec commit. A port is done when it passes every vector. Want another language? Open a
 [new-language issue](https://github.com/mdgascar/mdg-utils-spec/issues/new/choose).
 
 Why this layout: [ADR 0003](docs/adr/0003-split-repos-per-language.md).
