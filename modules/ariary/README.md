@@ -110,6 +110,10 @@ nothing.
   spec 0.5.0 it was rejected. Callers who read such text must pass
   `{ grouping: 'comma', decimal: 'dot' }`. To review: whether the default should reject a comma
   followed by exactly three digits as ambiguous.
+- **Formatted text longer than the reading limit (to review).** Reading stops at 32 characters
+  (ADR 0004), but formatting writes every decimal: `5e-324` formats to over 300 characters,
+  which does not read back. To review: whether formatting should cap decimals, or reading
+  should allow longer decimal text.
 - **Decimals a number cannot hold (to review).** `parseAriary('0,123456789012345678')` gives the
   nearest number, silently rounded, as `Number()` and `(float)` do. To review: whether such text
   should be `OUT_OF_RANGE` instead, so money is never rounded without notice.
