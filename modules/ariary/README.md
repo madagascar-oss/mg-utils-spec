@@ -10,16 +10,16 @@ is set by the rules and test vectors here. Parsers (text typed by users → valu
 `parse` throws, `safeParse` returns the value or the error code, `tryParse` returns the value or
 nothing.
 
-| Function          | Does                                            | JavaScript                           | PHP                                     |
-| ----------------- | ----------------------------------------------- | ------------------------------------ | --------------------------------------- |
-| `formatAriary`    | Amount → `Ar 1 500` (grouping, symbol position) | `formatAriary(amount, options)`      | `Ariary::fromInt($amount)->format(...)` |
-| `parseAriary`     | Text → amount, or throws                        | `parseAriary(text)`                  | `Ariary::parse($text)->amount`          |
-| `safeParseAriary` | Text → amount or error code, never throws       | `safeParseAriary(text)`              | `Ariary::safeParse($text)`              |
-| `tryParseAriary`  | Text → amount, or nothing, never throws         | `tryParseAriary(text)` → `undefined` | `Ariary::tryParse($text)` → `null`      |
-| `ariaryToWords`   | Amount → Malagasy words + `ariary`              | `ariaryToWords(amount)`              | `Ariary::fromInt($amount)->toWords()`   |
-| `fmgToAriary`     | Old francs → Ariary (5 FMG = 1 Ar)              | `fmgToAriary(francs)`                | `Ariary::fromFmg($francs)->amount`      |
-| `ariaryToFmg`     | Ariary → old francs                             | `ariaryToFmg(amount)`                | `Ariary::fromInt($amount)->toFmg()`     |
-| `formatFmg`       | Francs → `Fmg 7 500`                            | `formatFmg(francs, options)`         | `Ariary::formatFmg($francs, ...)`       |
+| Function          | Does                                            | JavaScript                                    | PHP                                     |
+| ----------------- | ----------------------------------------------- | --------------------------------------------- | --------------------------------------- |
+| `formatAriary`    | Amount → `Ar 1 500` (grouping, symbol position) | `formatAriary(amount, options)`               | `Ariary::fromInt($amount)->format(...)` |
+| `parseAriary`     | Text → amount, or throws                        | `parseAriary(text, options)`                  | `Ariary::parse($text, ...)->amount`     |
+| `safeParseAriary` | Text → amount or error code, never throws       | `safeParseAriary(text, options)`              | `Ariary::safeParse($text, ...)`         |
+| `tryParseAriary`  | Text → amount, or nothing, never throws         | `tryParseAriary(text, options)` → `undefined` | `Ariary::tryParse($text, ...)` → `null` |
+| `ariaryToWords`   | Amount → Malagasy words + `ariary`              | `ariaryToWords(amount)`                       | `Ariary::fromInt($amount)->toWords()`   |
+| `fmgToAriary`     | Old francs → Ariary (5 FMG = 1 Ar)              | `fmgToAriary(francs)`                         | `Ariary::fromFmg($francs)->amount`      |
+| `ariaryToFmg`     | Ariary → old francs                             | `ariaryToFmg(amount)`                         | `Ariary::fromInt($amount)->toFmg()`     |
+| `formatFmg`       | Francs → `Fmg 7 500`                            | `formatFmg(francs, options)`                  | `Ariary::formatFmg($francs, ...)`       |
 
 ## Rules
 
@@ -35,25 +35,32 @@ nothing.
    grouped, rounded or padded: `1500.5` → `Ar 1 500,5`, `0.25` → `Ar 0,25`.
 3. **Options** (`formatAriary` and `formatFmg`):
 
-   | Option     | Values                   | Example for 1500 |
-   | ---------- | ------------------------ | ---------------- |
-   | `grouping` | `space` (default), `dot` | `Ar 1.500`       |
+   | Option           | Values                            | Example for 1500.5 |
+   | ---------------- | --------------------------------- | ------------------ |
+   | `grouping`       | `space` (default), `dot`, `comma` | `Ar 1.500,5`       |
+   | `decimal`        | `comma` (default), `dot`          | `Ar 1 500.5`       |
+   | `symbolPosition` | `before` (default), `after`       | `1 500,5 Ar`       |
 
-   With `dot`, decimals still follow a comma: `1234567.89` → `Ar 1.234.567,89`.
-   | `symbolPosition` | `before` (default), `after` | `1 500 Ar` |
+   The defaults are the Malagasy way. With `dot` grouping, decimals still follow a comma:
+   `1234567.89` → `Ar 1.234.567,89`. **A comma is never a thousand separator in Madagascar**:
+   `grouping: 'comma'` and `decimal: 'dot'` exist only for text in another convention
+   (`Ar 1,500.5`). `grouping` and `decimal` must differ. Any other value, or the same character
+   for both, is `INVALID_TYPE`.
 
-   Any other value is `INVALID_TYPE`. **A comma is never a thousand separator in Madagascar.**
-
-4. **Reading text** (`parseAriary`):
+4. **Reading text** (`parseAriary`, `safeParseAriary`, `tryParseAriary`), with the `grouping` and
+   `decimal` options of rule 3 (no `symbolPosition`):
    - Accepts the currency as `Ar`, `MGA` or `Ariary` (any case), before or after the amount,
      or no currency at all, but not on both sides.
-   - Digit groups may be separated by spaces, no-break spaces, narrow no-break spaces (U+202F)
-     or dots, the same separator throughout. Every group after the first has three digits.
-   - Decimals follow one comma: `1 500,50 Ar` → `1500.5`, `0,5` → `0.5`. **`1,500` is 1.5**, the
-     Malagasy reading, not fifteen hundred. A dot is never a decimal point (`1.5` is rejected).
-   - Rejected with `INVALID_FORMAT`: a dot or a second comma for decimals, a comma with no digit
-     on either side (`1,`, `,5`), signs, leading zeros, other currencies, and input longer than
-     32 characters.
+   - Without `grouping`, digit groups may be separated by spaces, no-break spaces, narrow
+     no-break spaces (U+202F) or dots, the same separator throughout. With `grouping`, only that
+     separator (`space` takes all three spaces). Every group after the first has three digits.
+   - Decimals follow one `decimal` separator, a comma by default: `1 500,50 Ar` → `1500.5`,
+     `0,5` → `0.5`. **By default `1,500` is 1.5**, the Malagasy reading, not fifteen hundred
+     (see "Waiting for a source or an expert"). For text in another convention, say so:
+     `parseAriary('1,500.50', { grouping: 'comma', decimal: 'dot' })` → `1500.5`.
+   - Rejected with `INVALID_FORMAT`: a decimal point other than the `decimal` option, a second
+     decimal separator, a decimal separator with no digit on either side (`1,`, `,5`), signs,
+     leading zeros, other currencies, and input longer than 32 characters.
    - Amounts above the port's largest exact integer are `OUT_OF_RANGE`.
 5. **In words:** the number in words (see the words module) followed by `ariary`:
    `1500` → `dimanjato sy arivo ariary`, `1500.5` → `dimanjato sy arivo faingo dimy ariary`.
@@ -87,6 +94,9 @@ nothing.
   as an option, and keeps CLDR's symbol position (`Ar` first).
 - **Reading separators.** Text pasted from documents uses spaces, no-break spaces or narrow
   no-break spaces interchangeably, so all three count as the same separator when reading.
+- **Separator options, Malagasy by default.** Every option defaults to the Malagasy way; other
+  conventions are opt-in, so a caller reading text from elsewhere says so instead of the
+  library guessing. Decided by the project lead on 2026-11-26.
 - **Decimals, with a comma.** Amounts take any number of decimals, written after a comma
   (`Ar 1 500,5`), as in French and Malagasy writing; the dot stays a thousand separator. Reading
   `1,500` therefore gives 1.5. Decided by the project lead on 2026-11-26.
@@ -94,6 +104,15 @@ nothing.
   abbreviation the project lead asked for.
 
 ## Waiting for a source or an expert
+
+- **Default reading of `1,500` (to review).** By default it reads as 1.5 Ar. Text typed in the
+  English convention, meaning 1500, is then read 1000 times too small, without an error. Before
+  spec 0.5.0 it was rejected. Callers who read such text must pass
+  `{ grouping: 'comma', decimal: 'dot' }`. To review: whether the default should reject a comma
+  followed by exactly three digits as ambiguous.
+- **Decimals a number cannot hold (to review).** `parseAriary('0,123456789012345678')` gives the
+  nearest number, silently rounded, as `Number()` and `(float)` do. To review: whether such text
+  should be `OUT_OF_RANGE` instead, so money is never rounded without notice.
 
 - **FMG amounts in words.** Not provided. `iraimbilanja` names one franc (1/5 ariary) in
   [English Wikipedia, Malagasy franc](https://en.wikipedia.org/wiki/Malagasy_franc) and

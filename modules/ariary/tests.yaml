@@ -93,10 +93,31 @@
   input: '1500'
   error: INVALID_TYPE
 - fn: formatAriary
+  input: 1500.5
+  args: [{ 'grouping': 'comma', 'decimal': 'dot' }]
+  expected: "Ar\u00a01,500.5"
+  note: 'opt-in for another convention'
+- fn: formatAriary
+  input: 1500.5
+  args: [{ 'decimal': 'dot' }]
+  expected: "Ar\u00a01\u00a0500.5"
+- fn: formatAriary
   input: 1500
   args: [{ 'grouping': 'comma' }]
   error: INVALID_TYPE
-  note: 'Madagascar never groups thousands with a comma'
+  note: 'grouping comma clashes with the default decimal comma'
+- fn: formatAriary
+  input: 1500
+  args: [{ 'grouping': 'dot', 'decimal': 'dot' }]
+  error: INVALID_TYPE
+- fn: formatAriary
+  input: 1500
+  args: [{ 'grouping': 'semicolon' }]
+  error: INVALID_TYPE
+- fn: formatAriary
+  input: 1500
+  args: [{ 'decimal': 'semicolon' }]
+  error: INVALID_TYPE
 - fn: formatAriary
   input: 1500
   args: [{ 'symbolPosition': 'middle' }]
@@ -167,7 +188,48 @@
 - fn: parseAriary
   input: '1.5'
   error: INVALID_FORMAT
-  note: 'a dot is never a decimal point'
+  note: 'by default a dot is never a decimal point'
+- fn: parseAriary
+  input: '1,500.50'
+  args: [{ 'grouping': 'comma', 'decimal': 'dot' }]
+  expected: 1500.5
+  note: 'text in another convention, said so by the caller'
+- fn: parseAriary
+  input: '1,500'
+  args: [{ 'grouping': 'comma', 'decimal': 'dot' }]
+  expected: 1500
+- fn: parseAriary
+  input: 'Ar 1.5'
+  args: [{ 'decimal': 'dot' }]
+  expected: 1.5
+- fn: parseAriary
+  input: '1.500,5'
+  args: [{ 'grouping': 'dot' }]
+  expected: 1500.5
+- fn: parseAriary
+  input: "1\u00a0500"
+  args: [{ 'grouping': 'space' }]
+  expected: 1500
+  note: 'space grouping takes every space'
+- fn: parseAriary
+  input: '1 500'
+  args: [{ 'grouping': 'dot' }]
+  error: INVALID_FORMAT
+  note: 'only the chosen grouping'
+- fn: parseAriary
+  input: '1,500'
+  args: [{ 'grouping': 'comma' }]
+  error: INVALID_TYPE
+  note: 'grouping and decimal must differ'
+- fn: parseAriary
+  input: '1 500'
+  args: [{ 'symbolPosition': 'after' }]
+  error: INVALID_TYPE
+  note: 'reading has no symbolPosition option'
+- fn: parseAriary
+  input: '1 500'
+  args: [null]
+  error: INVALID_TYPE
 - fn: parseAriary
   input: '1 500.50'
   error: INVALID_FORMAT
