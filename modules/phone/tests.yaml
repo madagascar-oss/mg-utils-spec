@@ -4,73 +4,73 @@
   expected:
     e164: '+261341234567'
     nationalNumber: '341234567'
-    operator: telma
+    operator: yas
   note: national form with trunk prefix 0
 - input: '034 12 345 67'
   expected:
     e164: '+261341234567'
     nationalNumber: '341234567'
-    operator: telma
+    operator: yas
   note: spaces are ignored
 - input: '034-12-345-67'
   expected:
     e164: '+261341234567'
     nationalNumber: '341234567'
-    operator: telma
+    operator: yas
   note: dashes are ignored
 - input: '034.12.345.67'
   expected:
     e164: '+261341234567'
     nationalNumber: '341234567'
-    operator: telma
+    operator: yas
   note: dots are ignored
 - input: '(034) 12 345 67'
   expected:
     e164: '+261341234567'
     nationalNumber: '341234567'
-    operator: telma
+    operator: yas
   note: parentheses are ignored
 - input: '+261341234567'
   expected:
     e164: '+261341234567'
     nationalNumber: '341234567'
-    operator: telma
+    operator: yas
   note: E.164
 - input: "034\u00a012\u00a0345\u00a067"
   expected:
     e164: '+261341234567'
     nationalNumber: '341234567'
-    operator: telma
+    operator: yas
   note: non-breaking spaces (as pasted from documents) are ignored
 - input: '+261 34 12 345 67'
   expected:
     e164: '+261341234567'
     nationalNumber: '341234567'
-    operator: telma
+    operator: yas
   note: international with spaces
 - input: '00261341234567'
   expected:
     e164: '+261341234567'
     nationalNumber: '341234567'
-    operator: telma
+    operator: yas
   note: international prefix 00
 - input: '261341234567'
   expected:
     e164: '+261341234567'
     nationalNumber: '341234567'
-    operator: telma
+    operator: yas
   note: country code without plus
 - input: '341234567'
   expected:
     e164: '+261341234567'
     nationalNumber: '341234567'
-    operator: telma
+    operator: yas
   note: national significant number alone
 - input: ' 034 12 345 67 '
   expected:
     e164: '+261341234567'
     nationalNumber: '341234567'
-    operator: telma
+    operator: yas
   note: surrounding spaces are ignored
 - input: '0321234567'
   expected:
@@ -92,8 +92,8 @@
   expected:
     e164: '+261381234567'
     nationalNumber: '381234567'
-    operator: telma
-  note: prefix 38 assigned to Telma in 2022
+    operator: yas
+  note: prefix 38 assigned to Telma (now Yas) in 2022
 - input: '0391234567'
   expected:
     e164: '+261391234567'
@@ -135,8 +135,22 @@
   error: INVALID_FORMAT
   note: very long input
 - input: '0351234567'
+  expected:
+    e164: '+261351234567'
+    nationalNumber: '351234567'
+    operator: airtel
+  note: prefix 35 opened by Airtel on 22 June 2026
+- input: '+261 35 12 345 67'
+  expected:
+    e164: '+261351234567'
+    nationalNumber: '351234567'
+    operator: airtel
+- input: '0311234567'
   error: UNKNOWN_OPERATOR
-  note: 35 is not assigned
+  note: 31 is not assigned
+- input: '0361234567'
+  error: UNKNOWN_OPERATOR
+  note: 36 is announced by Yas but has no published source yet (see README)
 - input: '0301234567'
   error: UNKNOWN_OPERATOR
   note: 30 is not assigned
@@ -177,9 +191,13 @@
   error: INVALID_TYPE
   note: unknown format name
 - fn: formatPhoneNumber
-  input: '0351234567'
+  input: '0311234567'
   args: [e164]
   error: UNKNOWN_OPERATOR
+- fn: formatPhoneNumber
+  input: '0351234567'
+  args: [international]
+  expected: '+261 35 12 345 67'
 - fn: isValidPhoneNumber
   input: '0341234567'
   expected: true
@@ -188,6 +206,9 @@
   expected: true
 - fn: isValidPhoneNumber
   input: '0351234567'
+  expected: true
+- fn: isValidPhoneNumber
+  input: '0311234567'
   expected: false
 - fn: isValidPhoneNumber
   input: ''
@@ -202,7 +223,7 @@
   expected:
     e164: '+261341234567'
     nationalNumber: '341234567'
-    operator: telma
+    operator: yas
   note: 'exactly 32 characters (the limit) is read'
 - input: '0341234567                       '
   error: INVALID_FORMAT
