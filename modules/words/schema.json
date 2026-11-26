@@ -8,6 +8,7 @@
     "zero",
     "units",
     "unitOneInCompound",
+    "decimalSeparator",
     "tens",
     "hundreds",
     "scales",
@@ -42,6 +43,7 @@
     "zero": { "$ref": "#/$defs/entry" },
     "units": { "$ref": "#/$defs/nine" },
     "unitOneInCompound": { "$ref": "#/$defs/entry" },
+    "decimalSeparator": { "$ref": "#/$defs/entry" },
     "tens": { "$ref": "#/$defs/nine" },
     "hundreds": { "$ref": "#/$defs/nine" },
     "scales": {
@@ -51,7 +53,7 @@
         "allOf": [{ "$ref": "#/$defs/sourced" }],
         "type": "object",
         "unevaluatedProperties": false,
-        "required": ["value", "word", "maxCount"],
+        "required": ["value", "word"],
         "properties": {
           "value": { "type": "integer", "minimum": 1000 },
           "word": { "$ref": "#/$defs/word" },
@@ -74,10 +76,9 @@
     "limits": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["min", "max"],
+      "required": ["min"],
       "properties": {
-        "min": { "type": "integer", "minimum": 0 },
-        "max": { "type": "integer", "maximum": 9007199254740991 }
+        "min": { "type": "integer", "minimum": 0 }
       }
     }
   }
