@@ -6,17 +6,18 @@ Reviewed in public each quarter. Each phase ends with something public.
 
 - [x] `spec/words` and `spec/phone` with sources and shared vectors
 - [x] `@mdgascar/words`, `@mdgascar/phone`, `@mdgascar/utils`
-- [ ] Publish 0.1.0 to npm from CI
+- [x] Publish 0.1.0 to npm from CI
 - [x] Live demo page
 
 ## Next — PHP port and remaining modules
 
 - [x] Codegen for PHP; `mdg-utils-php` passes the same vectors
 - [x] Split into `mdg-utils-spec`, `mdg-utils-js` and `mdg-utils-php` ([ADR 0003](docs/adr/0003-split-repos-per-language.md))
-- [ ] `mdg-utils-php` on Packagist
-- [ ] Symfony bundle as a separate package
+- [x] `mdg-utils-php` on Packagist
+- [x] Symfony bundle as a separate package
 - [x] `ariary` and `date` modules in both languages
-- [ ] Fixed-line numbers in `phone`
+- [x] Fixed-line numbers in `phone`
+- [x] Words back to numbers, ordinals, dates back to calendar fields
 - [ ] Release 1.0.0 of spec and packages
 
 ## Later
