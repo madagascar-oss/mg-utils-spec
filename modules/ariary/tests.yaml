@@ -370,7 +370,7 @@
   note: 'words module rule 6: lavitrisa takes any count'
 - fn: spellAriary
   input: 1999999999999
-  expected: 'sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo sy sivinjato tapitrisa sy sivy amby sivifolo sy sivinjato sy arivo lavitrisa ariary'
+  expected: 'sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo amby sivinjato tapitrisa sy sivy amby sivifolo amby sivinjato amby arivo lavitrisa ariary'
 - fn: spellAriary
   input: -1
   error: OUT_OF_RANGE
