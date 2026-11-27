@@ -588,8 +588,13 @@
   error: PRECISION_LOSS
   note: 'a number cannot hold 2000000000000000.9: never rounded silently'
 - fn: parseWords
-  input: 'iray lavitrisa lavitrisa'
+  input: 'folo lavitrisa lavitrisa'
   error: PRECISION_LOSS
+  note: '10 000 000 000 000 000 000 is above every port integer'
+- fn: parseWords
+  input: 'folo lavitrisa lavitrisa'
+  args: [{ 'as': 'text' }]
+  expected: '10000000000000000000'
 - fn: parseWords
   input: 'iraika amby sivifolo sy sivinjato sy efatra alina sy fito hetsy sy efatra amby dimampolo amby roanjato tapitrisa sy sivy amby sivifolo amby zato amby fito arivo amby sivy tapitrisa lavitrisa'
   expected: 9007199254740991

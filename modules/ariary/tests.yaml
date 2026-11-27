@@ -319,13 +319,13 @@
   expected: '0.123456789012345678'
   note: 'the exact digits'
 - fn: parseAriary
-  input: 'Ar 9 007 199 254 740 993'
+  input: 'Ar 10 000 000 000 000 000 000'
   error: PRECISION_LOSS
-  note: 'above Number.MAX_SAFE_INTEGER'
+  note: 'above every port integer'
 - fn: parseAriary
-  input: 'Ar 9 007 199 254 740 993'
+  input: 'Ar 10 000 000 000 000 000 000'
   args: [{ 'as': 'text' }]
-  expected: '9007199254740993'
+  expected: '10000000000000000000'
 - fn: parseAriary
   input: '1 500,50 Ar'
   args: [{ 'as': 'text' }]
@@ -479,13 +479,13 @@
   args: [{ 'as': 'text' }]
   expected: '0.060000000000000008'
 - fn: ariaryToFmg
-  input: 9007199254740991
+  input: '9223372036854775807'
   error: PRECISION_LOSS
-  note: 'the francs exceed Number.MAX_SAFE_INTEGER'
+  note: 'the francs exceed every port integer'
 - fn: ariaryToFmg
-  input: 9007199254740991
+  input: '9223372036854775807'
   args: [{ 'as': 'text' }]
-  expected: '45035996273704955'
+  expected: '46116860184273879035'
 - fn: ariaryToFmg
   input: '1500.07'
   args: [{ 'as': 'text' }]
