@@ -9,11 +9,11 @@ is set by the rules and test vectors here. Parsers (text typed by users → valu
 `parse` throws, `safeParse` returns the value or the error code, `tryParse` returns the value or
 nothing.
 
-| Function         | Does                                            | JavaScript                          | PHP                                               |
-| ---------------- | ----------------------------------------------- | ----------------------------------- | ------------------------------------------------- |
-| `formatDate`     | Date → text in a `DateStyle`                    | `formatDate(date, style)`           | `MalagasyDate::fromString($date)->format($style)` |
-| `getMonthName`   | `1`–`12` → month name, wide or abbreviated      | `getMonthName(month, width)`        | `MalagasyDate::monthName($month, $width)`         |
-| `getWeekdayName` | ISO weekday `1`–`7` → name, wide or abbreviated | `getWeekdayName(isoWeekday, width)` | `MalagasyDate::weekdayName($weekday, $width)`     |
+| Function      | Does                                            | JavaScript                       | PHP                                               |
+| ------------- | ----------------------------------------------- | -------------------------------- | ------------------------------------------------- |
+| `formatDate`  | Date → text in a `DateStyle`                    | `formatDate(date, style)`        | `MalagasyDate::fromString($date)->format($style)` |
+| `monthName`   | `1`–`12` → month name, wide or abbreviated      | `monthName(month, width)`        | `MalagasyDate::monthName($month, $width)`         |
+| `weekdayName` | ISO weekday `1`–`7` → name, wide or abbreviated | `weekdayName(isoWeekday, width)` | `MalagasyDate::weekdayName($weekday, $width)`     |
 
 Allowed per language, because they adapt native types: building a date from the language's own
 date type (`Date` in JavaScript, `DateTimeInterface` via `MalagasyDate::fromDateTime()` in PHP)

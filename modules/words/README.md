@@ -13,9 +13,9 @@ is set by the rules and test vectors here. Parsers (text typed by users → valu
 `parse` throws, `safeParse` returns the value or the error code, `tryParse` returns the value or
 nothing.
 
-| Function        | Does                    | JavaScript                  | PHP                                                                                                                   |
-| --------------- | ----------------------- | --------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| `numberToWords` | Number → Malagasy words | `numberToWords(n, options)` | `NumberWords::fromInt($n, $system)`, `NumberWords::fromFloat($n, $system)`, `NumberWords::fromString($text, $system)` |
+| Function | Does                    | JavaScript          | PHP                                                            |
+| -------- | ----------------------- | ------------------- | -------------------------------------------------------------- |
+| `spell`  | Number → Malagasy words | `spell(n, options)` | `NumberWords::spell($n, $system)` (int, float or decimal text) |
 
 One option, `system`: `standard` (the default, rules 1–11) or `traditional` (rule 12).
 

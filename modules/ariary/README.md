@@ -10,16 +10,16 @@ is set by the rules and test vectors here. Parsers (text typed by users → valu
 `parse` throws, `safeParse` returns the value or the error code, `tryParse` returns the value or
 nothing.
 
-| Function          | Does                                            | JavaScript                                    | PHP                                                                             |
-| ----------------- | ----------------------------------------------- | --------------------------------------------- | ------------------------------------------------------------------------------- |
-| `formatAriary`    | Amount → `Ar 1 500` (grouping, symbol position) | `formatAriary(amount, options)`               | `Ariary::fromInt($amount)->format(...)`                                         |
-| `parseAriary`     | Text → amount, or throws                        | `parseAriary(text, options)`                  | `Ariary::parse($text, ...)->amount`                                             |
-| `safeParseAriary` | Text → amount or error code, never throws       | `safeParseAriary(text, options)`              | `Ariary::safeParse($text, ...)`                                                 |
-| `tryParseAriary`  | Text → amount, or nothing, never throws         | `tryParseAriary(text, options)` → `undefined` | `Ariary::tryParse($text, ...)` → `null`                                         |
-| `ariaryToWords`   | Amount → Malagasy words + `ariary`              | `ariaryToWords(amount, options)`              | `Ariary::fromInt($amount)->toWords(...)`, `Ariary::wordsFromString($text, ...)` |
-| `fmgToAriary`     | Old francs → Ariary (5 FMG = 1 Ar)              | `fmgToAriary(francs)`                         | `Ariary::fromFmg($francs)->amount`                                              |
-| `ariaryToFmg`     | Ariary → old francs                             | `ariaryToFmg(amount)`                         | `Ariary::fromInt($amount)->toFmg()`                                             |
-| `formatFmg`       | Francs → `Fmg 7 500`                            | `formatFmg(francs, options)`                  | `Ariary::formatFmg($francs, ...)`                                               |
+| Function          | Does                                            | JavaScript                                    | PHP                                                                     |
+| ----------------- | ----------------------------------------------- | --------------------------------------------- | ----------------------------------------------------------------------- |
+| `formatAriary`    | Amount → `Ar 1 500` (grouping, symbol position) | `formatAriary(amount, options)`               | `Ariary::fromInt($amount)->format(...)`                                 |
+| `parseAriary`     | Text → amount, or throws                        | `parseAriary(text, options)`                  | `Ariary::parse($text, ...)->amount`                                     |
+| `safeParseAriary` | Text → amount or error code, never throws       | `safeParseAriary(text, options)`              | `Ariary::safeParse($text, ...)`                                         |
+| `tryParseAriary`  | Text → amount, or nothing, never throws         | `tryParseAriary(text, options)` → `undefined` | `Ariary::tryParse($text, ...)` → `null`                                 |
+| `spellAriary`     | Amount → Malagasy words + `ariary`              | `spellAriary(amount, options)`                | `Ariary::fromInt($amount)->spell(...)`, `Ariary::spellText($text, ...)` |
+| `fmgToAriary`     | Old francs → Ariary (5 FMG = 1 Ar)              | `fmgToAriary(francs)`                         | `Ariary::fromFmg($francs)->amount`                                      |
+| `ariaryToFmg`     | Ariary → old francs                             | `ariaryToFmg(amount)`                         | `Ariary::fromInt($amount)->toFmg()`                                     |
+| `formatFmg`       | Francs → `Fmg 7 500`                            | `formatFmg(francs, options)`                  | `Ariary::formatFmg($francs, ...)`                                       |
 
 ## Rules
 
