@@ -2,58 +2,58 @@
 # Default function: formatAriary. \u00a0 is a no-break space, \u202f a narrow no-break space.
 - fn: formatAriary
   input: 0
-  expected: "Ar\u00a00"
+  expected: 'Ar 0'
 - fn: formatAriary
   input: 5
-  expected: "Ar\u00a05"
+  expected: 'Ar 5'
 - fn: formatAriary
   input: 999
-  expected: "Ar\u00a0999"
+  expected: 'Ar 999'
   note: 'no separator below 1000'
 - fn: formatAriary
   input: 1000
-  expected: "Ar\u00a01\u00a0000"
+  expected: 'Ar 1 000'
 - fn: formatAriary
   input: 1500
-  expected: "Ar\u00a01\u00a0500"
+  expected: 'Ar 1 500'
   note: 'default: symbol first, no-break spaces between groups'
 - fn: formatAriary
   input: 12345
-  expected: "Ar\u00a012\u00a0345"
+  expected: 'Ar 12 345'
 - fn: formatAriary
   input: 100000
-  expected: "Ar\u00a0100\u00a0000"
+  expected: 'Ar 100 000'
 - fn: formatAriary
   input: 2026000
-  expected: "Ar\u00a02\u00a0026\u00a0000"
+  expected: 'Ar 2 026 000'
 - fn: formatAriary
   input: 999999999999
-  expected: "Ar\u00a0999\u00a0999\u00a0999\u00a0999"
+  expected: 'Ar 999 999 999 999'
 - fn: formatAriary
   input: 1000000000000
-  expected: "Ar\u00a01\u00a0000\u00a0000\u00a0000\u00a0000"
+  expected: 'Ar 1 000 000 000 000'
 - fn: formatAriary
   input: 9007199254740991
-  expected: "Ar\u00a09\u00a0007\u00a0199\u00a0254\u00a0740\u00a0991"
+  expected: 'Ar 9 007 199 254 740 991'
   note: 'largest amount every port holds exactly (Number.MAX_SAFE_INTEGER)'
 - fn: formatAriary
   input: 1500
   args: [{ 'grouping': 'dot' }]
-  expected: "Ar\u00a01.500"
+  expected: 'Ar 1.500'
   note: 'dot grouping option'
 - fn: formatAriary
   input: 1500
   args: [{ 'symbolPosition': 'after' }]
-  expected: "1\u00a0500\u00a0Ar"
+  expected: '1 500 Ar'
   note: 'symbol after the amount'
 - fn: formatAriary
   input: 2500000
   args: [{ 'grouping': 'dot', 'symbolPosition': 'after' }]
-  expected: "2.500.000\u00a0Ar"
+  expected: '2.500.000 Ar'
 - fn: formatAriary
   input: 2500000
   args: [{}]
-  expected: "Ar\u00a02\u00a0500\u00a0000"
+  expected: 'Ar 2 500 000'
   note: 'empty options use the defaults'
 - fn: formatAriary
   input: -1
@@ -61,27 +61,27 @@
   note: 'negative amounts are not supported'
 - fn: formatAriary
   input: 1.5
-  expected: "Ar\u00a01,5"
+  expected: 'Ar 1,5'
   note: 'decimals follow a comma'
 - fn: formatAriary
   input: 1500.5
-  expected: "Ar\u00a01\u00a0500,5"
+  expected: 'Ar 1 500,5'
 - fn: formatAriary
   input: 0.25
   args: [{ 'symbolPosition': 'after' }]
-  expected: "0,25\u00a0Ar"
+  expected: '0,25 Ar'
 - fn: formatAriary
   input: 1234567.89
   args: [{ 'grouping': 'dot' }]
-  expected: "Ar\u00a01.234.567,89"
+  expected: 'Ar 1.234.567,89'
   note: 'dot grouping keeps the decimal comma'
 - fn: formatAriary
   input: 1234.5678
-  expected: "Ar\u00a01\u00a0234,5678"
+  expected: 'Ar 1 234,5678'
   note: 'decimals are not grouped, rounded or padded'
 - fn: formatAriary
-  input: 0.0000001
-  expected: "Ar\u00a00,0000001"
+  input: 1e-7
+  expected: 'Ar 0,0000001'
   note: 'no exponent notation'
 - fn: formatAriary
   input: .nan
@@ -91,16 +91,24 @@
   error: INVALID_TYPE
 - fn: formatAriary
   input: '1500'
-  error: INVALID_TYPE
+  expected: 'Ar 1 500'
+  note: 'decimal text is an amount too, written exactly'
+- fn: formatAriary
+  input: '1500.25'
+  expected: 'Ar 1 500,25'
+- fn: formatAriary
+  input: '1 500'
+  error: INVALID_FORMAT
+  note: 'amount text is plain digits (words rule 13)'
 - fn: formatAriary
   input: 1500.5
   args: [{ 'grouping': 'comma', 'decimal': 'dot' }]
-  expected: "Ar\u00a01,500.5"
+  expected: 'Ar 1,500.5'
   note: 'opt-in for another convention'
 - fn: formatAriary
   input: 1500.5
   args: [{ 'decimal': 'dot' }]
-  expected: "Ar\u00a01\u00a0500.5"
+  expected: 'Ar 1 500.5'
 - fn: formatAriary
   input: 1500
   args: [{ 'grouping': 'comma' }]
@@ -126,7 +134,7 @@
   input: 'Ar 1 500'
   expected: 1500
 - fn: parseAriary
-  input: "Ar\u00a01\u00a0500"
+  input: 'Ar 1 500'
   expected: 1500
   note: 'output of formatAriary reads back'
 - fn: parseAriary
@@ -159,7 +167,7 @@
   expected: 2000
   note: 'surrounding spaces are ignored'
 - fn: parseAriary
-  input: "1\u202f000\u202f000 Ar"
+  input: '1 000 000 Ar'
   expected: 1000000
   note: 'narrow no-break spaces'
 - fn: parseAriary
@@ -179,7 +187,7 @@
   input: 'Ar 0,5'
   expected: 0.5
 - fn: parseAriary
-  input: "Ar\u00a01\u00a0500,5"
+  input: 'Ar 1 500,5'
   expected: 1500.5
   note: 'decimal output of formatAriary reads back'
 - fn: parseAriary
@@ -207,7 +215,7 @@
   args: [{ 'grouping': 'dot' }]
   expected: 1500.5
 - fn: parseAriary
-  input: "1\u00a0500"
+  input: '1 500'
   args: [{ 'grouping': 'space' }]
   expected: 1500
   note: 'space grouping takes every space'
@@ -276,7 +284,7 @@
   error: INVALID_FORMAT
   note: 'currency written twice'
 - fn: parseAriary
-  input: "1 500 \u20ac"
+  input: '1 500 €'
   error: INVALID_FORMAT
   note: 'another currency'
 - fn: parseAriary
@@ -294,17 +302,43 @@
   input: 'Ar 9 007 199 254 740 991'
   expected: 9007199254740991
 - fn: parseAriary
-  input: '1500                            '
-  expected: 1500
-  note: 'exactly 32 characters (the limit) is read'
+  input: 'Ar 0,000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005'
+  expected: 5e-324
+  note: 'the longest text formatAriary writes for a number (329 characters, limits.maxReadLength) reads back'
 - fn: parseAriary
-  input: '1500                             '
+  input: 'Ar 0,0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000005'
   error: INVALID_FORMAT
-  note: '33 characters is over the limit'
+  note: '330 characters is over the limit'
 - fn: parseAriary
-  input: '0000000000000000000000000000000000000000'
-  error: INVALID_FORMAT
-  note: 'input longer than 32 characters'
+  input: '0,123456789012345678'
+  error: PRECISION_LOSS
+  note: 'a number cannot hold these decimals: never rounded silently'
+- fn: parseAriary
+  input: '0,123456789012345678'
+  args: [{ 'as': 'text' }]
+  expected: '0.123456789012345678'
+  note: 'the exact digits'
+- fn: parseAriary
+  input: 'Ar 9 007 199 254 740 993'
+  error: PRECISION_LOSS
+  note: 'above Number.MAX_SAFE_INTEGER'
+- fn: parseAriary
+  input: 'Ar 9 007 199 254 740 993'
+  args: [{ 'as': 'text' }]
+  expected: '9007199254740993'
+- fn: parseAriary
+  input: '1 500,50 Ar'
+  args: [{ 'as': 'text' }]
+  expected: '1500.5'
+  note: 'text is canonical: no trailing decimal zeros'
+- fn: parseAriary
+  input: '1 500'
+  args: [{ 'as': 'bigint' }]
+  error: INVALID_TYPE
+- fn: parseAriary
+  input: '1,500'
+  expected: 1.5
+  note: 'the Malagasy reading: a comma is the decimal separator (recorded decision)'
 - fn: parseAriary
   input: 1500
   error: INVALID_TYPE
@@ -416,15 +450,47 @@
   error: OUT_OF_RANGE
 - fn: formatFmg
   input: 7500
-  expected: "Fmg\u00a07\u00a0500"
+  expected: 'Fmg 7 500'
   note: 'francs use the same layout with the Fmg symbol'
 - fn: formatFmg
   input: 7500
   args: [{ 'grouping': 'dot', 'symbolPosition': 'after' }]
-  expected: "7.500\u00a0Fmg"
+  expected: '7.500 Fmg'
 - fn: formatFmg
   input: 7500.5
-  expected: "Fmg\u00a07\u00a0500,5"
+  expected: 'Fmg 7 500,5'
 - fn: formatFmg
   input: -5
   error: OUT_OF_RANGE
+- fn: fmgToAriary
+  input: '7501'
+  expected: 1500.2
+  note: 'decimal text in'
+- fn: fmgToAriary
+  input: '7501'
+  args: [{ 'as': 'text' }]
+  expected: '1500.2'
+- fn: fmgToAriary
+  input: 0.30000000000000004
+  error: PRECISION_LOSS
+  note: 'the exact result 0.060000000000000008 does not fit a number'
+- fn: fmgToAriary
+  input: 0.30000000000000004
+  args: [{ 'as': 'text' }]
+  expected: '0.060000000000000008'
+- fn: ariaryToFmg
+  input: 9007199254740991
+  error: PRECISION_LOSS
+  note: 'the francs exceed Number.MAX_SAFE_INTEGER'
+- fn: ariaryToFmg
+  input: 9007199254740991
+  args: [{ 'as': 'text' }]
+  expected: '45035996273704955'
+- fn: ariaryToFmg
+  input: '1500.07'
+  args: [{ 'as': 'text' }]
+  expected: '7500.35'
+- fn: ariaryToFmg
+  input: 1500
+  args: [{ 'as': 'decimal' }]
+  error: INVALID_TYPE
