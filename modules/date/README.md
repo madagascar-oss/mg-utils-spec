@@ -1,6 +1,7 @@
 # date — Malagasy dates
 
-Writes Gregorian dates in Malagasy, and gives the Malagasy names of months and weekdays.
+Writes Gregorian dates in Malagasy, reads them back, and gives the Malagasy names of months and
+weekdays.
 
 ## Public API
 
@@ -9,11 +10,14 @@ is set by the rules and test vectors here. Parsers (text typed by users → valu
 `parse` throws, `safeParse` returns the value or the error code, `tryParse` returns the value or
 nothing.
 
-| Function      | Does                                            | JavaScript                       | PHP                                               |
-| ------------- | ----------------------------------------------- | -------------------------------- | ------------------------------------------------- |
-| `formatDate`  | Date → text in a `DateStyle`                    | `formatDate(date, style)`        | `MalagasyDate::fromString($date)->format($style)` |
-| `monthName`   | `1`–`12` → month name, wide or abbreviated      | `monthName(month, width)`        | `MalagasyDate::monthName($month, $width)`         |
-| `weekdayName` | ISO weekday `1`–`7` → name, wide or abbreviated | `weekdayName(isoWeekday, width)` | `MalagasyDate::weekdayName($weekday, $width)`     |
+| Function        | Does                                            | JavaScript                       | PHP                                               |
+| --------------- | ----------------------------------------------- | -------------------------------- | ------------------------------------------------- |
+| `formatDate`    | Date → text in a `DateStyle`                    | `formatDate(date, style)`        | `MalagasyDate::fromString($date)->format($style)` |
+| `parseDate`     | Malagasy date text → date, or throws            | `parseDate(text, style)`         | `MalagasyDate::parse($text, $style)`              |
+| `safeParseDate` | Text → date or error code, never throws         | `safeParseDate(text, style)`     | `MalagasyDate::safeParse($text, $style)`          |
+| `tryParseDate`  | Text → date, or nothing, never throws           | `tryParseDate(text, style)`      | `MalagasyDate::tryParse($text, $style)` → `null`  |
+| `monthName`     | `1`–`12` → month name, wide or abbreviated      | `monthName(month, width)`        | `MalagasyDate::monthName($month, $width)`         |
+| `weekdayName`   | ISO weekday `1`–`7` → name, wide or abbreviated | `weekdayName(isoWeekday, width)` | `MalagasyDate::weekdayName($weekday, $width)`     |
 
 Allowed per language, because they adapt native types: building a date from the language's own
 date type (`Date` in JavaScript, `DateTimeInterface` via `MalagasyDate::fromDateTime()` in PHP)
@@ -42,7 +46,16 @@ and reading the ISO weekday of a date object (`MalagasyDate->isoWeekday()` in PH
    Pattern letters: `EEEE` weekday name, `d` day, `dd` two-digit day, `MMMM` month name, `MMM`
    abbreviated month, `MM` two-digit month, `y` year. Any other style is `INVALID_TYPE`.
 
-5. **Names.** Months 1–12, weekdays numbered as in ISO 8601 (Monday 1 … Sunday 7). Width
+5. **Reading dates** (`parseDate`): any style of rule 4, so every date `formatDate` writes
+   reads back: `23 Novambra 2026`, `23/11/2026` → `{ year: 2026, month: 11, day: 23 }`. Case and
+   spacing do not matter, and day and month may have one digit (`5/7/2026`). A `full` date
+   must name its own weekday. A day that does not exist is `INVALID_FORMAT`, a year outside
+   1–9999 `OUT_OF_RANGE`, text over 64 characters `INVALID_FORMAT`. With a `style`, only that
+   style is read. Without one, a text two styles read as different dates is `AMBIGUOUS`, never
+   guessed: `5 Mey 12` is 5 May of year 12 (`long`) or 12 May of year 5 (`medium`), since
+   `Mey` is both the name and the abbreviation. This only happens for years up to 31.
+
+6. **Names.** Months 1–12, weekdays numbered as in ISO 8601 (Monday 1 … Sunday 7). Width
    `wide` (default) or `abbreviated`; other widths are `INVALID_TYPE`, other numbers
    `OUT_OF_RANGE`.
 

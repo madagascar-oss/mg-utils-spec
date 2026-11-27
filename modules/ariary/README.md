@@ -12,7 +12,7 @@ nothing.
 
 | Function          | Does                                            | JavaScript                                    | PHP                                                                     |
 | ----------------- | ----------------------------------------------- | --------------------------------------------- | ----------------------------------------------------------------------- |
-| `formatAriary`    | Amount → `Ar 1 500` (grouping, symbol position) | `formatAriary(amount, options)`               | `Ariary::fromInt($amount)->format(...)`                                 |
+| `formatAriary`    | Amount → `Ar 1 500` (grouping, symbol position) | `formatAriary(amount, options)`               | `Ariary::fromInt($amount)->format(...)`, `Ariary::fromText($text)`      |
 | `parseAriary`     | Text → amount, or throws                        | `parseAriary(text, options)`                  | `Ariary::parse($text, ...)->amount`                                     |
 | `safeParseAriary` | Text → amount or error code, never throws       | `safeParseAriary(text, options)`              | `Ariary::safeParse($text, ...)`                                         |
 | `tryParseAriary`  | Text → amount, or nothing, never throws         | `tryParseAriary(text, options)` → `undefined` | `Ariary::tryParse($text, ...)` → `null`                                 |
@@ -29,7 +29,10 @@ nothing.
    for whole amounts and 9 007 199 254 740 991 for decimal ones. Negative amounts and amounts
    above that limit are `OUT_OF_RANGE`; anything that is not a finite number is `INVALID_TYPE`.
    Shared vectors stay within 9 007 199 254 740 991. A decimal amount is the number value in its
-   shortest exact decimal form: `1500.50` is `1500.5`.
+   shortest exact decimal form: `1500.50` is `1500.5`. **Every function that takes an amount
+   also takes decimal text** (words rule 13: digits, an optional point and decimals, at most
+   100 characters), read exactly and with no upper limit: `formatAriary('1500.25')` →
+   `Ar 1 500,25`.
 2. **Default format: `Ar 1 500`.** Symbol `Ar`, a no-break space (U+00A0), then the digits in
    groups of three separated by no-break spaces. **Decimals follow a comma**, as written, never
    grouped, rounded or padded: `1500.5` → `Ar 1 500,5`, `0.25` → `Ar 0,25`.
@@ -56,12 +59,17 @@ nothing.
      separator (`space` takes all three spaces). Every group after the first has three digits.
    - Decimals follow one `decimal` separator, a comma by default: `1 500,50 Ar` → `1500.5`,
      `0,5` → `0.5`. **By default `1,500` is 1.5**, the Malagasy reading, not fifteen hundred
-     (see "Waiting for a source or an expert"). For text in another convention, say so:
+     (see "Recorded decisions"). For text in another convention, say so:
      `parseAriary('1,500.50', { grouping: 'comma', decimal: 'dot' })` → `1500.5`.
    - Rejected with `INVALID_FORMAT`: a decimal point other than the `decimal` option, a second
      decimal separator, a decimal separator with no digit on either side (`1,`, `,5`), signs,
-     leading zeros, other currencies, and input longer than 32 characters.
-   - Amounts above the port's largest exact integer are `OUT_OF_RANGE`.
+     leading zeros, other currencies, and input longer than 329 characters
+     (`limits.maxReadLength`: the longest text `formatAriary` writes for a number, so every
+     formatted amount reads back).
+   - **Never a rounded value.** An amount a number value cannot hold exactly (too many decimals,
+     or above the port's largest exact integer) is `PRECISION_LOSS`. The option
+     `{ as: 'text' }` gives the exact decimal digits instead: `parseAriary('0,123456789012345678',
+{ as: 'text' })` → `'0.123456789012345678'`.
 5. **In words:** the number in words (see the words module) followed by `ariary`:
    `1500` → `dimanjato sy arivo ariary`, `1500.5` → `dimanjato sy arivo faingo dimy ariary`.
    The words `system` option applies (words rule 12): `30 000 000` in the traditional system →
@@ -72,8 +80,8 @@ nothing.
 6. **Malagasy franc:** 1 Ar = 5 FMG. `fmgToAriary` divides by 5 and `ariaryToFmg` multiplies by
    5, both exactly in decimal: `7501` FMG → `1500.2` Ar, `0.07` Ar → `0.35` FMG (never a
    binary rounding artefact such as `0.35000000000000003`). Francs may be decimal too. A result
-   above the port's largest exact integer is `OUT_OF_RANGE`. `formatFmg` uses the same layout
-   with the symbol `Fmg`.
+   a number value cannot hold exactly is `PRECISION_LOSS`; `{ as: 'text' }` gives the exact
+   digits. `formatFmg` uses the same layout with the symbol `Fmg`.
 
 ## Sources
 
@@ -104,24 +112,15 @@ nothing.
   library guessing. Decided by the project lead on 2026-11-26.
 - **Decimals, with a comma.** Amounts take any number of decimals, written after a comma
   (`Ar 1 500,5`), as in French and Malagasy writing; the dot stays a thousand separator. Reading
-  `1,500` therefore gives 1.5. Decided by the project lead on 2026-11-26.
+  `1,500` therefore gives 1.5: in Madagascar it is not ambiguous. Decided by the project lead on
+  2026-11-26, confirmed 2026-11-27.
+- **No silent rounding.** Reading and converting never round: a value a number cannot hold is
+  `PRECISION_LOSS`, and the caller chooses the exact text with `{ as: 'text' }`. Decided by the
+  project lead on 2026-11-27.
 - **Symbol `Fmg`.** ISO uses `MGF` and CLDR `mg` has no symbol for the franc; `Fmg` is the
   abbreviation the project lead asked for.
 
-## Waiting for a source or an expert
-
-- **Default reading of `1,500` (to review).** By default it reads as 1.5 Ar. Text typed in the
-  English convention, meaning 1500, is then read 1000 times too small, without an error. Before
-  spec 0.5.0 it was rejected. Callers who read such text must pass
-  `{ grouping: 'comma', decimal: 'dot' }`. To review: whether the default should reject a comma
-  followed by exactly three digits as ambiguous.
-- **Formatted text longer than the reading limit (to review).** Reading stops at 32 characters
-  (ADR 0004), but formatting writes every decimal: `5e-324` formats to over 300 characters,
-  which does not read back. To review: whether formatting should cap decimals, or reading
-  should allow longer decimal text.
-- **Decimals a number cannot hold (to review).** `parseAriary('0,123456789012345678')` gives the
-  nearest number, silently rounded, as `Number()` and `(float)` do. To review: whether such text
-  should be `OUT_OF_RANGE` instead, so money is never rounded without notice.
+## Not provided
 
 - **FMG amounts in words.** Not provided. `iraimbilanja` names one franc (1/5 ariary) in
   [English Wikipedia, Malagasy franc](https://en.wikipedia.org/wiki/Malagasy_franc) and
