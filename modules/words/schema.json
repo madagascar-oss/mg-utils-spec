@@ -12,6 +12,7 @@
     "tens",
     "hundreds",
     "scales",
+    "traditionalScales",
     "joiners",
     "limits"
   ],
@@ -58,6 +59,27 @@
           "value": { "type": "integer", "minimum": 1000 },
           "word": { "$ref": "#/$defs/word" },
           "maxCount": { "type": "integer", "minimum": 1, "maximum": 999 },
+          "source": true,
+          "checked": true
+        }
+      }
+    },
+    "traditionalScales": {
+      "description": "Rule 12: one name per power of ten from 10³, each taking a single digit 1–9.",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "allOf": [{ "$ref": "#/$defs/sourced" }],
+        "type": "object",
+        "unevaluatedProperties": false,
+        "required": ["value", "word"],
+        "properties": {
+          "value": { "type": "integer", "minimum": 1000 },
+          "word": { "$ref": "#/$defs/word" },
+          "derived": {
+            "const": true,
+            "description": "Not attested: built by the source's own naming rule."
+          },
           "source": true,
           "checked": true
         }
