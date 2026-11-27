@@ -147,90 +147,90 @@
   args: ['iso']
   error: INVALID_TYPE
   note: 'unknown style'
-- fn: getMonthName
+- fn: monthName
   input: 1
   expected: 'Janoary'
-- fn: getMonthName
+- fn: monthName
   input: 2
   expected: 'Febroary'
-- fn: getMonthName
+- fn: monthName
   input: 3
   expected: 'Martsa'
-- fn: getMonthName
+- fn: monthName
   input: 4
   expected: 'Aprily'
-- fn: getMonthName
+- fn: monthName
   input: 5
   expected: 'Mey'
-- fn: getMonthName
+- fn: monthName
   input: 6
   expected: 'Jona'
-- fn: getMonthName
+- fn: monthName
   input: 7
   expected: 'Jolay'
-- fn: getMonthName
+- fn: monthName
   input: 8
   expected: 'Aogositra'
-- fn: getMonthName
+- fn: monthName
   input: 9
   expected: 'Septambra'
-- fn: getMonthName
+- fn: monthName
   input: 10
   expected: 'Oktobra'
-- fn: getMonthName
+- fn: monthName
   input: 11
   expected: 'Novambra'
-- fn: getMonthName
+- fn: monthName
   input: 12
   expected: 'Desambra'
-- fn: getMonthName
+- fn: monthName
   input: 11
   args: ['abbreviated']
   expected: 'Nov'
-- fn: getMonthName
+- fn: monthName
   input: 0
   error: OUT_OF_RANGE
-- fn: getMonthName
+- fn: monthName
   input: 13
   error: OUT_OF_RANGE
-- fn: getMonthName
+- fn: monthName
   input: 1.5
   error: INVALID_TYPE
-- fn: getMonthName
+- fn: monthName
   input: 1
   args: ['narrow']
   error: INVALID_TYPE
   note: 'unknown width'
-- fn: getWeekdayName
+- fn: weekdayName
   input: 1
   expected: 'Alatsinainy'
   note: 'ISO 8601: Monday is 1'
-- fn: getWeekdayName
+- fn: weekdayName
   input: 2
   expected: 'Talata'
-- fn: getWeekdayName
+- fn: weekdayName
   input: 3
   expected: 'Alarobia'
-- fn: getWeekdayName
+- fn: weekdayName
   input: 4
   expected: 'Alakamisy'
-- fn: getWeekdayName
+- fn: weekdayName
   input: 5
   expected: 'Zoma'
-- fn: getWeekdayName
+- fn: weekdayName
   input: 6
   expected: 'Asabotsy'
-- fn: getWeekdayName
+- fn: weekdayName
   input: 7
   expected: 'Alahady'
   note: 'Sunday is 7'
-- fn: getWeekdayName
+- fn: weekdayName
   input: 7
   args: ['abbreviated']
   expected: 'Alah'
-- fn: getWeekdayName
+- fn: weekdayName
   input: 0
   error: OUT_OF_RANGE
-- fn: getWeekdayName
+- fn: weekdayName
   input: 8
   error: OUT_OF_RANGE

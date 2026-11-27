@@ -309,42 +309,50 @@
   input: 1500
   error: INVALID_TYPE
   note: 'number, not string'
-- fn: ariaryToWords
+- fn: spellAriary
   input: 0
   expected: 'aotra ariary'
-- fn: ariaryToWords
+- fn: spellAriary
   input: 1
   expected: 'iray ariary'
-- fn: ariaryToWords
+- fn: spellAriary
   input: 21
   expected: 'iraika amby roapolo ariary'
-- fn: ariaryToWords
+- fn: spellAriary
   input: 1500
   expected: 'dimanjato sy arivo ariary'
-- fn: ariaryToWords
+- fn: spellAriary
   input: 20000
   expected: 'roa alina ariary'
-- fn: ariaryToWords
+- fn: spellAriary
   input: 1500.5
   expected: 'dimanjato sy arivo faingo dimy ariary'
-- fn: ariaryToWords
+- fn: spellAriary
   input: 0.25
   expected: 'aotra faingo dimy amby roapolo ariary'
-- fn: ariaryToWords
+- fn: spellAriary
   input: 1000000000000
   expected: 'arivo lavitrisa ariary'
   note: 'words module rule 6: lavitrisa takes any count'
-- fn: ariaryToWords
+- fn: spellAriary
   input: 1999999999999
   expected: 'sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo sy sivinjato tapitrisa sy sivy amby sivifolo sy sivinjato sy arivo lavitrisa ariary'
-- fn: ariaryToWords
+- fn: spellAriary
   input: -1
   error: OUT_OF_RANGE
-- fn: ariaryToWords
+- fn: spellAriary
   input: 30000000
   args: [{ 'system': 'traditional' }]
   expected: 'telo safatsiroa ariary'
   note: 'the words system option (words rule 12)'
+- fn: spellAriary
+  input: '2000000000000000.9'
+  expected: 'roa tapitrisa lavitrisa faingo sivy ariary'
+  note: 'decimal text, read exactly (words rule 13)'
+- fn: spellAriary
+  input: 'Ar 1 500'
+  error: INVALID_FORMAT
+  note: 'formatted text is read by parseAriary, not spellAriary'
 - fn: fmgToAriary
   input: 0
   expected: 0

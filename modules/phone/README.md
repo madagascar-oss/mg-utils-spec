@@ -9,14 +9,14 @@ is set by the rules and test vectors here. Parsers (text typed by users → valu
 `parse` throws, `safeParse` returns the value or the error code, `tryParse` returns the value or
 nothing.
 
-| Function               | Does                                              | JavaScript                                 | PHP                                           |
-| ---------------------- | ------------------------------------------------- | ------------------------------------------ | --------------------------------------------- |
-| `parsePhoneNumber`     | Text → parsed value, or throws                    | `parsePhoneNumber(input)`                  | `PhoneNumber::parse($input)`                  |
-| `safeParsePhoneNumber` | Text → parsed value or error code, never throws   | `safeParsePhoneNumber(input)`              | `PhoneNumber::safeParse($input)`              |
-| `tryParsePhoneNumber`  | Text → parsed value, or nothing, never throws     | `tryParsePhoneNumber(input)` → `undefined` | `PhoneNumber::tryParse($input)` → `null`      |
-| `isValidPhoneNumber`   | Any value → `true`/`false`, never throws          | `isValidPhoneNumber(input)`                | `PhoneNumber::isValid($input)`                |
-| `formatPhoneNumber`    | Text → `e164`, `international` or `national`      | `formatPhoneNumber(input, format)`         | `PhoneNumber::parse($input)->format($format)` |
-| operator display name  | Operator id → name, e.g. `yas` → `Yas Madagascar` | `OPERATOR_NAMES[id]`                       | `Operator::displayName()`                     |
+| Function              | Does                                              | JavaScript                           | PHP                                           |
+| --------------------- | ------------------------------------------------- | ------------------------------------ | --------------------------------------------- |
+| `parsePhone`          | Text → parsed value, or throws                    | `parsePhone(input)`                  | `PhoneNumber::parse($input)`                  |
+| `safeParsePhone`      | Text → parsed value or error code, never throws   | `safeParsePhone(input)`              | `PhoneNumber::safeParse($input)`              |
+| `tryParsePhone`       | Text → parsed value, or nothing, never throws     | `tryParsePhone(input)` → `undefined` | `PhoneNumber::tryParse($input)` → `null`      |
+| `isValidPhone`        | Any value → `true`/`false`, never throws          | `isValidPhone(input)`                | `PhoneNumber::isValid($input)`                |
+| `formatPhone`         | Text → `e164`, `international` or `national`      | `formatPhone(input, format)`         | `PhoneNumber::parse($input)->format($format)` |
+| operator display name | Operator id → name, e.g. `yas` → `Yas Madagascar` | `OPERATOR_NAMES[id]`                 | `Operator::displayName()`                     |
 
 ## Rules
 
@@ -46,7 +46,7 @@ nothing.
    A well-formed number with any other code (including fixed-line `20` and VSAT `22`) is
    `UNKNOWN_OPERATOR`. Fixed lines are out of scope for spec 0.1.
 
-4. **Formats** (`formatPhoneNumber`):
+4. **Formats** (`formatPhone`):
 
    | Format          | Output for `0341234567` |
    | --------------- | ----------------------- |
@@ -56,8 +56,8 @@ nothing.
 
    Any other format name is `INVALID_TYPE`.
 
-5. **Non-string input** is `INVALID_TYPE` for `parsePhoneNumber` and `formatPhoneNumber`;
-   `isValidPhoneNumber` never throws and returns `false`.
+5. **Non-string input** is `INVALID_TYPE` for `parsePhone` and `formatPhone`;
+   `isValidPhone` never throws and returns `false`.
 
 ## Parsed value
 

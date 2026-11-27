@@ -243,5 +243,7 @@ decimalSeparator:
   source: https://malagasyword.org/bins/teny2/faingo
   checked: 2026-11-26
 # No max: each port stops at its largest exact integer (README, Errors).
+# maxTextLength: longest decimal text read (rule 13), so a parser never scans unbounded input.
 limits:
   min: 0
+  maxTextLength: 100
