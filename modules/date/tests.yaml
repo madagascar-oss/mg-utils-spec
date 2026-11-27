@@ -317,3 +317,11 @@
   input: '23/11/2026'
   args: ['weekly']
   error: INVALID_TYPE
+- fn: parseDate
+  input: '5 Mey 12'
+  error: AMBIGUOUS
+  note: "'Mey' is the month name and its abbreviation: 5 May 12 (long) or 12 May 5 (medium)"
+- fn: parseDate
+  input: '5 Mey 12'
+  args: ['long']
+  expected: { year: 12, month: 5, day: 5 }
