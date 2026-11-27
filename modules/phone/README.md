@@ -1,4 +1,4 @@
-# phone — Madagascar phone numbers
+# phone: Madagascar phone numbers
 
 Reads, checks and formats Malagasy phone numbers, mobile and fixed (country code `+261`).
 

@@ -1,4 +1,4 @@
-# date — Malagasy dates
+# date: Malagasy dates
 
 Writes Gregorian dates in Malagasy, reads them back, and gives the Malagasy names of months and
 weekdays.

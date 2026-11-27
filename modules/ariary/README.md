@@ -1,4 +1,4 @@
-# ariary — Malagasy Ariary amounts
+# ariary: Malagasy Ariary amounts
 
 Formats, reads and converts amounts in Malagasy Ariary (ISO 4217 `MGA`), writes them in words,
 and converts old Malagasy francs (FMG).

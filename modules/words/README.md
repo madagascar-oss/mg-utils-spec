@@ -1,4 +1,4 @@
-# words — Malagasy number words
+# words: Malagasy number words
 
 Turns any number from `0` up, whole or decimal, into Malagasy words, as written in the standard
 (official) language, writes ordinals (`fahatelo`, third), and reads the words back into the
