@@ -65,5 +65,11 @@ legacyFranc:
   checked: 2026-11-24
 # Same range as the words module, so every amount can also be written in words. No max:
 # each port stops at its largest exact integer (README, rule 1).
+# maxTextLength: longest decimal text taken as an amount (words rule 13).
+# maxReadLength: longest text read back. formatAriary writes at most 329 characters for a
+# number: 'Ar', a space, '0,' and 324 decimals (2.2250738585072014e-308 written out), so every
+# formatted amount reads back (text amounts of 100 characters format shorter).
 limits:
   min: 0
+  maxTextLength: 100
+  maxReadLength: 329

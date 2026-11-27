@@ -1,4 +1,4 @@
-# Madagascar mobile numbering (+261). Rules in README.md; every entry cites its source.
+# Madagascar telephone numbering (+261): mobile and fixed lines. Rules in README.md; every entry cites its source.
 # Source: ARTEC / OMERT communications to the ITU on the national numbering plan
 # (27.VIII.2013, 21.VIII.2013, 21.X.2022), published by the ITU for country code +261.
 plan:
@@ -28,16 +28,66 @@ operators:
         checked: 2026-11-26
   - id: yas
     name: Yas Madagascar
-    prefixes: ['34', '38']
+    prefixes: ['34', '36', '38']
+    # Telecom Malagasy's fixed network (ITU plan of 27.VIII.2013: 20 2 … 20 95).
+    fixedPrefixes: ['20']
     source: https://www.itu.int/dms_pub/itu-t/oth/02/02/T020200007F0002PDFF.pdf
     checked: 2026-11-23
     # Telma (Telecom Malagasy) until 26 November 2024. The ITU filing still says Telma.
+    # 36 is not in the ITU filing yet; Yas announced it on its official page.
     extraSources:
       - about: name Yas Madagascar, formerly Telma
         source: https://www.lexpress.mg/2024/11/telephonie-mobile-telma-change-de-nom.html
         checked: 2026-11-26
+      - about: prefix 36
+        source: https://www.facebook.com/YasMadagasikara/posts/-vaovao-ao-aminny-yas-madagascar-tonga-ny-pr%C3%A9fixe-036-manampy-ny-034-sy-038-1-00/1405609748336274/
+        checked: 2026-11-27
   - id: blueline
     name: Blueline
     prefixes: ['39']
     source: https://www.itu.int/dms_pub/itu-t/oth/02/02/T020200007F0002PDFF.pdf
     checked: 2026-11-23
+  # VSAT fixed numbers, not geographic (ITU plan of 27.VIII.2013).
+  - id: gulfsat
+    name: Gulfsat Madagascar
+    fixedPrefixes: ['22']
+    source: https://www.itu.int/dms_pub/itu-t/oth/02/02/T020200007F0002PDFF.pdf
+    checked: 2026-11-27
+# Fixed network of code 20: the digit after 20 is a zone (Z), then 6 subscriber digits.
+# A 20 number whose zone is not listed here is not assigned.
+fixedZones:
+  prefix: '20'
+  zones:
+    - { digit: '2', name: Antananarivo }
+    - { digit: '4', name: Antananarivo (rest of the province) }
+    - { digit: '5', name: Toamasina }
+    - { digit: '6', name: Mahajanga }
+    - { digit: '7', name: Fianarantsoa }
+    - { digit: '8', name: Antsiranana }
+    - { digit: '9', name: Toliara }
+  source: https://www.itu.int/dms_pub/itu-t/oth/02/02/T020200007F0002PDFF.pdf
+  checked: 2026-11-27
+# Geographic numbers listed in the national numbering plan: the leading digits of the
+# national number, the town and its province (spelled as in the ITU filing).
+areas:
+  entries:
+    - { prefix: '202', name: Antananarivo, province: Antananarivo }
+    - { prefix: '2053', name: Toamasina, province: Toamasina }
+    - { prefix: '2054', name: Ambatondrazaka, province: Toamasina }
+    - { prefix: '2056', name: Moramanga, province: Toamasina }
+    - { prefix: '2057', name: Sainte-Marie, province: Toamasina }
+    - { prefix: '2062', name: Mahajanga, province: Mahajanga }
+    - { prefix: '2067', name: Antsohihy, province: Mahajanga }
+    - { prefix: '2069', name: Maintirano, province: Mahajanga }
+    - { prefix: '20722', name: Manakara, province: Fianarantsoa }
+    - { prefix: '20729', name: Mananjary, province: Fianarantsoa }
+    - { prefix: '2073', name: Farafangana, province: Fianarantsoa }
+    - { prefix: '2075', name: Fianarantsoa, province: Fianarantsoa }
+    - { prefix: '2082', name: Antsiranana, province: Antsiranana }
+    - { prefix: '2086', name: Nosy Be, province: Antsiranana }
+    - { prefix: '2088', name: Sambava, province: Antsiranana }
+    - { prefix: '2092', name: Tolagnaro, province: Toliary }
+    - { prefix: '2094', name: Toliary, province: Toliary }
+    - { prefix: '2095', name: Morondava, province: Toliary }
+  source: https://www.itu.int/dms_pub/itu-t/oth/02/02/T020200007F0002PDFF.pdf
+  checked: 2026-11-27

@@ -1,6 +1,6 @@
-# phone — Madagascar mobile phone numbers
+# phone: Madagascar phone numbers
 
-Reads, checks and formats Malagasy **mobile** phone numbers (country code `+261`).
+Reads, checks and formats Malagasy phone numbers, mobile and fixed (country code `+261`).
 
 ## Public API
 
@@ -39,12 +39,17 @@ nothing.
    | 33   | Airtel Madagascar               | 2013 plan   |
    | 34   | Yas Madagascar (formerly Telma) | 2013 plan   |
    | 35   | Airtel Madagascar               | 22 Jun 2026 |
+   | 36   | Yas Madagascar (formerly Telma) | 2026        |
    | 37   | Orange Madagascar               | 21 Oct 2022 |
    | 38   | Yas Madagascar (formerly Telma) | 21 Oct 2022 |
    | 39   | Blueline (MVNO)                 | 21 Aug 2013 |
 
-   A well-formed number with any other code (including fixed-line `20` and VSAT `22`) is
-   `UNKNOWN_OPERATOR`. Fixed lines are out of scope for spec 0.1.
+   **Codes 20–29 are fixed lines** (2013 plan): `20` is the Yas (Telecom Malagasy) fixed
+   network, `22` is Gulfsat Madagascar VSAT. After `20` comes a zone digit (2 and 4 Antananarivo,
+   5 Toamasina, 6 Mahajanga, 7 Fianarantsoa, 8 Antsiranana, 9 Toliara), then 6 subscriber digits.
+   A geographic number gives its town when the plan lists it (`020 53 …` → Toamasina);
+   otherwise its `area` is `null`. A well-formed number with any other code, or a `20` number
+   with an unlisted zone, is `UNKNOWN_OPERATOR`.
 
 4. **Formats** (`formatPhone`):
 
@@ -65,6 +70,8 @@ nothing.
 e164: '+261341234567'
 nationalNumber: '341234567'
 operator: yas
+type: mobile # or fixed
+area: null # for a geographic fixed number: { name: Toamasina, province: Toamasina }
 ```
 
 ## Sources
@@ -78,6 +85,11 @@ operator: yas
 - Prefix 35 (Airtel Madagascar), numbers on sale since 22 June 2026: TechAfrica News,
   <https://techafricanews.com/2026/06/22/airtel-madagascar-launches-new-035-prefix-to-support-network-growth/>
   (also reported by CapMad and Telecompaper). Not in the ITU filing yet.
+- Prefix 36 (Yas Madagascar): announcement on the operator's official Facebook page ("Tonga ny
+  préfixe 036, manampy ny 034 sy 038"),
+  <https://www.facebook.com/YasMadagasikara/posts/-vaovao-ao-aminny-yas-madagascar-tonga-ny-pr%C3%A9fixe-036-manampy-ny-034-sy-038-1-00/1405609748336274/>.
+  Not in the ITU filing yet.
+- Fixed lines, zones and towns: the 27.VIII.2013 plan in the ITU document above.
 - Telma renamed Yas Madagascar on 26 November 2024: L'Express de Madagascar,
   <https://www.lexpress.mg/2024/11/telephonie-mobile-telma-change-de-nom.html>.
   The operator id changed from `telma` to `yas` in spec 0.6.0.
@@ -92,9 +104,3 @@ operator: yas
 - **37 on the ARTEC page.** The ARTEC web page does not list 37; the ITU communication of
   21 Oct 2022 assigns it to Orange Madagascar. The data follows the ITU communication, which
   is the later and formal notice.
-
-## Waiting for a source
-
-- **36 (Yas Madagascar).** Yas announced a new 036 range ("Bienvenue 036 !") on LinkedIn,
-  without a date. No page on yas.mg, no press article and no ARTEC or ITU entry was found on
-  2026-11-26, so 36 stays `UNKNOWN_OPERATOR` until one is published.

@@ -234,3 +234,94 @@
 - fn: weekdayName
   input: 8
   error: OUT_OF_RANGE
+# parseDate: Malagasy dates back to calendar fields, in any style formatDate writes.
+- fn: parseDate
+  input: '23 Novambra 2026'
+  expected: { year: 2026, month: 11, day: 23 }
+  note: 'long'
+- fn: parseDate
+  input: 'Alatsinainy 23 Novambra 2026'
+  expected: { year: 2026, month: 11, day: 23 }
+  note: 'full'
+- fn: parseDate
+  input: '2026 Nov 23'
+  expected: { year: 2026, month: 11, day: 23 }
+  note: 'medium'
+- fn: parseDate
+  input: '2026-11-23'
+  expected: { year: 2026, month: 11, day: 23 }
+  note: 'short'
+- fn: parseDate
+  input: '23/11/2026'
+  expected: { year: 2026, month: 11, day: 23 }
+  note: 'numeric'
+- fn: parseDate
+  input: '26 Jona 1960'
+  expected: { year: 1960, month: 6, day: 26 }
+- fn: parseDate
+  input: '5/7/2026'
+  expected: { year: 2026, month: 7, day: 5 }
+  note: 'one-digit day and month, as people type them'
+- fn: parseDate
+  input: '  23 novambra   2026 '
+  expected: { year: 2026, month: 11, day: 23 }
+  note: 'case and spacing do not matter'
+- fn: parseDate
+  input: '1 Janoary 1'
+  expected: { year: 1, month: 1, day: 1 }
+  note: 'smallest year, as formatDate writes it'
+- fn: parseDate
+  input: '23/11/2026'
+  args: ['numeric']
+  expected: { year: 2026, month: 11, day: 23 }
+  note: 'a style restricts the reading to that style'
+- fn: parseDate
+  input: '23 Novambra 2026'
+  args: ['numeric']
+  error: INVALID_FORMAT
+- fn: parseDate
+  input: 'Talata 23 Novambra 2026'
+  error: INVALID_FORMAT
+  note: '23 November 2026 is an Alatsinainy: the weekday must match'
+- fn: parseDate
+  input: '30 Febroary 2026'
+  error: INVALID_FORMAT
+  note: 'impossible date'
+- fn: parseDate
+  input: '29/02/2023'
+  error: INVALID_FORMAT
+  note: 'not a leap year'
+- fn: parseDate
+  input: '1 Janoary 0'
+  error: OUT_OF_RANGE
+  note: 'years 1 to 9999'
+- fn: parseDate
+  input: '23 November 2026'
+  error: INVALID_FORMAT
+  note: 'English month name'
+- fn: parseDate
+  input: '11/23/2026'
+  error: INVALID_FORMAT
+  note: 'day first: there is no month 23'
+- fn: parseDate
+  input: ''
+  error: INVALID_FORMAT
+- fn: parseDate
+  input: '23 Novambra 2026 2026 2026 2026 2026 2026 2026 2026 2026 2026 2026'
+  error: INVALID_FORMAT
+  note: 'longer than limits.maxReadLength'
+- fn: parseDate
+  input: 20261123
+  error: INVALID_TYPE
+- fn: parseDate
+  input: '23/11/2026'
+  args: ['weekly']
+  error: INVALID_TYPE
+- fn: parseDate
+  input: '5 Mey 12'
+  error: AMBIGUOUS
+  note: "'Mey' is the month name and its abbreviation: 5 May 12 (long) or 12 May 5 (medium)"
+- fn: parseDate
+  input: '5 Mey 12'
+  args: ['long']
+  expected: { year: 12, month: 5, day: 5 }

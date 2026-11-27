@@ -121,8 +121,10 @@ hundreds:
     checked: 2026-11-23
 # Groups above 999. A count of one is bare only for arivo ('arivo', 'iray alina', 'iray tapitrisa').
 # maxCount: largest multiplier read before the word (9 → 'sivy alina'; 999 → '... tapitrisa').
-# The largest group has no maxCount: it takes any count, written with every rule
-# (1999 × 10⁹ → 'sivy amby sivifolo sy sivinjato sy arivo lavitrisa').
+# The largest group has no maxCount: it takes any count ('arivo lavitrisa', 1 000 000 000 000;
+# 'iray alina lavitrisa', 10 000 000 000 000, Wikipedia). A count is written as one phrase,
+# every part joined by amby (rule 6): 'valopolo amby roanjato tapitrisa' (280 000 000,
+# dictionary entry tapitrisa), 'iraika amby arivo lavitrisa' (1 001 000 000 000).
 scales:
   - value: 1000
     word: arivo
@@ -146,8 +148,8 @@ scales:
     checked: 2026-11-23
   - value: 1000000000
     word: lavitrisa
-    source: https://malagasyword.org/bins/teny2/lavitrisa
-    checked: 2026-11-23
+    source: https://mg.wikipedia.org/wiki/Fanisana_amin'_ny_teny_malagasy
+    checked: 2026-11-27
 # Traditional system (rule 12): one name per power of ten, each taking a single digit 1–9.
 # 10³–10⁶ are the standard words; 10⁷–10¹⁵ are attested (Languages and Numbers, quoting Assimil).
 # derived: built by the source's own rule, '<name>faharoa' = <name> × 10⁷, as phanisana does;
@@ -226,24 +228,43 @@ joiners:
     word: "ambin'ny"
     source: https://www.languagesandnumbers.com/how-to-count-in-malagasy/en/mlg/
     checked: 2026-11-24
-  # Units onto 20–90 ('iraika amby roapolo') and anything onto exactly 100 ('dimy amby zato').
+  # Inside one phrase: units onto tens ('iraika amby roapolo'), the part below 100 onto the
+  # hundreds in a number below 1000 ('sivy amby telopolo amby roanjato', 239, Wikipedia), and
+  # every part of a count ('valopolo amby roanjato tapitrisa', 280 000 000).
   belowThousand:
     word: amby
-    source: https://malagasyword.org/bins/teny2/amby
-    checked: 2026-11-23
-  # Anything onto 200–900 ('dimy sy roanjato') and between groups of 1000 and above
-  # ('valo alina sy roa hetsy', 280 000).
+    source: https://mg.wikipedia.org/wiki/Fanisana_amin'_ny_teny_malagasy
+    checked: 2026-11-27
+  # Between groups ('valo alina sy roa hetsy', 280 000). In a number of 1000 or more, the
+  # hundreds from 200 are a group too ('dimy amby sivifolo sy efajato sy fito arivo', 7 495).
   betweenGroups:
     word: sy
-    source: https://malagasyword.org/bins/teny2/tapitrisa
-    checked: 2026-11-23
+    source: https://mg.wikipedia.org/wiki/Fanisana_amin'_ny_teny_malagasy
+    checked: 2026-11-27
 # Between the whole part and the decimals: 3.14 → 'telo faingo efatra ambin'ny folo'.
 decimalSeparator:
   word: faingo
   source: https://malagasyword.org/bins/teny2/faingo
   checked: 2026-11-26
+# Ordinals (rule 14): faha before the cardinal ('fahatelo'), fah before a vowel ('fahefatra',
+# 'fahiraika ambin'ny folo'), except 1, which is voalohany.
+ordinals:
+  first:
+    word: voalohany
+    source: https://malagasyword.org/bins/teny2/voalohany
+    checked: 2026-11-27
+  prefix:
+    word: faha
+    source: https://malagasyword.org/bins/teny2/faha
+    checked: 2026-11-27
+  prefixBeforeVowel:
+    word: fah
+    source: https://malagasyword.org/bins/teny2/faha
+    checked: 2026-11-27
+  vowels: [a, e, i, o, y]
 # No max: each port stops at its largest exact integer (README, Errors).
 # maxTextLength: longest decimal text read (rule 13), so a parser never scans unbounded input.
 limits:
   min: 0
   maxTextLength: 100
+  maxWordsLength: 4096

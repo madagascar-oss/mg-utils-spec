@@ -6,8 +6,13 @@
   "additionalProperties": false,
   "required": ["months", "monthsSource", "weekdays", "weekdaysSource", "styles", "limits"],
   "$defs": {
-    "name": { "type": "string", "pattern": "^[A-Z][a-z]+$" },
-    "sourced": { "$ref": "../../schemas/source.schema.json" }
+    "name": {
+      "type": "string",
+      "pattern": "^[A-Z][a-z]+$"
+    },
+    "sourced": {
+      "$ref": "../../schemas/source.schema.json"
+    }
   },
   "properties": {
     "months": {
@@ -19,9 +24,17 @@
         "additionalProperties": false,
         "required": ["number", "name", "abbreviation"],
         "properties": {
-          "number": { "type": "integer", "minimum": 1, "maximum": 12 },
-          "name": { "$ref": "#/$defs/name" },
-          "abbreviation": { "$ref": "#/$defs/name" }
+          "number": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 12
+          },
+          "name": {
+            "$ref": "#/$defs/name"
+          },
+          "abbreviation": {
+            "$ref": "#/$defs/name"
+          }
         }
       }
     },
@@ -29,7 +42,10 @@
       "$ref": "#/$defs/sourced",
       "type": "object",
       "unevaluatedProperties": false,
-      "properties": { "source": true, "checked": true }
+      "properties": {
+        "source": true,
+        "checked": true
+      }
     },
     "weekdays": {
       "type": "array",
@@ -40,9 +56,17 @@
         "additionalProperties": false,
         "required": ["isoNumber", "name", "abbreviation"],
         "properties": {
-          "isoNumber": { "type": "integer", "minimum": 1, "maximum": 7 },
-          "name": { "$ref": "#/$defs/name" },
-          "abbreviation": { "$ref": "#/$defs/name" }
+          "isoNumber": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 7
+          },
+          "name": {
+            "$ref": "#/$defs/name"
+          },
+          "abbreviation": {
+            "$ref": "#/$defs/name"
+          }
         }
       }
     },
@@ -50,19 +74,32 @@
       "$ref": "#/$defs/sourced",
       "type": "object",
       "unevaluatedProperties": false,
-      "properties": { "source": true, "checked": true }
+      "properties": {
+        "source": true,
+        "checked": true
+      }
     },
     "styles": {
       "type": "array",
       "minItems": 1,
       "items": {
-        "allOf": [{ "$ref": "#/$defs/sourced" }],
+        "allOf": [
+          {
+            "$ref": "#/$defs/sourced"
+          }
+        ],
         "type": "object",
         "unevaluatedProperties": false,
         "required": ["id", "pattern"],
         "properties": {
-          "id": { "type": "string", "pattern": "^[a-z]+$" },
-          "pattern": { "type": "string", "pattern": "^(EEEE|MMMM|MMM|MM|dd|d|y|[ /.,-])+$" },
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z]+$"
+          },
+          "pattern": {
+            "type": "string",
+            "pattern": "^(EEEE|MMMM|MMM|MM|dd|d|y|[ /.,-])+$"
+          },
           "source": true,
           "checked": true
         }
@@ -71,10 +108,20 @@
     "limits": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["minYear", "maxYear"],
+      "required": ["minYear", "maxYear", "maxReadLength"],
       "properties": {
-        "minYear": { "type": "integer", "minimum": 1 },
-        "maxYear": { "type": "integer", "maximum": 9999 }
+        "minYear": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "maxYear": {
+          "type": "integer",
+          "maximum": 9999
+        },
+        "maxReadLength": {
+          "type": "integer",
+          "minimum": 1
+        }
       }
     }
   }
