@@ -50,6 +50,9 @@ styles:
     pattern: dd/MM/y
     source: https://github.com/mdgascar/mdg-utils-spec/blob/dev/modules/date/README.md#recorded-decisions
     checked: 2026-11-24
+# maxReadLength: longest text parseDate reads, so a parser never scans unbounded input. The
+# longest formatted date, 'Alatsinainy 23 Septambra 2026', has 30 characters.
 limits:
   minYear: 1
   maxYear: 9999
+  maxReadLength: 64
