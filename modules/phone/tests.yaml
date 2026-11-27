@@ -5,100 +5,134 @@
     e164: '+261341234567'
     nationalNumber: '341234567'
     operator: yas
+    type: mobile
+    area: null
   note: national form with trunk prefix 0
 - input: '034 12 345 67'
   expected:
     e164: '+261341234567'
     nationalNumber: '341234567'
     operator: yas
+    type: mobile
+    area: null
   note: spaces are ignored
 - input: '034-12-345-67'
   expected:
     e164: '+261341234567'
     nationalNumber: '341234567'
     operator: yas
+    type: mobile
+    area: null
   note: dashes are ignored
 - input: '034.12.345.67'
   expected:
     e164: '+261341234567'
     nationalNumber: '341234567'
     operator: yas
+    type: mobile
+    area: null
   note: dots are ignored
 - input: '(034) 12 345 67'
   expected:
     e164: '+261341234567'
     nationalNumber: '341234567'
     operator: yas
+    type: mobile
+    area: null
   note: parentheses are ignored
 - input: '+261341234567'
   expected:
     e164: '+261341234567'
     nationalNumber: '341234567'
     operator: yas
+    type: mobile
+    area: null
   note: E.164
-- input: "034\u00a012\u00a0345\u00a067"
+- input: '034 12 345 67'
   expected:
     e164: '+261341234567'
     nationalNumber: '341234567'
     operator: yas
+    type: mobile
+    area: null
   note: non-breaking spaces (as pasted from documents) are ignored
 - input: '+261 34 12 345 67'
   expected:
     e164: '+261341234567'
     nationalNumber: '341234567'
     operator: yas
+    type: mobile
+    area: null
   note: international with spaces
 - input: '00261341234567'
   expected:
     e164: '+261341234567'
     nationalNumber: '341234567'
     operator: yas
+    type: mobile
+    area: null
   note: international prefix 00
 - input: '261341234567'
   expected:
     e164: '+261341234567'
     nationalNumber: '341234567'
     operator: yas
+    type: mobile
+    area: null
   note: country code without plus
 - input: '341234567'
   expected:
     e164: '+261341234567'
     nationalNumber: '341234567'
     operator: yas
+    type: mobile
+    area: null
   note: national significant number alone
 - input: ' 034 12 345 67 '
   expected:
     e164: '+261341234567'
     nationalNumber: '341234567'
     operator: yas
+    type: mobile
+    area: null
   note: surrounding spaces are ignored
 - input: '0321234567'
   expected:
     e164: '+261321234567'
     nationalNumber: '321234567'
     operator: orange
+    type: mobile
+    area: null
 - input: '0371234567'
   expected:
     e164: '+261371234567'
     nationalNumber: '371234567'
     operator: orange
+    type: mobile
+    area: null
   note: prefix 37 assigned to Orange in 2022
 - input: '0331234567'
   expected:
     e164: '+261331234567'
     nationalNumber: '331234567'
     operator: airtel
+    type: mobile
+    area: null
 - input: '0381234567'
   expected:
     e164: '+261381234567'
     nationalNumber: '381234567'
     operator: yas
+    type: mobile
+    area: null
   note: prefix 38 assigned to Telma (now Yas) in 2022
 - input: '0391234567'
   expected:
     e164: '+261391234567'
     nationalNumber: '391234567'
     operator: blueline
+    type: mobile
+    area: null
 - input: ''
   error: INVALID_FORMAT
   note: empty
@@ -139,27 +173,75 @@
     e164: '+261351234567'
     nationalNumber: '351234567'
     operator: airtel
+    type: mobile
+    area: null
   note: prefix 35 opened by Airtel on 22 June 2026
 - input: '+261 35 12 345 67'
   expected:
     e164: '+261351234567'
     nationalNumber: '351234567'
     operator: airtel
+    type: mobile
+    area: null
 - input: '0311234567'
   error: UNKNOWN_OPERATOR
   note: 31 is not assigned
 - input: '0361234567'
-  error: UNKNOWN_OPERATOR
-  note: 36 is announced by Yas but has no published source yet (see README)
+  expected:
+    e164: '+261361234567'
+    nationalNumber: '361234567'
+    operator: yas
+    type: mobile
+    area: null
+  note: 36 announced by Yas Madagascar on its official page
 - input: '0301234567'
   error: UNKNOWN_OPERATOR
   note: 30 is not assigned
-- input: '0202212345'
+- input: '020 22 421 19'
+  expected:
+    e164: '+261202242119'
+    nationalNumber: '202242119'
+    operator: yas
+    type: fixed
+    area: { name: Antananarivo, province: Antananarivo }
+  note: fixed line, the ARTEC number in the ITU filing
+- input: '+261 20 53 123 45'
+  expected:
+    e164: '+261205312345'
+    nationalNumber: '205312345'
+    operator: yas
+    type: fixed
+    area: { name: Toamasina, province: Toamasina }
+- input: '020 72 212 34'
+  expected:
+    e164: '+261207221234'
+    nationalNumber: '207221234'
+    operator: yas
+    type: fixed
+    area: { name: Manakara, province: Fianarantsoa }
+  note: the longest area prefix wins (20 722)
+- input: '020 44 123 45'
+  expected:
+    e164: '+261204412345'
+    nationalNumber: '204412345'
+    operator: yas
+    type: fixed
+    area: null
+  note: zone 4 is assigned but no town is listed for it
+- input: '020 12 345 67'
   error: UNKNOWN_OPERATOR
-  note: fixed lines are not mobile numbers
-- input: '0221234567'
+  note: zone 1 is not assigned
+- input: '022 12 345 67'
+  expected:
+    e164: '+261221234567'
+    nationalNumber: '221234567'
+    operator: gulfsat
+    type: fixed
+    area: null
+  note: VSAT fixed range, not geographic
+- input: '0211234567'
   error: UNKNOWN_OPERATOR
-  note: 22 is a VSAT fixed range
+  note: 21 is not assigned
 - input: 341234567
   error: INVALID_TYPE
   note: number, not string
@@ -224,6 +306,8 @@
     e164: '+261341234567'
     nationalNumber: '341234567'
     operator: yas
+    type: mobile
+    area: null
   note: 'exactly 32 characters (the limit) is read'
 - input: '0341234567                       '
   error: INVALID_FORMAT
