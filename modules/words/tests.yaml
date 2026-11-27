@@ -64,21 +64,21 @@
 - input: 200
   expected: 'roanjato'
 - input: 201
-  expected: 'iray sy roanjato'
-  note: 'a 1 before sy stays iray'
+  expected: 'iraika amby roanjato'
+  note: 'rule 4: one phrase below 1000 is joined by amby, so 1 is iraika'
 - input: 205
-  expected: 'dimy sy roanjato'
+  expected: 'dimy amby roanjato'
 - input: 211
-  expected: "iraika ambin'ny folo sy roanjato"
+  expected: "iraika ambin'ny folo amby roanjato"
 - input: 221
-  expected: 'iraika amby roapolo sy roanjato'
+  expected: 'iraika amby roapolo amby roanjato'
 - input: 280
-  expected: 'valopolo sy roanjato'
+  expected: 'valopolo amby roanjato'
 - input: 348
-  expected: 'valo amby efapolo sy telonjato'
-  note: "Assimil writes 'valo amby efapolo amby telonjato'; the data follows rule 4 (see Recorded disagreements)"
+  expected: 'valo amby efapolo amby telonjato'
+  note: 'Assimil, Le malgache de poche'
 - input: 999
-  expected: 'sivy amby sivifolo sy sivinjato'
+  expected: 'sivy amby sivifolo amby sivinjato'
 - input: 1000
   expected: 'arivo'
   note: 'dictionary table: a count of one is the bare scale word'
@@ -153,12 +153,16 @@
   expected: 'roanjato tapitrisa'
   note: 'dictionary table'
 - input: 280000000
-  expected: 'valopolo sy roanjato tapitrisa'
-  note: "the dictionary entry tapitrisa writes 'valopolo amby roanjato tapitrisa'; the data follows rule 4 (see Recorded disagreements)"
+  expected: 'valopolo amby roanjato tapitrisa'
+  note: 'dictionary entry tapitrisa'
 - input: 201000000
+  expected: 'iraika amby roanjato tapitrisa'
+  note: 'rule 4: the count is one phrase, joined by amby'
+- input: 200000001
   expected: 'iray sy roanjato tapitrisa'
+  note: 'rule 8: groups are joined by sy, so this differs from 201000000'
 - input: 999999999
-  expected: 'sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo sy sivinjato tapitrisa'
+  expected: 'sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo amby sivinjato tapitrisa'
 - input: 1000000000
   expected: 'iray lavitrisa'
   note: "the dictionary table writes 'lavitrisa'"
@@ -170,25 +174,33 @@
 - input: 12000000000
   expected: "roa ambin'ny folo lavitrisa"
 - input: 999999999999
-  expected: 'sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo sy sivinjato tapitrisa sy sivy amby sivifolo sy sivinjato lavitrisa'
+  expected: 'sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo amby sivinjato tapitrisa sy sivy amby sivifolo amby sivinjato lavitrisa'
 - input: 1000000000000
   expected: 'arivo lavitrisa'
-  note: 'rule 6: lavitrisa takes any count'
+  note: 'rule 6: compound group word for 10¹², bare like arivo (rule 7)'
 - input: 1000000000001
   expected: 'iray sy arivo lavitrisa'
+  note: 'rule 6: arivo lavitrisa is 10¹²'
 - input: 1001000000000
-  expected: 'iray sy arivo lavitrisa'
-  note: 'same phrase as 1000000000001, recorded in README'
+  expected: 'iray lavitrisa sy arivo lavitrisa'
+  note: 'rule 6: counts stop at 999, so 1001 × 10⁹ is two groups'
 - input: 1999999999999
-  expected: 'sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo sy sivinjato tapitrisa sy sivy amby sivifolo sy sivinjato sy arivo lavitrisa'
+  expected: 'sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo amby sivinjato tapitrisa sy sivy amby sivifolo amby sivinjato lavitrisa sy arivo lavitrisa'
 - input: 10000000000000
-  expected: 'iray alina lavitrisa'
+  expected: 'folo arivo lavitrisa'
 - input: 21000000000000
-  expected: 'arivo sy roa alina lavitrisa'
+  expected: 'iraika amby roapolo arivo lavitrisa'
 - input: 1000000000000000
   expected: 'iray tapitrisa lavitrisa'
+  note: 'rule 6: tapitrisa lavitrisa is 10¹⁵'
+- input: '1000000000000000000'
+  expected: 'iray lavitrisa lavitrisa'
+  note: 'rule 6: lavitrisa lavitrisa is 10¹⁸'
+- input: '1000000000000000000000'
+  expected: 'arivo lavitrisa lavitrisa'
+  note: 'rule 6: 10²¹'
 - input: 9007199254740991
-  expected: 'iraika amby sivifolo sy sivinjato sy efatra alina sy fito hetsy sy efatra amby dimampolo sy roanjato tapitrisa sy sivy amby sivifolo amby zato sy fito arivo sy sivy tapitrisa lavitrisa'
+  expected: 'iraika amby sivifolo sy sivinjato sy efatra alina sy fito hetsy sy efatra amby dimampolo amby roanjato tapitrisa sy sivy amby sivifolo amby zato lavitrisa sy fito arivo lavitrisa sy sivy tapitrisa lavitrisa'
   note: 'largest input every port can hold exactly (Number.MAX_SAFE_INTEGER)'
 - input: -1
   error: OUT_OF_RANGE
@@ -219,7 +231,7 @@
   expected: "roa ambin'ny folo faingo iraika amby zato"
 - input: 1234.5678
   expected: 'efatra amby telopolo sy roanjato sy arivo faingo valo amby fitopolo sy eninjato sy dimy arivo'
-- input: 0.0000001
+- input: 1e-7
   expected: 'aotra faingo aotra aotra aotra aotra aotra aotra iray'
   note: 'small values have no exponent notation'
 - input: 0.30000000000000004
@@ -329,7 +341,7 @@
 - input: '0'
   expected: 'aotra'
 - input: '9007199254740991'
-  expected: 'iraika amby sivifolo sy sivinjato sy efatra alina sy fito hetsy sy efatra amby dimampolo sy roanjato tapitrisa sy sivy amby sivifolo amby zato sy fito arivo sy sivy tapitrisa lavitrisa'
+  expected: 'iraika amby sivifolo sy sivinjato sy efatra alina sy fito hetsy sy efatra amby dimampolo amby roanjato tapitrisa sy sivy amby sivifolo amby zato lavitrisa sy fito arivo lavitrisa sy sivy tapitrisa lavitrisa'
   note: 'text and number agree'
 - input: '0.30000000000000004'
   expected: 'aotra faingo efatra sy telopolo tapitrisa lavitrisa'
@@ -351,10 +363,10 @@
   note: '19-digit decimals keep the traditional names'
 - input: '0.12345678901234567891'
   args: [{ 'system': 'traditional' }]
-  expected: "aotra faingo iraika amby sivifolo sy valonjato sy fito arivo sy enina alina sy dimy hetsy sy efatra amby telopolo sy roanjato tapitrisa sy iray sy sivinjato sy valo arivo sy fito alina sy enina hetsy sy dimy amby efapolo sy telonjato tapitrisa sy roa ambin'ny folo lavitrisa lavitrisa"
+  expected: "aotra faingo iraika amby sivifolo sy valonjato sy fito arivo sy enina alina sy dimy hetsy sy efatra amby telopolo amby roanjato tapitrisa sy iraika amby sivinjato lavitrisa sy valo amby fitopolo amby eninjato arivo lavitrisa sy dimy amby efapolo amby telonjato tapitrisa lavitrisa sy roa ambin'ny folo lavitrisa lavitrisa"
   note: '20-digit decimals fall back to the standard system'
 - input: '9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999'
-  expected: 'sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo sy sivinjato tapitrisa sy sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo sy sivinjato tapitrisa sy sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo sy sivinjato tapitrisa sy sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo sy sivinjato tapitrisa sy sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo sy sivinjato tapitrisa sy sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo sy sivinjato tapitrisa sy sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo sy sivinjato tapitrisa sy sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo sy sivinjato tapitrisa sy sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo sy sivinjato tapitrisa sy sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo sy sivinjato tapitrisa sy sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo sy sivinjato tapitrisa sy sivy lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa'
+  expected: 'sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo amby sivinjato tapitrisa sy sivy amby sivifolo amby sivinjato lavitrisa sy sivy amby sivifolo amby sivinjato arivo lavitrisa sy sivy amby sivifolo amby sivinjato tapitrisa lavitrisa sy sivy amby sivifolo amby sivinjato lavitrisa lavitrisa sy sivy amby sivifolo amby sivinjato arivo lavitrisa lavitrisa sy sivy amby sivifolo amby sivinjato tapitrisa lavitrisa lavitrisa sy sivy amby sivifolo amby sivinjato lavitrisa lavitrisa lavitrisa sy sivy amby sivifolo amby sivinjato arivo lavitrisa lavitrisa lavitrisa sy sivy amby sivifolo amby sivinjato tapitrisa lavitrisa lavitrisa lavitrisa sy sivy amby sivifolo amby sivinjato lavitrisa lavitrisa lavitrisa lavitrisa sy sivy amby sivifolo amby sivinjato arivo lavitrisa lavitrisa lavitrisa lavitrisa sy sivy amby sivifolo amby sivinjato tapitrisa lavitrisa lavitrisa lavitrisa lavitrisa sy sivy amby sivifolo amby sivinjato lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa sy sivy amby sivifolo amby sivinjato arivo lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa sy sivy amby sivifolo amby sivinjato tapitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa sy sivy amby sivifolo amby sivinjato lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa sy sivy amby sivifolo amby sivinjato arivo lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa sy sivy amby sivifolo amby sivinjato tapitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa sy sivy amby sivifolo amby sivinjato lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa sy sivy amby sivifolo amby sivinjato arivo lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa sy sivy amby sivifolo amby sivinjato tapitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa sy sivy amby sivifolo amby sivinjato lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa sy sivy amby sivifolo amby sivinjato arivo lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa sy sivy amby sivifolo amby sivinjato tapitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa sy sivy amby sivifolo amby sivinjato lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa sy sivy amby sivifolo amby sivinjato arivo lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa sy sivy amby sivifolo amby sivinjato tapitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa sy sivy amby sivifolo amby sivinjato lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa sy sivy amby sivifolo amby sivinjato arivo lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa sy sivy amby sivifolo amby sivinjato tapitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa sy sivy lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa'
   note: 'the longest text (limits.maxTextLength)'
 - input: '99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999990'
   error: INVALID_FORMAT
@@ -389,3 +401,215 @@
 - input: '١٢'
   error: INVALID_FORMAT
   note: 'ASCII digits only'
+# Rule 14: ordinals.
+- fn: spellOrdinal
+  input: 1
+  expected: 'voalohany'
+  note: 'dictionary entries voalohany and faha: 1 takes voalohany, not faha'
+- fn: spellOrdinal
+  input: 2
+  expected: 'faharoa'
+  note: 'mylanguages.org ordinals table'
+- fn: spellOrdinal
+  input: 3
+  expected: 'fahatelo'
+  note: 'dictionary entry faha'
+- fn: spellOrdinal
+  input: 4
+  expected: 'fahefatra'
+  note: "dictionary entry faha: fah before a vowel (mylanguages.org writes 'fahaefatra')"
+- fn: spellOrdinal
+  input: 5
+  expected: 'fahadimy'
+  note: 'dictionary entry faha'
+- fn: spellOrdinal
+  input: 6
+  expected: 'fahenina'
+  note: 'fah before a vowel'
+- fn: spellOrdinal
+  input: 10
+  expected: 'fahafolo'
+  note: 'mylanguages.org ordinals table'
+- fn: spellOrdinal
+  input: 11
+  expected: "fahiraika ambin'ny folo"
+  note: 'dictionary entry faha: iray in compounds takes fah'
+- fn: spellOrdinal
+  input: 19
+  expected: "fahasivy ambin'ny folo"
+  note: "dictionary entry faha: 'fahasivy ambin' ny folo'"
+- fn: spellOrdinal
+  input: 20
+  expected: 'faharoapolo'
+  note: "mylanguages.org writes 'faha-roapolo'"
+- fn: spellOrdinal
+  input: 21
+  expected: 'fahiraika amby roapolo'
+- fn: spellOrdinal
+  input: 23
+  expected: 'fahatelo amby roapolo'
+  note: "dictionary entry faha: 'faha 23'"
+- fn: spellOrdinal
+  input: 100
+  expected: 'fahazato'
+- fn: spellOrdinal
+  input: 1000
+  expected: 'faharivo'
+  note: 'fah before the vowel of arivo'
+- fn: spellOrdinal
+  input: 1001
+  expected: 'fahiray sy arivo'
+- fn: spellOrdinal
+  input: 10000
+  expected: 'fahiray alina'
+- fn: spellOrdinal
+  input: 2026
+  expected: 'fahenina amby roapolo sy roa arivo'
+- fn: spellOrdinal
+  input: 30000000
+  args: [{ 'system': 'traditional' }]
+  expected: 'fahatelo safatsiroa'
+- fn: spellOrdinal
+  input: '1000000000000000000'
+  expected: 'fahiray lavitrisa lavitrisa'
+  note: 'digit text, read exactly'
+- fn: spellOrdinal
+  input: 0
+  error: OUT_OF_RANGE
+  note: 'ordinals start at 1'
+- fn: spellOrdinal
+  input: -1
+  error: OUT_OF_RANGE
+- fn: spellOrdinal
+  input: 1.5
+  error: INVALID_TYPE
+  note: 'only whole numbers have an ordinal'
+- fn: spellOrdinal
+  input: '1.5'
+  error: INVALID_FORMAT
+  note: 'text is digits only'
+- fn: spellOrdinal
+  input: '0'
+  error: OUT_OF_RANGE
+- fn: spellOrdinal
+  input: null
+  error: INVALID_TYPE
+- fn: spellOrdinal
+  input: 3
+  args: [{ 'system': 'ancient' }]
+  error: INVALID_TYPE
+# parseWords: words back to the number, the exact inverse of spell.
+- fn: parseWords
+  input: 'aotra'
+  expected: 0
+- fn: parseWords
+  input: "iraika ambin'ny folo"
+  expected: 11
+- fn: parseWords
+  input: 'valo amby efapolo amby telonjato'
+  expected: 348
+  note: 'Assimil'
+- fn: parseWords
+  input: 'enina amby valopolo sy dimanjato sy roa arivo'
+  expected: 2586
+  note: 'Assimil'
+- fn: parseWords
+  input: 'valopolo amby roanjato tapitrisa'
+  expected: 280000000
+  note: 'dictionary entry tapitrisa'
+- fn: parseWords
+  input: 'iraika amby roanjato tapitrisa'
+  expected: 201000000
+- fn: parseWords
+  input: 'iray sy roanjato tapitrisa'
+  expected: 200000001
+  note: 'sy separates groups: 1 + 200 000 000'
+- fn: parseWords
+  input: 'iray sy arivo lavitrisa'
+  expected: 1000000000001
+  note: 'one reading only (rule 6)'
+- fn: parseWords
+  input: 'iray lavitrisa sy arivo lavitrisa'
+  expected: 1001000000000
+- fn: parseWords
+  input: "telo faingo efatra ambin'ny folo"
+  expected: 3.14
+- fn: parseWords
+  input: 'aotra faingo aotra aotra valo'
+  expected: 0.008
+- fn: parseWords
+  input: 'telo safatsiroa'
+  expected: 30000000
+  note: 'the traditional system is read too'
+- fn: parseWords
+  input: 'iray sy sivinjato sy valo arivo sy fito alina sy enina hetsy sy dimy tapitrisa sy efatra safatsiroa sy telo tsitamboisa sy roa lavitrisa sy iray alinkisa'
+  expected: 12345678901
+  note: 'tanisa 1.1.3 README'
+- fn: parseWords
+  input: '  Iraika  Ambin’ny FOLO '
+  expected: 11
+  note: 'case, spacing and curly apostrophes do not matter'
+- fn: parseWords
+  input: "roa ambin' ny folo"
+  expected: 12
+  note: "the dictionary's spelling ambin' ny"
+- fn: parseWords
+  input: 'roa amby ny folo'
+  expected: 12
+  note: 'the older amby ny (Assimil, dictionary entry lavitrisa)'
+- fn: parseWords
+  input: 'iray lavitrisa lavitrisa'
+  args: [{ 'as': 'text' }]
+  expected: '1000000000000000000'
+  note: 'exact text of any size'
+- fn: parseWords
+  input: 'roa tapitrisa lavitrisa faingo sivy'
+  args: [{ 'as': 'text' }]
+  expected: '2000000000000000.9'
+- fn: parseWords
+  input: 'roa tapitrisa lavitrisa faingo sivy'
+  error: PRECISION_LOSS
+  note: 'a number cannot hold 2000000000000000.9: never rounded silently'
+- fn: parseWords
+  input: 'iray lavitrisa lavitrisa'
+  error: PRECISION_LOSS
+- fn: parseWords
+  input: 'iraika amby sivifolo sy sivinjato sy efatra alina sy fito hetsy sy efatra amby dimampolo amby roanjato tapitrisa sy sivy amby sivifolo amby zato lavitrisa sy fito arivo lavitrisa sy sivy tapitrisa lavitrisa'
+  expected: 9007199254740991
+  note: 'largest exact integer'
+- fn: parseWords
+  input: 'dimy sy roanjato'
+  error: INVALID_FORMAT
+  note: 'below 1000 spell writes dimy amby roanjato: only one way is read'
+- fn: parseWords
+  input: 'iray tapitrisa sy roa'
+  error: INVALID_FORMAT
+  note: 'smallest part first'
+- fn: parseWords
+  input: 'iray arivo'
+  error: INVALID_FORMAT
+  note: 'a count of one is bare for arivo'
+- fn: parseWords
+  input: 'iray faingo dimampolo'
+  error: INVALID_FORMAT
+  note: '1.50 is written iray faingo dimy (rule 10)'
+- fn: parseWords
+  input: 'roa sy'
+  error: INVALID_FORMAT
+- fn: parseWords
+  input: ''
+  error: INVALID_FORMAT
+- fn: parseWords
+  input: 'twelve'
+  error: INVALID_FORMAT
+- fn: parseWords
+  input: '12'
+  error: INVALID_FORMAT
+  note: 'digits are not words'
+- fn: parseWords
+  input: 12
+  error: INVALID_TYPE
+- fn: parseWords
+  input: 'roa'
+  args: [{ 'as': 'bigint' }]
+  error: INVALID_TYPE

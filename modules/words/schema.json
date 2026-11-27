@@ -15,7 +15,6 @@
     "traditionalScales",
     "joiners",
     "limits",
-    "compoundScale",
     "ordinals"
   ],
   "$defs": {
@@ -187,10 +186,6 @@
           "description": "Longest words text read by parseWords."
         }
       }
-    },
-    "compoundScale": {
-      "description": "Rule 6: the word for 10ⁿ followed by this word is 10ⁿ⁺⁹.",
-      "$ref": "#/$defs/entry"
     },
     "ordinals": {
       "description": "Rule 14: ordinal words.",

@@ -10,3 +10,5 @@
   description: The phone number is well formed but its operator code is not assigned to an operator.
 - code: PRECISION_LOSS
   description: The value is exact in the text but the port's number type cannot hold it exactly; ask for the exact text instead.
+- code: AMBIGUOUS
+  description: The text reads as more than one value, so none is chosen.

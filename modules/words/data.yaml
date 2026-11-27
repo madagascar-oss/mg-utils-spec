@@ -121,7 +121,10 @@ hundreds:
     checked: 2026-11-23
 # Groups above 999. A count of one is bare only for arivo ('arivo', 'iray alina', 'iray tapitrisa').
 # maxCount: largest multiplier read before the word (9 → 'sivy alina'; 999 → '... tapitrisa').
-# A count is one phrase joined by amby (rule 4): 280 000 000 → 'valopolo amby roanjato tapitrisa'.
+# The largest group has no maxCount: it takes any count ('arivo lavitrisa', 1 000 000 000 000;
+# 'iray alina lavitrisa', 10 000 000 000 000, Wikipedia). A count is written as one phrase,
+# every part joined by amby (rule 6): 'valopolo amby roanjato tapitrisa' (280 000 000,
+# dictionary entry tapitrisa), 'iraika amby arivo lavitrisa' (1 001 000 000 000).
 scales:
   - value: 1000
     word: arivo
@@ -145,17 +148,8 @@ scales:
     checked: 2026-11-23
   - value: 1000000000
     word: lavitrisa
-    maxCount: 999
-    source: https://malagasyword.org/bins/teny2/lavitrisa
-    checked: 2026-11-23
-# Rule 6: above lavitrisa, a group word is a compound of the words above, as Assimil names 10⁹
-# 'arivo tapitrisa': the word for 10ⁿ (n = 3, 6, 9, 12, …) followed by 'lavitrisa' is 10ⁿ⁺⁹.
-# 'arivo lavitrisa' 10¹², 'tapitrisa lavitrisa' 10¹⁵, 'lavitrisa lavitrisa' 10¹⁸,
-# 'arivo lavitrisa lavitrisa' 10²¹. Each takes a count of 1–999.
-compoundScale:
-  word: lavitrisa
-  source: https://www.languagesandnumbers.com/how-to-count-in-malagasy/en/mlg/
-  checked: 2026-11-27
+    source: https://mg.wikipedia.org/wiki/Fanisana_amin'_ny_teny_malagasy
+    checked: 2026-11-27
 # Traditional system (rule 12): one name per power of ten, each taking a single digit 1–9.
 # 10³–10⁶ are the standard words; 10⁷–10¹⁵ are attested (Languages and Numbers, quoting Assimil).
 # derived: built by the source's own rule, '<name>faharoa' = <name> × 10⁷, as phanisana does;
@@ -234,18 +228,18 @@ joiners:
     word: "ambin'ny"
     source: https://www.languagesandnumbers.com/how-to-count-in-malagasy/en/mlg/
     checked: 2026-11-24
-  # Inside one phrase below 1000: units onto tens ('iraika amby roapolo') and the part below 100
-  # onto the hundreds ('valo amby efapolo amby telonjato', 348, Assimil). A count before a
-  # group word is such a phrase ('valopolo amby roanjato tapitrisa', dictionary entry tapitrisa).
+  # Inside one phrase: units onto tens ('iraika amby roapolo'), the part below 100 onto the
+  # hundreds in a number below 1000 ('sivy amby telopolo amby roanjato', 239, Wikipedia), and
+  # every part of a count ('valopolo amby roanjato tapitrisa', 280 000 000).
   belowThousand:
     word: amby
-    source: https://www.languagesandnumbers.com/how-to-count-in-malagasy/en/mlg/
+    source: https://mg.wikipedia.org/wiki/Fanisana_amin'_ny_teny_malagasy
     checked: 2026-11-27
   # Between groups ('valo alina sy roa hetsy', 280 000). In a number of 1000 or more, the
-  # hundreds from 200 are a group too ('enina amby valopolo sy dimanjato sy roa arivo', 2 586).
+  # hundreds from 200 are a group too ('dimy amby sivifolo sy efajato sy fito arivo', 7 495).
   betweenGroups:
     word: sy
-    source: https://www.languagesandnumbers.com/how-to-count-in-malagasy/en/mlg/
+    source: https://mg.wikipedia.org/wiki/Fanisana_amin'_ny_teny_malagasy
     checked: 2026-11-27
 # Between the whole part and the decimals: 3.14 → 'telo faingo efatra ambin'ny folo'.
 decimalSeparator:
