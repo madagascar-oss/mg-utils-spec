@@ -12,9 +12,11 @@ is set by the rules and test vectors here. Parsers (text typed by users → valu
 `parse` throws, `safeParse` returns the value or the error code, `tryParse` returns the value or
 nothing.
 
-| Function        | Does                    | JavaScript         | PHP                                                      |
-| --------------- | ----------------------- | ------------------ | -------------------------------------------------------- |
-| `numberToWords` | Number → Malagasy words | `numberToWords(n)` | `NumberWords::fromInt($n)`, `NumberWords::fromFloat($n)` |
+| Function        | Does                    | JavaScript                  | PHP                                                                        |
+| --------------- | ----------------------- | --------------------------- | -------------------------------------------------------------------------- |
+| `numberToWords` | Number → Malagasy words | `numberToWords(n, options)` | `NumberWords::fromInt($n, $system)`, `NumberWords::fromFloat($n, $system)` |
+
+One option, `system`: `standard` (the default, rules 1–11) or `traditional` (rule 12).
 
 ## Rules
 
@@ -58,14 +60,39 @@ nothing.
     `iray`). A binary floating-point value reads as it is: `0.1 + 0.2` is
     `0.30000000000000004`, not `0.3`.
 11. **Out of scope for now:** negative numbers.
+12. **The traditional system** (option `system: traditional`) gives **every power of ten from
+    10³ its own name**. It is not used in everyday writing, but it is attested in learner
+    material. Each name takes a single digit, 1–9, read with the rules above, and the groups are
+    joined by `sy`, smallest first. A count of one is bare only for `arivo` (rule 7). Below
+    10 000 the two systems write the same words.
+
+    | Power | Name          | Power | Name                 | Power | Name                        |
+    | ----- | ------------- | ----- | -------------------- | ----- | --------------------------- |
+    | 10³   | `arivo`       | 10⁹   | `lavitrisa`          | 10¹⁵  | `tsitamboisafaharoa`        |
+    | 10⁴   | `alina`       | 10¹⁰  | `alinkisa`           | 10¹⁶  | `lavitrisafaharoa`\*        |
+    | 10⁵   | `hetsy`       | 10¹¹  | `tsipesimpesenina`   | 10¹⁷  | `alinkisafaharoa`\*         |
+    | 10⁶   | `tapitrisa`   | 10¹²  | `tsitokotsiforohana` | 10¹⁸  | `tsipesimpeseninafaharoa`\* |
+    | 10⁷   | `safatsiroa`  | 10¹³  | `tsihitanoanoa`      |       |                             |
+    | 10⁸   | `tsitamboisa` | 10¹⁴  | `safatsiroafaharoa`  |       |                             |
+
+    `30 000 000` → `telo safatsiroa` (standard: `telopolo tapitrisa`); `12 345 678 901` →
+    `iray sy sivinjato sy valo arivo sy fito alina sy enina hetsy sy dimy tapitrisa sy efatra
+safatsiroa sy telo tsitamboisa sy roa lavitrisa sy iray alinkisa`.
+
+    The source names 10⁷–10¹⁵, then skips to 10²¹; its rule is that `<name>faharoa` ("the
+    second") is `<name>` × 10⁷. \* 10¹⁶–10¹⁸ are **derived** by that rule (as `phanisana`
+    does), so the system reaches every integer a port supports. The largest name also takes
+    1–9, so the traditional system ends at 10¹⁹ − 1 (`OUT_OF_RANGE` above). Decimals after
+    `faingo` are read in the same system (rule 9).
 
 ## Errors
 
-| Input                                  | Code           |
-| -------------------------------------- | -------------- |
-| Not a number, `NaN`, `Infinity`        | `INVALID_TYPE` |
-| Below 0                                | `OUT_OF_RANGE` |
-| Above the port's largest exact integer | `OUT_OF_RANGE` |
+| Input                                    | Code           |
+| ---------------------------------------- | -------------- |
+| Not a number, `NaN`, `Infinity`          | `INVALID_TYPE` |
+| A `system` other than the two of rule 12 | `INVALID_TYPE` |
+| Below 0                                  | `OUT_OF_RANGE` |
+| Above the port's largest exact integer   | `OUT_OF_RANGE` |
 
 The spec sets no maximum. A port stops where its integer type stops being exact:
 
@@ -91,6 +118,11 @@ Shared vectors stay within 9 007 199 254 740 991 so every port runs all of them.
   <https://ctan.org/pkg/malagasy-numberwords>.
 - `18.3` and `0.008` examples: README of the `tanisa` npm package,
   <https://unpkg.com/tanisa@1.2.0/README.md>.
+- Traditional system (rule 12): the names for 10⁷–10¹⁵ and the `faharoa` rule from Languages
+  and Numbers (quoting Assimil), above. One digit per name, joined by `sy`, smallest first:
+  the 12 345 678 901 example of `tanisa` 1.1.3, <https://unpkg.com/tanisa@1.1.3/README.md>,
+  and the `phanisana` PHP library, which also derives 10¹⁶–10¹⁸,
+  <https://github.com/mamyraoby/phanisana/blob/main/src/Enum/Dictionary.php>.
 
 ## Waiting for a source or an expert
 
@@ -103,22 +135,13 @@ Not in the data until a source settles them, or a Malagasy language expert revie
   a hundred, [Fanisana amin' ny teny malagasy](https://mg.wikipedia.org/wiki/Fanisana_amin'_ny_teny_malagasy)),
   so `latsaky ny dimy` would read as "less than five", not "minus five". `tanisa` rejects
   negatives (`toWords(-5)` throws). Needed: a source that spells a negative number in words.
-- **Names for 10⁷, 10⁸ and above.** Languages and Numbers (quoting Assimil) lists a name for each
-  power of ten: `safatsiroa` (10⁷), `tsitamboisa` (10⁸), `lavitrisa` or `arivo tapitrisa` (10⁹),
-  `alinkisa` (10¹⁰), `tsipesimpesenina` (10¹¹), `tsitokotsiforohana` (10¹²), `tsihitanoanoa`
-  (10¹³), `safatsiroafaharoa` (10¹⁴), `tsitamboisafaharoa` (10¹⁵), … `safatsiroafahatelo` (10²¹),
-  `tsitamboisafahatelo` (10²²)
-  ([source](https://www.languagesandnumbers.com/how-to-count-in-malagasy/en/mlg/)). `tanisa` 1.1.3
-  uses some of them (`… sy dimy tapitrisa sy efatra safatsiroa sy telo tsitamboisa sy roa
-lavitrisa sy iray alinkisa` for 12 345 678 901,
-  [README](https://unpkg.com/tanisa@1.1.3/README.md)). The data reads these powers through
-  counts instead, as the dictionary's `tapitrisa` entry does: 12 345 678 901 is `… sy dimy amby
-efapolo sy telonjato tapitrisa sy roa ambin'ny folo lavitrisa` (rule 6). Several of these words also have looser meanings
-  (`alinkisa` "innumerable", `tsitokotsiforohana` "an enormous sum"). Needed: an expert ruling on
-  whether standard writing uses them, and which form the spec should give.
 
 ## Recorded disagreements
 
+- **Spelling of two traditional names (rule 12).** `phanisana` writes `tsipesimpesina` (10¹¹)
+  and `tsitanoanoa` (10¹³); Languages and Numbers (Assimil) writes `tsipesimpesenina` and
+  `tsihitanoanoa`. The data follows Assimil, the project's reference, including in the derived
+  `tsipesimpeseninafaharoa` (10¹⁸). Decided by the maintainers on 2026-11-27.
 - **`sy` before 200–900 at every size (rule 4).** Assimil gives `348` → `valo amby efapolo amby
 telonjato` (`amby` below 1000) but `2 586` → `enina amby valopolo sy dimanjato sy roa arivo`
   (`sy` before the hundreds). The dictionary's `tapitrisa` entry writes

@@ -10,16 +10,16 @@ is set by the rules and test vectors here. Parsers (text typed by users → valu
 `parse` throws, `safeParse` returns the value or the error code, `tryParse` returns the value or
 nothing.
 
-| Function          | Does                                            | JavaScript                                    | PHP                                     |
-| ----------------- | ----------------------------------------------- | --------------------------------------------- | --------------------------------------- |
-| `formatAriary`    | Amount → `Ar 1 500` (grouping, symbol position) | `formatAriary(amount, options)`               | `Ariary::fromInt($amount)->format(...)` |
-| `parseAriary`     | Text → amount, or throws                        | `parseAriary(text, options)`                  | `Ariary::parse($text, ...)->amount`     |
-| `safeParseAriary` | Text → amount or error code, never throws       | `safeParseAriary(text, options)`              | `Ariary::safeParse($text, ...)`         |
-| `tryParseAriary`  | Text → amount, or nothing, never throws         | `tryParseAriary(text, options)` → `undefined` | `Ariary::tryParse($text, ...)` → `null` |
-| `ariaryToWords`   | Amount → Malagasy words + `ariary`              | `ariaryToWords(amount)`                       | `Ariary::fromInt($amount)->toWords()`   |
-| `fmgToAriary`     | Old francs → Ariary (5 FMG = 1 Ar)              | `fmgToAriary(francs)`                         | `Ariary::fromFmg($francs)->amount`      |
-| `ariaryToFmg`     | Ariary → old francs                             | `ariaryToFmg(amount)`                         | `Ariary::fromInt($amount)->toFmg()`     |
-| `formatFmg`       | Francs → `Fmg 7 500`                            | `formatFmg(francs, options)`                  | `Ariary::formatFmg($francs, ...)`       |
+| Function          | Does                                            | JavaScript                                    | PHP                                      |
+| ----------------- | ----------------------------------------------- | --------------------------------------------- | ---------------------------------------- |
+| `formatAriary`    | Amount → `Ar 1 500` (grouping, symbol position) | `formatAriary(amount, options)`               | `Ariary::fromInt($amount)->format(...)`  |
+| `parseAriary`     | Text → amount, or throws                        | `parseAriary(text, options)`                  | `Ariary::parse($text, ...)->amount`      |
+| `safeParseAriary` | Text → amount or error code, never throws       | `safeParseAriary(text, options)`              | `Ariary::safeParse($text, ...)`          |
+| `tryParseAriary`  | Text → amount, or nothing, never throws         | `tryParseAriary(text, options)` → `undefined` | `Ariary::tryParse($text, ...)` → `null`  |
+| `ariaryToWords`   | Amount → Malagasy words + `ariary`              | `ariaryToWords(amount, options)`              | `Ariary::fromInt($amount)->toWords(...)` |
+| `fmgToAriary`     | Old francs → Ariary (5 FMG = 1 Ar)              | `fmgToAriary(francs)`                         | `Ariary::fromFmg($francs)->amount`       |
+| `ariaryToFmg`     | Ariary → old francs                             | `ariaryToFmg(amount)`                         | `Ariary::fromInt($amount)->toFmg()`      |
+| `formatFmg`       | Francs → `Fmg 7 500`                            | `formatFmg(francs, options)`                  | `Ariary::formatFmg($francs, ...)`        |
 
 ## Rules
 
@@ -64,6 +64,8 @@ nothing.
    - Amounts above the port's largest exact integer are `OUT_OF_RANGE`.
 5. **In words:** the number in words (see the words module) followed by `ariary`:
    `1500` → `dimanjato sy arivo ariary`, `1500.5` → `dimanjato sy arivo faingo dimy ariary`.
+   The words `system` option applies (words rule 12): `30 000 000` in the traditional system →
+   `telo safatsiroa ariary`.
 6. **Malagasy franc:** 1 Ar = 5 FMG. `fmgToAriary` divides by 5 and `ariaryToFmg` multiplies by
    5, both exactly in decimal: `7501` FMG → `1500.2` Ar, `0.07` Ar → `0.35` FMG (never a
    binary rounding artefact such as `0.35000000000000003`). Francs may be decimal too. A result

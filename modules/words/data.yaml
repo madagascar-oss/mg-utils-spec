@@ -148,6 +148,78 @@ scales:
     word: lavitrisa
     source: https://malagasyword.org/bins/teny2/lavitrisa
     checked: 2026-11-23
+# Traditional system (rule 12): one name per power of ten, each taking a single digit 1–9.
+# 10³–10⁶ are the standard words; 10⁷–10¹⁵ are attested (Languages and Numbers, quoting Assimil).
+# derived: built by the source's own rule, '<name>faharoa' = <name> × 10⁷, as phanisana does;
+# spelled from the Assimil names. The largest entry also takes 1–9, so the system ends at 10¹⁹ − 1.
+traditionalScales:
+  - value: 1000
+    word: arivo
+    source: https://malagasyword.org/bins/teny2/arivo
+    checked: 2026-11-23
+  - value: 10000
+    word: alina
+    source: https://malagasyword.org/bins/teny2/alina
+    checked: 2026-11-23
+  - value: 100000
+    word: hetsy
+    source: https://malagasyword.org/bins/teny2/hetsy
+    checked: 2026-11-23
+  - value: 1000000
+    word: tapitrisa
+    source: https://malagasyword.org/bins/teny2/tapitrisa
+    checked: 2026-11-23
+  - value: 10000000
+    word: safatsiroa
+    source: https://www.languagesandnumbers.com/how-to-count-in-malagasy/en/mlg/
+    checked: 2026-11-27
+  - value: 100000000
+    word: tsitamboisa
+    source: https://www.languagesandnumbers.com/how-to-count-in-malagasy/en/mlg/
+    checked: 2026-11-27
+  - value: 1000000000
+    word: lavitrisa
+    source: https://www.languagesandnumbers.com/how-to-count-in-malagasy/en/mlg/
+    checked: 2026-11-27
+  - value: 10000000000
+    word: alinkisa
+    source: https://www.languagesandnumbers.com/how-to-count-in-malagasy/en/mlg/
+    checked: 2026-11-27
+  - value: 100000000000
+    word: tsipesimpesenina
+    source: https://www.languagesandnumbers.com/how-to-count-in-malagasy/en/mlg/
+    checked: 2026-11-27
+  - value: 1000000000000
+    word: tsitokotsiforohana
+    source: https://www.languagesandnumbers.com/how-to-count-in-malagasy/en/mlg/
+    checked: 2026-11-27
+  - value: 10000000000000
+    word: tsihitanoanoa
+    source: https://www.languagesandnumbers.com/how-to-count-in-malagasy/en/mlg/
+    checked: 2026-11-27
+  - value: 100000000000000
+    word: safatsiroafaharoa
+    source: https://www.languagesandnumbers.com/how-to-count-in-malagasy/en/mlg/
+    checked: 2026-11-27
+  - value: 1000000000000000
+    word: tsitamboisafaharoa
+    source: https://www.languagesandnumbers.com/how-to-count-in-malagasy/en/mlg/
+    checked: 2026-11-27
+  - value: 10000000000000000
+    word: lavitrisafaharoa
+    derived: true
+    source: https://github.com/mamyraoby/phanisana/blob/main/src/Enum/Dictionary.php
+    checked: 2026-11-27
+  - value: 100000000000000000
+    word: alinkisafaharoa
+    derived: true
+    source: https://github.com/mamyraoby/phanisana/blob/main/src/Enum/Dictionary.php
+    checked: 2026-11-27
+  - value: 1000000000000000000
+    word: tsipesimpeseninafaharoa
+    derived: true
+    source: https://github.com/mamyraoby/phanisana/blob/main/src/Enum/Dictionary.php
+    checked: 2026-11-27
 joiners:
   # 11–19 only: 'iraika ambin'ny folo'.
   unitsBeforeTen:
