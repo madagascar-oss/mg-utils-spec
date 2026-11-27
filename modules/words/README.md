@@ -18,7 +18,7 @@ nothing.
 | ---------------- | ---------------------------------------- | ------------------------------ | -------------------------------------------------------------- |
 | `spell`          | Number → Malagasy words                  | `spell(n, options)`            | `NumberWords::spell($n, $system)` (int, float or decimal text) |
 | `spellOrdinal`   | Whole number → ordinal words (rule 14)   | `spellOrdinal(n, options)`     | `NumberWords::spellOrdinal($n, $system)`                       |
-| `parseWords`     | Words → number, or throws (rule 15)      | `parseWords(text, options)`    | `NumberWords::parse($text)`, `NumberWords::parseText($text)`   |
+| `parseWords`     | Words → number, or throws (rule 15)      | `parseWords(text, options)`    | `NumberWords::parse($text)->value()`, `->digits`               |
 | `safeParseWords` | Words → number or error code, no throw   | `safeParseWords(text, opts)`   | `NumberWords::safeParse($text)`                                |
 | `tryParseWords`  | Words → number, or nothing, never throws | `tryParseWords(text, options)` | `NumberWords::tryParse($text)` → `null`                        |
 
