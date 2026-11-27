@@ -151,7 +151,7 @@ scales:
 # Traditional system (rule 12): one name per power of ten, each taking a single digit 1–9.
 # 10³–10⁶ are the standard words; 10⁷–10¹⁵ are attested (Languages and Numbers, quoting Assimil).
 # derived: built by the source's own rule, '<name>faharoa' = <name> × 10⁷, as phanisana does;
-# spelled from the Assimil names. The largest entry also takes 1–9, so the system ends at 10¹⁹ − 1.
+# spelled from the Assimil names. No port's largest input reaches 10¹⁹, so each name takes 1–9.
 traditionalScales:
   - value: 1000
     word: arivo

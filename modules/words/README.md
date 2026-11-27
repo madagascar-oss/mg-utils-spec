@@ -81,8 +81,8 @@ safatsiroa sy telo tsitamboisa sy roa lavitrisa sy iray alinkisa`.
 
     The source names 10⁷–10¹⁵, then skips to 10²¹; its rule is that `<name>faharoa` ("the
     second") is `<name>` × 10⁷. \* 10¹⁶–10¹⁸ are **derived** by that rule (as `phanisana`
-    does), so the system reaches every integer a port supports. The largest name also takes
-    1–9, so the traditional system ends at 10¹⁹ − 1 (`OUT_OF_RANGE` above). Decimals after
+    does), so the system names every integer a port supports: the largest input of any port
+    (PHP's 9.2 × 10¹⁸) stays below 10¹⁹, so every name takes one digit. Decimals after
     `faingo` are read in the same system (rule 9).
 
 ## Errors
