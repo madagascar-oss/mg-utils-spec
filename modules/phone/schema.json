@@ -1,16 +1,23 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/mdgascar/mdg-utils-spec/modules/phone/schema.json",
-  "title": "Madagascar mobile numbering",
+  "title": "Madagascar telephone numbering",
   "type": "object",
   "additionalProperties": false,
-  "required": ["plan", "operators"],
+  "required": ["plan", "operators", "fixedZones", "areas"],
   "$defs": {
-    "digits": { "type": "string", "pattern": "^[0-9]+$" }
+    "digits": {
+      "type": "string",
+      "pattern": "^[0-9]+$"
+    }
   },
   "properties": {
     "plan": {
-      "allOf": [{ "$ref": "../../schemas/source.schema.json" }],
+      "allOf": [
+        {
+          "$ref": "../../schemas/source.schema.json"
+        }
+      ],
       "type": "object",
       "unevaluatedProperties": false,
       "required": [
@@ -21,14 +28,26 @@
         "grouping"
       ],
       "properties": {
-        "countryCode": { "$ref": "#/$defs/digits" },
-        "internationalPrefix": { "$ref": "#/$defs/digits" },
-        "trunkPrefix": { "$ref": "#/$defs/digits" },
-        "nationalNumberLength": { "type": "integer", "minimum": 1 },
+        "countryCode": {
+          "$ref": "#/$defs/digits"
+        },
+        "internationalPrefix": {
+          "$ref": "#/$defs/digits"
+        },
+        "trunkPrefix": {
+          "$ref": "#/$defs/digits"
+        },
+        "nationalNumberLength": {
+          "type": "integer",
+          "minimum": 1
+        },
         "grouping": {
           "type": "array",
           "minItems": 1,
-          "items": { "type": "integer", "minimum": 1 }
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          }
         },
         "source": true,
         "checked": true
@@ -38,18 +57,31 @@
       "type": "array",
       "minItems": 1,
       "items": {
-        "allOf": [{ "$ref": "../../schemas/source.schema.json" }],
+        "allOf": [
+          {
+            "$ref": "../../schemas/source.schema.json"
+          }
+        ],
         "type": "object",
         "unevaluatedProperties": false,
-        "required": ["id", "name", "prefixes"],
+        "required": ["id", "name"],
         "properties": {
-          "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
-          "name": { "type": "string", "minLength": 1 },
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]*$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
           "prefixes": {
             "type": "array",
             "minItems": 1,
             "uniqueItems": true,
-            "items": { "type": "string", "pattern": "^3[0-9]$" }
+            "items": {
+              "type": "string",
+              "pattern": "^3[0-9]$"
+            }
           },
           "source": true,
           "checked": true,
@@ -58,18 +90,117 @@
             "type": "array",
             "minItems": 1,
             "items": {
-              "allOf": [{ "$ref": "../../schemas/source.schema.json" }],
+              "allOf": [
+                {
+                  "$ref": "../../schemas/source.schema.json"
+                }
+              ],
               "type": "object",
               "unevaluatedProperties": false,
               "required": ["about"],
               "properties": {
-                "about": { "type": "string", "minLength": 1 },
+                "about": {
+                  "type": "string",
+                  "minLength": 1
+                },
                 "source": true,
                 "checked": true
               }
             }
+          },
+          "fixedPrefixes": {
+            "description": "Fixed-line operator codes (20–29).",
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^2[0-9]$"
+            }
           }
+        },
+        "anyOf": [
+          {
+            "required": ["prefixes"]
+          },
+          {
+            "required": ["fixedPrefixes"]
+          }
+        ]
+      }
+    },
+    "fixedZones": {
+      "allOf": [
+        {
+          "$ref": "../../schemas/source.schema.json"
         }
+      ],
+      "type": "object",
+      "unevaluatedProperties": false,
+      "required": ["prefix", "zones"],
+      "properties": {
+        "prefix": {
+          "type": "string",
+          "pattern": "^2[0-9]$"
+        },
+        "zones": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["digit", "name"],
+            "properties": {
+              "digit": {
+                "type": "string",
+                "pattern": "^[0-9]$"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "source": true,
+        "checked": true
+      }
+    },
+    "areas": {
+      "allOf": [
+        {
+          "$ref": "../../schemas/source.schema.json"
+        }
+      ],
+      "type": "object",
+      "unevaluatedProperties": false,
+      "required": ["entries"],
+      "properties": {
+        "entries": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["prefix", "name", "province"],
+            "properties": {
+              "prefix": {
+                "type": "string",
+                "pattern": "^2[0-9]{2,4}$"
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "province": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "source": true,
+        "checked": true
       }
     }
   }
