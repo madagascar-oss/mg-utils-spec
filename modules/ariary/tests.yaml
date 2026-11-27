@@ -340,6 +340,11 @@
 - fn: ariaryToWords
   input: -1
   error: OUT_OF_RANGE
+- fn: ariaryToWords
+  input: 30000000
+  args: [{ 'system': 'traditional' }]
+  expected: 'telo safatsiroa ariary'
+  note: 'the words system option (words rule 12)'
 - fn: fmgToAriary
   input: 0
   expected: 0
