@@ -2,7 +2,8 @@
 
 Turns any number from `0` up, whole or decimal, into Malagasy words, as written in the standard
 (official) language. The rules have no upper limit; each port stops at its largest exact integer
-(see [Errors](#errors)). Input is a number value only: strings, digit separators and other
+(see [Errors](#errors)). Input is a number value, or plain decimal text such as
+`'2000000000000000.9'` when every digit must be exact (rule 13). Digit separators and other
 notations are not parsed.
 
 ## Public API
@@ -12,9 +13,9 @@ is set by the rules and test vectors here. Parsers (text typed by users → valu
 `parse` throws, `safeParse` returns the value or the error code, `tryParse` returns the value or
 nothing.
 
-| Function        | Does                    | JavaScript                  | PHP                                                                        |
-| --------------- | ----------------------- | --------------------------- | -------------------------------------------------------------------------- |
-| `numberToWords` | Number → Malagasy words | `numberToWords(n, options)` | `NumberWords::fromInt($n, $system)`, `NumberWords::fromFloat($n, $system)` |
+| Function        | Does                    | JavaScript                  | PHP                                                                                                                   |
+| --------------- | ----------------------- | --------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| `numberToWords` | Number → Malagasy words | `numberToWords(n, options)` | `NumberWords::fromInt($n, $system)`, `NumberWords::fromFloat($n, $system)`, `NumberWords::fromString($text, $system)` |
 
 One option, `system`: `standard` (the default, rules 1–11) or `traditional` (rule 12).
 
@@ -81,20 +82,34 @@ safatsiroa sy telo tsitamboisa sy roa lavitrisa sy iray alinkisa`.
 
     The source names 10⁷–10¹⁵, then skips to 10²¹; its rule is that `<name>faharoa` ("the
     second") is `<name>` × 10⁷. \* 10¹⁶–10¹⁸ are **derived** by that rule (as `phanisana`
-    does), so the system names every integer a port supports: the largest input of any port
-    (PHP's 9.2 × 10¹⁸) stays below 10¹⁹, so every name takes one digit. Decimals after
-    `faingo` are read in the same system (rule 9).
+    does), so the system names every integer a number value can hold. Decimals after `faingo`
+    are read in the same system (rule 9). **No name exists past 10¹⁸**, so a number of 10¹⁹ or
+    more, which only decimal text (rule 13) can reach, is written in the standard system. The
+    whole part and the decimals are each one number here: `'10000000000000000000'` →
+    `folo lavitrisa lavitrisa` in both systems.
+
+13. **Decimal text** is read digit by digit, exactly, with no floating-point rounding:
+    `'2000000000000000.9'` → `roa tapitrisa lavitrisa faingo sivy`, where the number
+    `2_000_000_000_000_000.9` is already `2000000000000001` before any port sees it. The text is
+    digits with an optional `.` and decimals: `'12'`, `'1500.25'`. No sign, space, separator,
+    exponent, or missing digit on either side of the point (`'.5'`, `'5.'`), and at most 100
+    characters (`limits.maxTextLength`). Anything else is `INVALID_FORMAT`. Leading zeros and
+    trailing decimal zeros are dropped, so text reads like the number it writes (rule 10):
+    `'007'` → `fito`, `'1.50'` → `iray faingo dimy`, `'0.0'` → `aotra`. Text has no port limit:
+    every port reads every digit.
 
 ## Errors
 
-| Input                                    | Code           |
-| ---------------------------------------- | -------------- |
-| Not a number, `NaN`, `Infinity`          | `INVALID_TYPE` |
-| A `system` other than the two of rule 12 | `INVALID_TYPE` |
-| Below 0                                  | `OUT_OF_RANGE` |
-| Above the port's largest exact integer   | `OUT_OF_RANGE` |
+| Input                                    | Code             |
+| ---------------------------------------- | ---------------- |
+| Not a number or text, `NaN`, `Infinity`  | `INVALID_TYPE`   |
+| Text that is not plain decimal (rule 13) | `INVALID_FORMAT` |
+| A `system` other than the two of rule 12 | `INVALID_TYPE`   |
+| Below 0                                  | `OUT_OF_RANGE`   |
+| Above the port's largest exact integer   | `OUT_OF_RANGE`   |
 
-The spec sets no maximum. A port stops where its integer type stops being exact:
+The spec sets no maximum. For number values, a port stops where its integer type stops being
+exact (decimal text has no such limit):
 
 | Port       | Largest input                                                                                             |
 | ---------- | --------------------------------------------------------------------------------------------------------- |

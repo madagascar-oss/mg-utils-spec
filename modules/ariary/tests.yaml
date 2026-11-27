@@ -345,6 +345,14 @@
   args: [{ 'system': 'traditional' }]
   expected: 'telo safatsiroa ariary'
   note: 'the words system option (words rule 12)'
+- fn: ariaryToWords
+  input: '2000000000000000.9'
+  expected: 'roa tapitrisa lavitrisa faingo sivy ariary'
+  note: 'decimal text, read exactly (words rule 13)'
+- fn: ariaryToWords
+  input: 'Ar 1 500'
+  error: INVALID_FORMAT
+  note: 'formatted text is read by parseAriary, not ariaryToWords'
 - fn: fmgToAriary
   input: 0
   expected: 0

@@ -98,9 +98,10 @@
     "limits": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["min"],
+      "required": ["min", "maxTextLength"],
       "properties": {
-        "min": { "type": "integer", "minimum": 0 }
+        "min": { "type": "integer", "minimum": 0 },
+        "maxTextLength": { "type": "integer", "minimum": 1 }
       }
     }
   }

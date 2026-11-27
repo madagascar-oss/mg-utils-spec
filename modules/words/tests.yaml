@@ -231,8 +231,8 @@
 - input: -1.5
   error: OUT_OF_RANGE
 - input: '12'
-  error: INVALID_TYPE
-  note: strings are not parsed
+  expected: "roa ambin'ny folo"
+  note: 'rule 13: decimal text'
 - input: null
   error: INVALID_TYPE
 - input: .nan
@@ -309,3 +309,83 @@
   args: [{ 'system': 'ancient' }]
   error: INVALID_TYPE
   note: 'only the two systems of rule 12'
+# Rule 13: decimal text, read exactly.
+- input: '2000000000000000.9'
+  expected: 'roa tapitrisa lavitrisa faingo sivy'
+  note: 'rule 13: the number 2_000_000_000_000_000.9 is already 2000000000000001'
+- input: '1000000000000000000.111'
+  expected: "iray lavitrisa lavitrisa faingo iraika ambin'ny folo amby zato"
+  note: 'beyond any port integer'
+- input: '1.50'
+  expected: 'iray faingo dimy'
+  note: 'trailing decimal zeros dropped (rule 10)'
+- input: '007'
+  expected: 'fito'
+  note: 'leading zeros dropped'
+- input: '00.050'
+  expected: 'aotra faingo aotra dimy'
+- input: '0.0'
+  expected: 'aotra'
+- input: '0'
+  expected: 'aotra'
+- input: '9007199254740991'
+  expected: 'iraika amby sivifolo sy sivinjato sy efatra alina sy fito hetsy sy efatra amby dimampolo sy roanjato tapitrisa sy sivy amby sivifolo amby zato sy fito arivo sy sivy tapitrisa lavitrisa'
+  note: 'text and number agree'
+- input: '0.30000000000000004'
+  expected: 'aotra faingo efatra sy telopolo tapitrisa lavitrisa'
+  note: 'text and number agree'
+- input: '30000000'
+  args: [{ 'system': 'traditional' }]
+  expected: 'telo safatsiroa'
+- input: '9999999999999999999'
+  args: [{ 'system': 'traditional' }]
+  expected: 'sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy tapitrisa sy sivy safatsiroa sy sivy tsitamboisa sy sivy lavitrisa sy sivy alinkisa sy sivy tsipesimpesenina sy sivy tsitokotsiforohana sy sivy tsihitanoanoa sy sivy safatsiroafaharoa sy sivy tsitamboisafaharoa sy sivy lavitrisafaharoa sy sivy alinkisafaharoa sy sivy tsipesimpeseninafaharoa'
+  note: 'largest number with a traditional name'
+- input: '10000000000000000000'
+  args: [{ 'system': 'traditional' }]
+  expected: 'folo lavitrisa lavitrisa'
+  note: 'rule 12: 10¹⁹ and more fall back to the standard system'
+- input: '1.12345678901234567890'
+  args: [{ 'system': 'traditional' }]
+  expected: 'iray faingo sivy amby valopolo sy fitonjato sy enina arivo sy dimy alina sy efatra hetsy sy telo tapitrisa sy roa safatsiroa sy iray tsitamboisa sy sivy alinkisa sy valo tsipesimpesenina sy fito tsitokotsiforohana sy enina tsihitanoanoa sy dimy safatsiroafaharoa sy efatra tsitamboisafaharoa sy telo lavitrisafaharoa sy roa alinkisafaharoa sy iray tsipesimpeseninafaharoa'
+  note: '19-digit decimals keep the traditional names'
+- input: '0.12345678901234567891'
+  args: [{ 'system': 'traditional' }]
+  expected: "aotra faingo iraika amby sivifolo sy valonjato sy fito arivo sy enina alina sy dimy hetsy sy efatra amby telopolo sy roanjato tapitrisa sy iray sy sivinjato sy valo arivo sy fito alina sy enina hetsy sy dimy amby efapolo sy telonjato tapitrisa sy roa ambin'ny folo lavitrisa lavitrisa"
+  note: '20-digit decimals fall back to the standard system'
+- input: '9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999'
+  expected: 'sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo sy sivinjato tapitrisa sy sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo sy sivinjato tapitrisa sy sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo sy sivinjato tapitrisa sy sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo sy sivinjato tapitrisa sy sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo sy sivinjato tapitrisa sy sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo sy sivinjato tapitrisa sy sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo sy sivinjato tapitrisa sy sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo sy sivinjato tapitrisa sy sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo sy sivinjato tapitrisa sy sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo sy sivinjato tapitrisa sy sivy amby sivifolo sy sivinjato sy sivy arivo sy sivy alina sy sivy hetsy sy sivy amby sivifolo sy sivinjato tapitrisa sy sivy lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa lavitrisa'
+  note: 'the longest text (limits.maxTextLength)'
+- input: '99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999990'
+  error: INVALID_FORMAT
+  note: 'longer than limits.maxTextLength'
+- input: ''
+  error: INVALID_FORMAT
+  note: 'empty'
+- input: '1 500'
+  error: INVALID_FORMAT
+  note: 'no separators'
+- input: '1,5'
+  error: INVALID_FORMAT
+  note: 'no comma'
+- input: '-1'
+  error: INVALID_FORMAT
+  note: 'no sign'
+- input: '+1'
+  error: INVALID_FORMAT
+  note: 'no sign'
+- input: '1e5'
+  error: INVALID_FORMAT
+  note: 'no exponent'
+- input: '.5'
+  error: INVALID_FORMAT
+  note: 'a digit before the point'
+- input: '5.'
+  error: INVALID_FORMAT
+  note: 'a digit after the point'
+- input: '1.2.3'
+  error: INVALID_FORMAT
+  note: 'one point at most'
+- input: '١٢'
+  error: INVALID_FORMAT
+  note: 'ASCII digits only'
