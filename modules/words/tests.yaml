@@ -1,4 +1,4 @@
-# Shared test vectors for numberToWords. Every language must pass all of them.
+# Shared test vectors for spell. Every language must pass all of them.
 # Notes cite the dictionary row when the exact phrase is attested; other rows apply the rules in README.md.
 - input: 0
   expected: 'aotra'
